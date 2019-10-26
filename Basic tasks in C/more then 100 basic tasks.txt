@@ -1,0 +1,7438 @@
+
+______________________________________________
+
+1. //Napisati funkciju koja iz niza brojeva vraca dva najmanja elementa.. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+void TraziNajmanje(int[],int*,int*);
+
+int main()
+{
+	int i, niz[10], najmanji, drugi_najmanji;
+	int *pok1, *pok2;
+	
+	for (i = 0; i < 10; i++)
+	{
+		printf("A[%d] = ", i + 1);
+		scanf("%d", &niz[i]);
+	}
+	pok1 = &najmanji;
+	pok2 = &drugi_najmanji;
+	
+	TraziNajmanje(niz, pok1, pok2);
+
+	printf("Najmanji broj: A[%d] = %d \n", &pok1, *pok1);
+
+	printf("Drugi najmanji broj: B[%d] = %d\n", &pok2, *pok2);
+	system("pause");
+	return 0;
+}
+
+void TraziNajmanje(int array[10],int *najmanji, int *najmanji2)
+{
+	int i;
+	
+	*najmanji = array[0];
+	for (i = 0; i < 10; i++)
+	{
+		if (*najmanji > array[i])
+		{
+		*najmanji = array[i];
+		}
+		
+	}
+	
+	printf("Najmanji : %d \n", *najmanji);
+	*najmanji2 = array[0];
+	for (i = 0; i < 10; i++)
+	{
+		if (*najmanji2 > array[i] && array[i] > *najmanji)
+			if(*najmanji2 != *najmanji)
+			{
+			*najmanji2 = array[i];
+			}
+	}
+	printf("\nNakon druge for petlje\n");
+}
+
+
+_______________________________________________________________
+
+3.
+
+ // Napisati funkciju koja vraca sumu i produkt reciprocnih vrijednosti brojeva do n.
+ // Broj n je parametar funkcije.
+ // Primjer: Zan = 4,funkcijarac¡unasumu1+ 1/ 2 + 1 /3 + 1 /4,teprodukt1•1 /2•1/ 3•1 /4 
+
+#include <stdio.h>
+
+
+float suma (float n, float* x)
+{
+float suma=0;
+
+
+for (int i=0;i<=n;i++)
+{
+  suma=suma+ (1/n);
+
+}
+for (int i=0;i<=n;i++)
+{
+  *x=*x * (1/n);
+  
+
+
+}
+
+
+return suma;
+
+}
+
+
+
+
+int main()
+{
+	float n;
+	float y;
+	float produkt=1;
+
+	printf("Unesite broj: ");
+		scanf("%f", &n);
+
+		y=suma(n, &produkt);
+		printf("reciprocna suma je: %f \n " , y);
+		printf("reciprocan produkt je je: %f \n " , produkt);
+
+
+}
+
+______________________________________________________________________________-
+
+4. 
+
+    // Napisati funkciju koja racuna sumu i produkt reciproc¡nih vrijednosti elemenata niza cijelih brojeva. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#define n 100
+#include <stdio.h>
+
+
+#define n 100
+#include <stdio.h>
+
+
+float Racunaj (int a[100], int m, float* suma)
+{
+	float produkt=1;
+    int i;
+
+	for(i=0;i<m;i++)
+	{
+		*suma= *suma +  (1/(float)a[i]);
+		
+
+	}
+	for (i=0;i<m;i++)
+	{
+		produkt= produkt * (1/(float)a[i]);
+
+     }
+
+
+	return produkt;
+
+}
+
+
+
+int main()
+{
+	int a[n], m,i;
+	float suma=0;
+	float produkt=1;
+
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &m);
+
+	printf("Unesite elemente niza:\n ");
+	for (i=0;i<m;i++)
+		scanf("%d",&a[i]);
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", a[i]);
+
+	produkt=Racunaj(a, m, &suma);
+
+	printf("\n\n\n\nProdukt je: %.9f \nSuma je: %.9f \n\n", produkt, suma);
+
+
+}
+
+__________________________________________________
+
+
+
+5. Napisati funkciju koja preuredi niz brojeva tako da svi brojevi koji nisu djeljivi sa 6 dojdu na kraj. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Rotiraj (int*, int, int*);
+
+int main()
+{
+    int* a;
+	int* novi;
+	int i, m;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &m);
+
+	if(m==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(m*sizeof(int));
+	novi=(int*) malloc(m*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(a+i));
+
+
+	Rotiraj(a,m,novi);
+
+	printf("\nElementi novog niza su:\n\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n");
+
+
+}
+
+int Rotiraj (int* a, int m, int* novi)
+{
+	int i,j=0;
+
+	for(i=0;i<m;i++)
+	{
+		if(a[i]%6!=0)
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+		for(i=0;i<m;i++)
+	{
+
+		if(a[i]%6==0)
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+
+	return 0;
+}
+
+
+
+__________________________________________________
+
+6. Napisati funkciju koja za niz znakova vrac´a poziciju prvog malog slova u nizu i prvog velikog slova u nizu. 
+
+ #include <stdio.h>
+# define n 100
+
+int malo (char niz[], int* y)
+{
+	int m=0;
+
+for (int i=0;niz[i]!='\0';i++)
+{
+if ('a'<=niz[i] && niz[i]<='z')
+{
+	m=i;
+	break;
+}
+
+}
+
+
+for (int i=0;niz[i]!='\0';i++)
+{
+if ('A'<=niz[i] && niz[i]<='Z')
+{
+	*y=i;
+	break;
+}
+
+}
+
+return m;
+
+}
+
+
+int main()
+{
+	char niz[n];
+	int i;
+	int x;
+	int y=0;
+
+
+	scanf("%s", niz);
+
+	
+	for(i=0;niz[i]!='\0';i++)
+	printf( "%c", niz[i]);
+
+	x=malo(niz,&y);
+	printf("Vase malo slovo se nalazi na poziciji: %d \n", x+1);
+
+	printf("Vase prvo veliko slovo se nalazi na poziciji: %d", y+1);
+
+}
+
+___________________________________________________________________________
+
+7. /* Napisati funkciju koja za niz brojeva vraæa broj koji se najèešæe ponavlja u nizu i broj ponavljanja.
+      Ako se više brojeva ponavlja jednaki broj puta, vratiti vrijednosti za jedan od njih. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int Ponavljanje (int* a, int n, int* brojac, int* brojacpon, int max)
+{
+	int maxbr,indeks;
+
+
+	for(int i=0;i<n;i++)
+	{
+		brojac[a[i]]++;
+	}
+
+	maxbr=brojac[0];
+	for(int i=0;i<max;i++)
+	{
+		if(brojac[i]>maxbr)
+		{
+			 maxbr=brojac[i];
+		     indeks=i;
+		}
+	}
+
+	*brojacpon=maxbr;
+
+	return indeks;
+
+}
+
+int main()
+{
+	int* a;
+	int brojacpon,max;
+	int* brojac;
+	int n,i, najvise_broj;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("Unesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	max=a[0];
+
+	for(int i=0;i<n;i++)
+	{
+		if(a[i]>max)
+			max=a[i];
+	}
+
+	brojac=(int*) malloc(max*sizeof(int)+1);
+
+	for(int i=0;i<n;i++)
+	{
+		brojac[i]=0;
+	}
+
+	najvise_broj=Ponavljanje(a,n,brojac,&brojacpon,max);
+
+    printf("\n\n\n Maksimalan broj ponavljanja je %d i to je broj %d \n\n", brojacpon, najvise_broj);
+
+
+	printf("\n");
+
+	return 0;
+}
+
+
+__________________________________________________________
+
+8. 
+
+// Napisati funkciju koja presloži niz brojeva tako da sve nule budu na kraju niza. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Rotiraj (int*, int, int*);
+
+int main()
+{
+    int* a;
+	int* novi;
+	int i, m;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &m);
+
+	if(m==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(m*sizeof(int));
+	novi=(int*) malloc(m*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(a+i));
+
+
+	Rotiraj(a,m,novi);
+
+	printf("\nElementi novog niza su:\n\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n");
+
+
+}
+
+int Rotiraj (int* a, int m, int* novi)
+{
+	int i,j=0;
+
+	for(i=0;i<m;i++)
+	{
+		if(a[i]!=0)
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+		for(i=0;i<m;i++)
+	{
+
+		if(a[i]==0)
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+
+	return 0;
+}
+
+__________________________________________________________
+
+9. 
+
+// Napisati funkciju koja presloži niz brojeva tako da sve nule budu na poèetku niza. 
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Rotiraj (int*, int, int*);
+
+int main()
+{
+    int* a;
+	int* novi;
+	int i, m;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &m);
+
+	if(m==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(m*sizeof(int));
+	novi=(int*) malloc(m*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(a+i));
+
+
+	Rotiraj(a,m,novi);
+
+	printf("\nElementi novog niza su:\n\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n");
+
+
+}
+
+int Rotiraj (int* a, int m, int* novi)
+{
+	int i,j=0;
+
+	for(i=0;i<m;i++)
+	{
+
+		if(a[i]==0)
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+
+	for(i=0;i<m;i++)
+	{
+		if(a[i]!=0)
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+	
+
+	return 0;
+}
+__________________________________________________________
+
+10. 
+
+//Napisati funkciju koja æe vratiti broj elemenata veæih i broj elemenata manjih od danog broja u nekom nizu. 
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int Provjera (int* a, int n, int* brmanji, int* brveci, int odabir)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		if(odabir>a[i])
+			(*brveci)++;
+		else if(odabir<a[i])
+			(*brmanji)++;
+		else
+			continue;
+	}
+
+	return 0;
+
+}
+
+int main()
+{
+	int* a;
+	int i, n, odabir, check=0, brmanji=0, brveci=0;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\n\nIzaberite clan s kojim zelite usporedjivati velicinu drugih clanova: \n");
+	scanf("%d", &odabir);
+
+	for(i=0;i<n;i++)
+		if(odabir==a[i])
+			check=1;
+
+	if(check==0)
+	{
+		printf("\n\n --- ERROR!!! ----> Niste unijeli nijedan element koji se nalazi u vasem nizu! \n\n\n");
+		return -1;
+	}
+
+	else
+		Provjera(a, n, &brmanji, &brveci, odabir);
+
+	printf("\n\nBroj od kojih je taj broj veci je %d, a broj od kojih je taj broj manji je %d \n\n", brveci, brmanji);
+
+	return 0;
+}
+
+
+_____________________________________________________________________-
+
+11.
+
+ //  Napisati funkciju koja u nizu cijelih brojeva raèuna (ne ispisuje) koliko je brojeva djeljivo sa 3 te koliko je brojeva djeljivo sa 5. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int Provjera (int* a, int n, int* brtri, int* brpet)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]%5==0)
+			*brpet=*brpet+1;
+
+		if(a[i]%3==0)
+			*brtri=*brtri+1;
+	}
+
+	return 0;
+
+}
+
+int main()
+{
+	int* a;
+	int i, n, brpet=0, brtri=0;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+
+	Provjera(a, n, &brpet, &brtri);
+
+	printf("\n\nBroj od djeljivih sa 5 je %d, a broj djeljivih sa 3 je %d \n\n", brpet, brtri);
+
+	return 0;
+}
+
+______________________________________________________
+
+12. // Napisati funkciju koja rotira niz brojeva udesno tako da zadnjih n brojeva prebaci na prvo mjesto, a sve ostale pomakne n mjesta udesno. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Rotiraj (int*,int,int,int*);
+
+int main()
+{
+   	int* a;
+	int* novi;
+	int i, n, m;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &m);
+
+	if(m==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(m*sizeof(int));
+	novi=(int*) malloc(m*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\nUnesite koliko zadnjih brojeva zelite prebaciti na prvo mjesto?\n");
+	scanf("%d", &n);
+
+	Rotiraj(a,m,n,novi);
+
+	printf("\nElementi novog niza su:\n\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n");
+
+
+}
+
+int Rotiraj (int* a, int m, int n, int* novi)
+{
+	int i,j=0;
+
+		for(i=0;i<m-n;i++)
+	{
+		novi[i+n]=a[i];
+	}
+
+	for(i=m-1;n>0;i--)
+	{
+		novi[j]=a[i];
+		j++;
+		n--;
+	}
+
+
+	return 0;
+}
+
+______________________________________________________
+
+13. // Napisati funkciju koja za niz cijelih brojeva vracæa adresu predzadnjeg èlana u nizu. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int Adresa (int* a, int n)
+{
+	int adr=0;
+
+	adr=(int)(a+n-2);
+
+	return adr;
+
+}
+
+int main()
+{
+	int* a;
+	int i, n, adr;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+
+    adr=Adresa(a,n);
+
+	printf("\n\nAdresa predzadnjeg clana je %p \n\n", adr);
+
+	return 0;
+}
+
+
+
+
+-----------------
+ILI 
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int Adresa (int* a, int n,int* adr)
+{
+	int adr=0;
+
+	*adr=&a[n-2];
+
+
+}
+
+int main()
+{
+	int* a;
+	int i, n;
+	int* adr;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+
+    Adresa(a,n,&adr);
+
+	printf("\n\nAdresa predzadnjeg clana je %p \n\n", adr);
+
+	return 0;
+}
+
+
+________________________________________________________________________-
+
+14.  // Napisati funkciju koja iz niza cijelih brojeva kreira drugi u kojem su samo oni brojevi koji se 
+     // u originalnom nizu pojavljuju više od jednog puta. 
+     // Primjer: za dani niz {1, 2, 3, 2, 3, 5, 4 } novi niz je {2, 3}.
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int napravi (int* a, int n, int* novi)
+{
+	int i,max,j;
+	int* brojac;
+
+	max=a[0];
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]>max)
+			max=a[i];
+	}
+
+	brojac=(int*) malloc(max*sizeof(int)+1);
+
+
+	for(i=0;i<n;i++)
+	{
+		brojac[i]=0;
+		novi[i]=0;
+	}
+
+	for(i=0;i<n;i++)
+	{
+		brojac[a[i]]++;
+	}
+
+	j=0;
+
+	for(i=0;i<max+1;i++)
+	{
+		if(brojac[i]>1)
+		{
+			*(novi+j)=i;
+			j++;
+		}				
+	}
+
+	return j;
+
+}
+
+int main()
+{
+	int* a;
+	int i, n, velicina;
+	int* adr;
+	int* novi;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(n*sizeof(int));
+	novi=(int*) malloc(n*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+    	velicina=napravi(a,n,novi);
+
+	printf("\n\n\n Elementi novog niza su:\n");
+	for (i=0;i<velicina;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n\n");
+
+	return 0;
+}
+
+_________________________________________
+
+15. // Napisati funkciju koja racuna sumu i produkt kubova negativnih brojeva u nizu cijelih brojeva. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+
+int Racunaj(int* a, int n, int* suma, int* produkt)
+{
+	int i;
+	for (i=0;i<n;i++)
+		if(a[i]<0)
+		{
+			*suma=*suma + (a[i]*a[i]*a[i]);
+			*produkt=*produkt * (a[i]*a[i]*a[i]);
+		}
+
+		return 0;
+}
+
+int main()
+{
+    int* a;
+	int i, n, suma=0, produkt=1;
+
+	
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\nUnesite elemente niza:\n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("Elementi niza su:\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	Racunaj(a,n,&suma,&produkt);
+
+	printf("Suma je %d, a produkt %d \n", suma, produkt);
+}
+
+_________________________________________
+
+16. // Napisati funkciju koja za niz brojeva vraca drugi najveci i drugi najmanji. 
+    // Primjer: Za niz {2, 5, 4, 7, 6, 9} funkcija vrac´a 7 i 4. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int drugi_najveci_i_najmanji(int [], int, int*, int*);
+
+int main()
+{
+    int i, x, brojevi[50], dr_najveci, dr_najmanji;
+    printf("Koliko brojeva zelite unijeti? ");
+    scanf("%d", &x);
+    for(i=0; i<x; i++)
+    {
+        printf("\nUnesite %d. broj: ", i+1);
+        scanf("%d", &brojevi[i]);
+
+    }
+    drugi_najveci_i_najmanji(brojevi, x, &dr_najveci, &dr_najmanji);
+
+    printf("\nDrugi najmanji: %d\nDrugi najveci: %d\n", dr_najveci, dr_najmanji);
+
+    return 0;
+}
+
+int drugi_najveci_i_najmanji(int niz[], int br, int* dr_najveci, int* dr_najmanji)
+{
+     int temp, i, j;
+     for(i=0; i<br-1; i++)
+        for(j=i+1; j<br; j++)
+            if(niz[i]<niz[j])
+            {
+                temp=niz[i];
+                niz[i]=niz[j];
+                niz[j]=temp;
+            }
+    *dr_najveci= niz[1];
+
+     for(i=0; i<br-1; i++)
+        for(j=i+1; j<br; j++)
+            if(niz[i]>niz[j])
+            {
+                temp=niz[i];
+                niz[i]=niz[j];
+                niz[j]=temp;
+            }
+   *dr_najmanji=niz[1];
+
+   return 0;
+}
+______________________________________________
+
+17. // Napisati funkciju koja presloži niz pozitivnih cijelih brojeva tako da na poèetku budu svi parni, a na kraju svi neparni. 
+    // Primjer: Niz {2, 4, 5, 7, 4, 8, 3} treba presložiti u {2, 4, 4, 8, 5, 7, 3}. 
+
+!!! RJEŠEN NA NAÈIN DA SE KREIRAO NOVI 
+
+#include<stdio.h>
+#include<stdlib.h>
+
+void preslozi(int [], int);
+
+int main()
+{
+    int i, x, brojevi[50], min, max;
+    printf("Koliko brojeva zelite unijeti? ");
+    scanf("%d", &x);
+    for(i=0; i<x; i++)
+    {
+        printf("\nUnesite %d. broj: ", i+1);
+        scanf("%d", &brojevi[i]);
+
+    }
+    preslozi(brojevi, x);
+    printf("\nRezultat: ");
+    for(i=0; i<x; i++)
+        printf(" %d", brojevi[i]);
+    return 0;
+}
+
+void preslozi(int niz[], int br)
+{
+     int temp, i, j;
+     for(i=0; i<br-1; i++)
+        for(j=i+1; j<br; j++)
+            if(niz[i]%2==1 && niz[j]%2==0)
+            {
+                temp=niz[i];
+                niz[i]=niz[j];
+                niz[j]=temp;
+            }
+}
+
+______________________________________________
+
+18. // Napisati funkciju koja izgenerira niz od n brojeva izme —du a i b, najvec´i i najmanji medu 
+    // njima pretvori u stringove, te vrati broj znamenki u njima. Napomena: n, a i b su parametri funkcije. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int Funkcija (int n, int a, int b, int*, int*, int*);
+
+int main()
+{	
+	int* niz;
+	int n,a,b,brznam1=0,brznam2=0;
+
+	printf("Unesite broj elemenata niza:\n ");
+		scanf("%d", &n);
+
+	if(n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	niz=(int*) malloc(n*sizeof(int));
+
+	printf("Unesite donju granicu generiranja:\n ");
+		scanf("%d", &a);
+
+	printf("Unesite gornju granicu generiranja:\n ");
+		scanf("%d", &b);
+
+
+	Funkcija(n,a,b,niz,&brznam1,&brznam2);
+
+	printf("\n");
+
+	 printf("max br znamenki je %d, a min br znamenki je je %d \n", brznam1, brznam2);
+
+
+}
+
+int Funkcija (int n, int a, int b, int* niz, int* brznam1, int* brznam2)
+{
+	int i=0, temp, m, max, min;
+	char maxc, minc;
+
+	m=n;
+
+	 printf("\t Izgenerirani su brojevi: \t \n");
+
+	 if (a>b)
+	 {
+		 while(n>0)
+		 {
+			 temp=rand()%(a-b)+b;
+			 printf("%d\t", temp);
+			 niz[i]=temp;
+
+			 i++;
+			 n--;
+		}
+		 
+	 }
+
+	  else 
+	 {
+		 while(n>0)
+		 {
+			 temp=rand()%(b-a)+a;
+			 printf("%d\t", temp);
+			 niz[i]=temp;
+
+			 i++;
+			 n--;
+		}
+		 
+	 }
+
+	 max=niz[0];
+	 min=niz[0];
+
+	 for(i=0;i<m;i++)
+		 if(niz[i]>max)
+			 max=niz[i];
+
+	  for(i=0;i<m;i++)
+		 if(niz[i]<min)
+			 min=niz[i];
+
+	  maxc=max-'0';
+	  minc=min-'0';
+
+	  printf("max u stringu je %c, a min u stringu je %c \n", maxc, minc);
+
+	  while(max!=0)
+	  {
+		  max=max/10;
+		  *brznam1=*brznam1+1;
+	  }
+
+	  while(min!=0)
+	  {
+		  min=min/10;
+		  *brznam2=*brznam2+1;;
+	  }
+
+
+	return 0;
+}
+
+___________________________________________
+
+19./* Napisati funkciju koja za dva niza brojeva jednake velicine kreira treci u kojem je svaki
+    element kvocijent odgovarajuæih elemenata iz prva dva niza.*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int treci_niz (int a[], int b[], float c[], int x)
+{ 
+	int i;
+
+	for(i=0; i<x; i++)
+	c[i]=(float)a[i]/b[i];
+
+	return 0;
+
+}
+
+int main()
+{
+    int i, x, niz1[50], niz2[50];
+    float rezultat[50];
+
+    printf("Koliko brojeva zelite unijeti? ");
+    scanf("%d", &x);
+    for(i=0; i<x; i++)
+    {
+        printf("\nUnesite %d. broj u 1. niz: ", i+1);
+        scanf("%d", &niz1[i]);
+
+    }
+    for(i=0; i<x; i++)
+    {
+        do {
+            printf("\nUnesite %d. broj u 2. niz: ", i+1);
+            scanf("%d", &niz2[i]);
+        }
+        while(niz2[i]==0); //ako se unese da je 0 djelitelj
+
+    }
+
+	treci_niz(niz1,niz2,rezultat,x);
+
+	printf("\n \n Niz dobiven kao rezultat:\n ");
+    for(i=0; i<x; i++)
+    {
+        printf(" %f", rezultat[i]);
+    }
+    
+    return 0;
+}
+
+________________________________________________
+
+20. /* Napisati funkciju koja spaja dva niza brojeva u jedan niz u kojemu su svi neparni ispred parnih. 
+    Funkcija vrac´a novonastali niz.Primjer: Za niz A = {1, 2, 3, 4, 5, 6} i niz B = {10, 9, 8, 7}, 
+    rezultantski niz je C = {1, 3, 5, 9, 7, 2, 4, 6, 10, 8}. */
+
+#include<stdio.h>
+#include<stdlib.h>
+
+void preslozi(int [], int [], int [], int, int);
+
+int main()
+{
+    int i, x, y, niz1[50], niz2[50], rezultat[100];
+    printf("Koliko brojeva zelite unijeti u prvi niz? ");
+    scanf("%d", &x);
+    printf("Koliko brojeva zelite unijeti u drugi niz? ");
+    scanf("%d", &y);
+    for(i=0; i<x; i++)
+    {
+        printf("\nUnesite %d. broj u 1. niz: ", i+1);
+        scanf("%d", &niz1[i]);
+
+    }
+    for(i=0; i<y; i++)
+    {
+        printf("\nUnesite %d. broj u 2. niz: ", i+1);
+        scanf("%d", &niz2[i]);
+    }
+    preslozi(niz1, niz2, rezultat, x, y);
+    printf("\nRezultat: ");
+    for(i=0; i<x+y; i++)
+    {
+        printf(" %d", rezultat[i]);
+    }
+    return 0;
+}
+
+void preslozi(int niz1[], int niz2[], int rez[], int br1, int br2)
+{
+    int temp, i, j;
+    for(i=0; i<br1; i++)
+    {
+        rez[i]=niz1[i];
+    }
+    for(i=0; i<br2; i++)
+    {
+        rez[i+br1]=niz2[i];
+    }
+     for(i=0; i<br1+br2-1; i++)
+        for(j=i+1; j<br1+br2; j++)
+            if(rez[i]%2==0 && rez[j]%2==1)
+            {
+                temp=rez[i];
+                rez[i]=rez[j];
+                rez[j]=temp;
+            }
+}
+
+__________________________________________
+
+21. /* Napisati funkciju koja iz dva niza brojeva kreira treæi tako da je i-tielement u novom nizu
+       aritmetièka sredina i-tih èlanova poèetnih nizova. Ako je jedan niz dulji,
+       novi niz je nadopunjen elementima duljeg niza. */
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int kreiraj(int [], int [], float [], int, int);
+
+int main()
+{
+    int i, x, y, z, niz1[50], niz2[50];
+    float rezultat[50];
+    printf("Koliko brojeva zelite unijeti u prvi niz? ");
+    scanf("%d", &x);
+    printf("Koliko brojeva zelite unijeti u drugi niz? ");
+    scanf("%d", &y);
+    for(i=0; i<x; i++)
+    {
+        printf("\nUnesite %d. broj u 1. niz: ", i+1);
+        scanf("%d", &niz1[i]);
+
+    }
+    for(i=0; i<y; i++)
+    {
+        printf("\nUnesite %d. broj u 2. niz: ", i+1);
+        scanf("%d", &niz2[i]);
+    }
+    z=kreiraj(niz1, niz2, rezultat, x, y);
+    printf("\nRezultat: ");
+    for(i=0; i<z; i++)
+    {
+        printf(" %.1f", rezultat[i]);
+    }
+    return 0;
+}
+
+int kreiraj(int niz1[], int niz2[], float rez[], int br1, int br2)
+{
+    int temp, i, min, max;
+    if(br1<br2)
+    {
+        min=br1;
+        max=br2;
+    }
+    else if (br2<br1)
+    {
+        min=br2;
+        max=br1;
+    }
+    else
+    {
+        for(i=0; i<br1; i++)
+            rez[i]=(float)(niz1[i]+niz2[i])/2;
+        return br1;
+    }
+    for(i=0; i<min; i++)
+    {
+        rez[i]=(float)(niz1[i]+niz2[i])/2;
+    }
+    for(i=min; i<max; i++)
+    {
+        if(br1<br2)
+            rez[i]=niz2[i];
+        else
+            rez[i]=niz1[i];
+    }
+    return max;
+}
+
+____________________________________________________
+
+22. /* . Napisati funkciju koja æe iz dva niza brojeva a i b kreirati treæi tako da je i-ti
+ èlan novog niza veæi broj odabran izmedu dva i-ta èlana originalnih nizova a i b. Memoriju za
+ novi niz alocirati dinamièki. Duljina novonastalog niza treba biti jednaka duljini kraæeg niza.
+ Primjer: za niz a = {2.1, 2.2, 3.5, 1, 2, 3} i niz b = {1.9, 2.3, 1.8} novi niz je {2.1, 2.3, 3.5}. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Stvori_niz (float*, float*, float*, int);
+
+int main()
+{
+   float* a;
+   float* b;
+   float* novi;
+   int i,n,m;
+
+	
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &n);
+
+	printf(" ! Unesite broj elemenata za drugi niz: ! \n ");
+		scanf("%d", &m);
+
+	if(m==1 || n==1)
+	{
+		printf("Nedovoljna velicina niza! \n");
+		return -1;
+	}
+
+	a=(float*) malloc(n*sizeof(float));
+	b=(float*) malloc(m*sizeof(float));
+	novi=(float*) malloc(m*sizeof(float));
+
+	printf("\n\n ! Unesite elemente prvog niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%f",(a+i));
+
+	printf("\n\n ! Unesite elemente drugog niza: ! \n ");
+	for (i=0;i<m;i++)
+		scanf("%f",(b+i));
+
+
+	printf("\n\n---> Elementi PRVOG niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%f\t", *(a+i));
+
+	printf("\n\n---> Elementi DRUGOG niza su: <---\n\n");
+	for (i=0;i<m;i++)
+		printf("%f\t", *(b+i));
+
+	Stvori_niz(a,b,novi,m);
+
+	printf("\n\n---> Elementi novog niza su: <---\n\n");
+	for (i=0;i<m;i++)
+		printf("%f\t", *(novi+i));
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Stvori_niz (float* a, float* b, float* novi, int m)
+{
+	int i;
+
+	for(i=0;i<m;i++)
+	{
+		if(a[i]>b[i])
+			novi[i]=a[i];
+		else
+			novi[i]=b[i];
+	}
+
+	return 0;
+}
+
+__________________________________________________________________
+
+23. /*  Napisati funkciju koja od dva niza brojeva kreira treæi tako da su u rezultirajuæem
+ 	nizu naizmjenice elementi jednog pa drugog niza. Ako su nizovi razlièite duljine, kraj novog
+ 	niza su svi preostali elementi iz duljeg niza. Memoriju za novi niz alocirati dinamièki.
+ 	Napomena: Funkcija treba vratiti novi niz, te njegovu duljinu. 
+	Primjer: Za nizove {1, 2, 3, 4, 5} i {11, 22, 33, 44, 55, 66, 77, 88, 99}
+	rezultirajuæi niz je{1, 11, 2, 22, 3, 33, 4, 44, 5, 55, 66, 77, 88, 99}. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Stvori_niz (float*, float*, float*, int, int);
+
+int main()
+{
+   float* a;
+   float* b;
+   float* novi;
+   int r,y;
+   int i,n,m,velicina;
+
+
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &r);
+
+	printf(" ! Unesite broj elemenata za drugi niz: ! \n ");
+	scanf("%d", &y);
+
+	if(r>y) //da se osiguramo da je onaj s velicinom n veci niz
+	{
+		n=r;
+		m=y;
+	}
+
+	else
+	{
+		n=y;
+		m=r;
+	}
+		
+
+	a=(float*) malloc(n*sizeof(float));
+	b=(float*) malloc(m*sizeof(float));
+	novi=(float*) malloc((m+n)*sizeof(float));
+
+	printf("\n\n ! Unesite elemente (moguceg) veceg niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%f",(a+i));
+
+	printf("\n\n ! Unesite elemente (moguceg) manjeg niza: ! \n ");
+	for (i=0;i<m;i++)
+		scanf("%f",(b+i));
+
+
+	printf("\n\n---> Elementi PRVOG niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.2f\t", *(a+i));
+
+	printf("\n\n---> Elementi DRUGOG niza su: <---\n\n");
+	for (i=0;i<m;i++)
+		printf("%.2f\t", *(b+i));
+
+	velicina=Stvori_niz(a,b,novi,n,m);
+
+	printf("\n\n---> Elementi novog niza su: <---\n\n");
+	for (i=0;i<m+n;i++)
+		printf("%.2f\t", *(novi+i));
+
+	printf("\n\n Velicina novog niza je %d \n", velicina);
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Stvori_niz (float* a, float* b, float* novi, int n, int m)
+{
+	int k=0,l=0,j=0,kraj,ostatak,i,provjera,velicina;
+
+	velicina=n+m;
+	ostatak=n-m;
+
+	kraj=2*m;
+	provjera=0;
+
+	while(kraj>0)
+	{
+		if(j%2==0)
+		{
+			novi[j]=a[k];
+			k++;
+		}
+
+		else
+		{
+			novi[j]=b[l];
+			l++;
+		}
+
+
+		j++;
+		kraj--;
+
+	}
+
+	j=m;
+
+	for(i=2*m;i<velicina;i++) //kopiranje ostatka veceg niza
+	{
+		novi[i]=a[j];
+		j++;
+	}
+
+
+	return velicina;
+}
+
+___________________________________________________-
+
+24. // Napisati funkciju koja za niz cijelih brojeva vraca dvije sume: sumu svih elemenata pozitivnog i sumu svih elemenata negativnog predznaka. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Sume (float*, int, float*, float*);
+
+int main()
+{
+   float* a;
+   int i,n;
+   float suma1=0,suma2=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(float*) malloc(n*sizeof(float));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%f",(a+i));
+
+
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.2f\t", *(a+i));
+
+	Sume(a,n,&suma1,&suma2);
+
+
+	printf("\n\n Suma negativnih je %.3f, a pozitivnih je %.3f \n", suma1, suma2);
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Sume (float* a, int n, float* suma1, float* suma2)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]>0)
+			*suma1=*suma1+a[i];
+
+		if(a[i]<0)
+			*suma2=*suma2+a[i];
+	}
+
+	return 0;
+}
+
+
+_________________________________________________________-
+
+25. // Napisati funkciju koja za niz cijelih brojeva vraæa zbroj i produkt svih elemenata niza koji su djeljivi sa 3 i manji od 30. 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Funkcija(int*, int, int*, int*);
+
+int main()
+{
+   int* a;
+   int i,n;
+   int zbroj=0,produkt=1;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.d\t", *(a+i));
+
+	Funkcija(a,n,&zbroj,&produkt);
+
+
+	printf("\n\n Suma je %d, a produktje %d \n", zbroj, produkt);
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Funkcija (int* a, int n, int* suma, int* produkt)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]<30 && a[i]%3==0)
+		{
+			*suma=*suma+a[i];
+			*produkt=*produkt*a[i];
+		}
+	}
+
+	return 0;
+}
+
+________________________________________________________________
+
+26. /* Napisati funkciju koja za niz float brojeva raèuna (vraæa) sumu i produkt brojeva ciji je drugi korijen manji od 1.5. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(int*, int, int*, int*);
+
+int main()
+{
+   int* a;
+   int i,n;
+   int zbroj=0,produkt=1;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.d\t", *(a+i));
+
+	Funkcija(a,n,&zbroj,&produkt);
+
+
+	printf("\n\n Suma je %d, a produkt je %d \n", zbroj, produkt);
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Funkcija (int* a, int n, int* suma, int* produkt)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		if( sqrt((float)a[i]) < 1.5 )
+		{
+			*suma=*suma+a[i];
+			*produkt=*produkt*a[i];
+		}
+	}
+
+	return 0;
+}
+
+________________________________________________________
+
+27. /* Napisati funkciju koja za niz cijelih brojeva raèuna (vraæa) zbroj 
+       apsolutnih vrijednosti i zbroj brojeva u nizu manjih od 25. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(int*, int, int*, int*);
+
+int main()
+{
+   int* a;
+   int i,n;
+   int sumaabs=0,suma2=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	Funkcija(a,n,&sumaabs,&suma2);
+
+
+	printf("\n\n Suma abpsolutnih vrijednosti je %d, a suma brojeva manjih od 25 je %d \n", sumaabs, suma2);
+
+	printf("\n\n\n");
+	
+	return 0;
+
+
+}
+
+int Funkcija (int* a, int n, int* sumaabs, int* suma2)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		*sumaabs=*sumaabs+ abs(a[i]);
+	}
+
+	for(i=0;i<n;i++)
+	{
+		if( a[i]<25 )
+		{
+			*suma2=*suma2+a[i];
+		}
+	}
+
+	return 0;
+}
+
+________________________ ****OVI BILI U ISPITU VEÆ**** ______________________________
+
+28. /* Napisati funkciju koja za niz brojeva i broj k kreira i vraæa novi niz u kojem su samo oni elementi 
+       koji su manji od k. Napomena: Funkcija treba vratiti i broj elemenata u novom nizu. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(int*, int*, int, int*, int);
+
+int main()
+{
+   int* a;
+   int novi[100];
+   int i,n,k;
+   int brojel=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.d\t", *(a+i));
+
+	printf(" \n\n ! Unesite broj k (broj od kojeg zelite da su elementi u novom nizu manji) \n\n ");
+		scanf("%d", &k);
+
+	Funkcija(a,novi,n,&brojel,k);
+
+
+	printf("\n\n Broj elemenata u novom nizu je %d \n", brojel);
+
+	printf("\n\n---> Elementi novog niza su: <---\n");
+	for (i=0;i<brojel;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Funkcija (int* a, int* novi,  int n, int* brojel, int k)
+{
+	int i,j=0;
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]<k)
+		{
+			*brojel=*brojel+1;
+		}
+	}
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]<k)
+		{
+			*(novi+j)=*(a+i);
+			j++;
+		}
+	}
+
+	return 0;
+}
+
+________________________________________________________
+
+29. /* Napisati funkciju koja iz jednog niza kreira i vraæa drugi u kojem je svaki
+       element drugi korijen pripadajuæeg elementa iz prvog niza. 
+       Primjer: Za niz {4, 2, 16, 4} povratni niz je {2, 1.41, 4, 2}. 
+       Napomena: Funkcija treba vratiti i broj elemenata novonastalog niza.  */
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(int*, float*, int, int*);
+
+int main()
+{
+   int* a;
+   float novi[100];
+   int i,n;
+   int brojel=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.d\t", *(a+i));
+
+
+	Funkcija(a,novi,n,&brojel);
+
+
+	printf("\n\n Broj elemenata u novom nizu je %d \n", brojel);
+
+	printf("\n\n---> Elementi novog niza su: <---\n");
+	for (i=0;i<brojel;i++)
+		printf("%.2f\t", *(novi+i));
+
+	printf("\n\n\n");
+	
+	return 0;
+
+
+}
+
+int Funkcija (int* a, float* novi,  int n, int* brojel)
+{
+	int i;
+
+
+	for(i=0;i<n;i++)
+	{
+			*(novi+i)=sqrt((float)a[i]);
+			*brojel=*brojel+1;
+	}
+
+	return 0;
+}
+
+________________________________________________-
+
+30. /*Napisati funkciju koja za dva niza cijelih brojeva vraca niz u kojem je svaki element suma kvadrata
+  pripadajucih elemenata nizova. Primjer: Za nizove {1, 2, 3, 7, 9} i {1.1, 3, 4, 1, 1} rezultat je
+  niz {2.21, 13, 25, 50, 82}. Napomena: Funkcija treba vratiti i broj elemenata novonastalog niza..  */
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Stvori_niz (float*, float*, float*, int);
+
+int main()
+{
+   float* a;
+   float* b;
+   float* novi;
+   int i,n,brel;
+
+	
+	printf(" ! Unesite broj elemenata za nizove: ! \n ");
+		scanf("%d", &n);
+
+
+	a=(float*) malloc(n*sizeof(float));
+	b=(float*) malloc(n*sizeof(float));
+	novi=(float*) malloc(n*sizeof(float));
+
+	printf("\n\n ! Unesite elemente prvog niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%f",(a+i));
+
+	printf("\n\n ! Unesite elemente drugog niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%f",(b+i));
+
+
+	printf("\n\n---> Elementi PRVOG niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%.2f\t", *(a+i));
+
+	printf("\n\n---> Elementi DRUGOG niza su: <---\n\n");
+	for (i=0;i<n;i++)
+		printf("%.2f\t", *(b+i));
+
+	brel=Stvori_niz(a,b,novi,n);
+
+	printf("\n\n---> Elementi novog niza su: <---\n\n");
+	for (i=0;i<n;i++)
+		printf("%.2f\t", *(novi+i));
+
+	printf("\n\n ---> Broj elemenata u nizu je %d \n\n", brel);
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Stvori_niz (float* a, float* b, float* novi, int n)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		novi[i]=(a[i]*a[i])+(b[i]*b[i]);
+	}
+
+	return n;
+}
+
+_________________________________________________--
+
+31. /* Napisati funkciju koja za niz pozitivnih cijelih brojeva vraæa sumu
+   svih neparnih elemenata koji su manji od nekog pozitivnog cijelog broja k. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(int*, int, int*, int);
+
+int main()
+{
+   int* a;
+   int i,n,k;
+   int suma=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf(" \n\n ! Unesite broj k \n\n ");
+		scanf("%d", &k);
+
+	Funkcija(a,n,&suma,k);
+
+
+	printf("\n\n Suma takvih elemenata u nizu je %d \n", suma);
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Funkcija (int* a,  int n, int* suma, int k)
+{
+	int i,j=0;
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]<k && a[i]%2!=0)
+		{
+			*suma=*suma+a[i];
+		}
+	}
+
+	return 0;
+}
+
+_______________________________________________
+
+32. 
+/* 32. Napisati funkciju koja æe za niz decimalnih brojeva izraèunati (i vratiti) broj brojeva 
+       veæih od 3 i broj brojeva manjih od 5. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(float*, int, int*, int*);
+
+int main()
+{
+   float* a;
+   int i,n;
+   int veciodtri=0,manjiodpet=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(float*) malloc(n*sizeof(float));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%f",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%f\t", *(a+i));
+
+
+	Funkcija(a,n,&veciodtri,&manjiodpet);
+
+
+	printf("\n\n--->  Broj elemenata veci od tri: %d \n\n--->  Broj elemenata manji od pet: %d \n\n", veciodtri, manjiodpet);
+
+	printf("\n\n\n");
+
+	return 0;
+
+
+}
+
+int Funkcija (float* a,  int n, int* veciodtri, int* manjiodpet)
+{
+	int i;
+
+	for(i=0;i<n;i++)
+	{
+		if(a[i]>3)
+		{
+			*veciodtri=*veciodtri+1;
+		}
+
+		if(a[i]<5)
+		{
+			*manjiodpet=*manjiodpet+1;
+		}
+	}
+
+	return 0;
+}
+
+____________________________________________
+
+33. /* Napisati funkciju koja za dva niza brojeva ispituje je li jedan podniz drugoga.
+   Primjer: Niz {4, 6, 7} je podniz niza {2, 3, 4, 6, 7, 9}. */
+
+!!!! RADI SAMO AKO SE U MANJEM NIZU UNESU RAZLICITI ELEMENTI
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Provjeri (int*, int*, int, int);
+
+int main()
+{
+   int* a;
+   int* b;
+   int i,n,m,provjera;
+
+	
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &n);
+
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &m);
+
+
+	a=(int*) malloc(n*sizeof(int));
+	b=(int*) malloc(m*sizeof(int));
+
+	printf("\n\n ! Unesite elemente prvog niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n ! Unesite (razlicite) elemente drugog niza: ! \n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(b+i));
+
+
+	printf("\n\n---> Elementi PRVOG niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\n\n---> Elementi DRUGOG niza su: <---\n\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(b+i));
+
+	provjera=Provjeri(a,b,n,m);
+
+	if(provjera==1)
+		printf("\n\n\nNiz JEST podniz drugog!\n\n\n");
+
+	else
+		printf("\n\n\nNiz NIJE podniz drugog!\n\n\n");
+
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Provjeri (int* a, int* b, int n, int m)
+{
+	int i,j,istek;
+
+	istek=m;
+
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			if(a[i]==b[j])
+			{
+				istek--;
+			}
+		}
+	}
+
+		if(istek<=0)
+			return 1;
+
+		else 
+			return -1;
+
+	
+}
+
+______________________________________________________________-
+
+34. /* Napisati funkciju koja nekom nizu brojeva invertira èlanove na parnim pozicijama.
+   Primjer: Za niz {2, 1, 3, 5, 7, 9, 4} promijenjeni niz ce biti {4, 1, 7, 5, 3, 9, 2}  */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Funkcija (int*, int);
+
+int main()
+{
+   int* a;
+   int i,n;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	Funkcija(a,n);
+
+	printf("\n\n---> Elementi IZMJENJENOG niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Funkcija (int* a, int n)
+{
+	
+	int i,temp;
+
+	for(i=0;i<n/2;i++)
+	{
+		if(i%2==0)
+		{
+			temp=a[i];
+			a[i]=a[n-1-i];
+			a[n-1-i]=temp;
+		}
+	}
+	
+	return 0;
+}
+
+
+_______________________________________________________________-
+
+35. /* Napisati funkciju koja za dva niza cijelih brojeva vraæa treæi koji nastane spajanjem 
+       ta dva niza. Napomena: Funkcija mora vratiti i duljinu niza. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Funkcija (int*, int*, int, int, int*);
+
+int main()
+{
+   int* a;
+   int* b;
+   int* novi;
+   int i,n,m,velicina;
+
+	
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &n);
+
+		printf(" ! Unesite broj elemenata za drugi niz: ! \n ");
+		scanf("%d", &m);
+
+	a=(int*) malloc(n*sizeof(int));
+	b=(int*) malloc(m*sizeof(int));
+	novi=(int*) malloc((n+m)*sizeof(int));
+
+	printf("\n\n ! Unesite elemente prvog niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n ! Unesite elemente drugog niza: ! \n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(b+i));
+
+
+	printf("\n\n---> Elementi prvog niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\n\n---> Elementi drugog niza su: <---\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(b+i));
+
+	velicina=Funkcija(a,b,n,m,novi);
+
+	printf("\n\n Velicina NOVOG niza je %d. \n", velicina);
+
+	printf("\n\n---> Elementi NOVOG niza su: <---\n");
+	for (i=0;i<n+m;i++)
+		printf("%d\t", *(novi+i));
+
+
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Funkcija (int* a, int* b, int n, int m, int* novi)
+{
+	
+	int i,temp,j=0;
+
+	for(i=0;i<n;i++)
+	{
+		novi[i]=a[i];
+	}
+
+	for(i=n;i<n+m;i++)
+	{
+		novi[i]=b[j];
+		j++;
+	}
+	
+	return n+m;
+}
+
+_____________________________________________________
+
+36. /* Napisati funkciju koja vraæa niz emirp brojeva, tj. prostih brojeva koji su i èitani naopaèke prosti brojevi. Primjer: 37 i 73. */
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija (int*, int, int*, int*);
+int JeLiProst(int);
+int Obrnuti(int);
+
+int main()
+{
+   int* a;
+   int* novi;
+   int i,n,velicina;
+
+	
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &n);
+
+
+	a=(int*) malloc(n*sizeof(int));
+	novi=(int*) malloc((n)*sizeof(int)); //maksimalno svi mogu biti takvi pa je velicina n
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+
+	printf("\n\n---> Elementi prvog su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+
+	velicina= Funkcija(a,n,novi,&velicina);
+
+	printf("\n\n---> Elementi NOVOG niza su: <---\n");
+	for (i=0;i<velicina;i++)
+		printf("%d\t", *(novi+i));
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Funkcija (int* a, int n, int* novi, int* velicina)
+{
+	int i,j=0;
+	int* b;
+
+	b=(int*) malloc(n*sizeof(int)); //b je za niz brojeva od a sa obrnutim znamenkama (npr a-37, b-73)
+
+	for(i=0;i<n;i++)
+	{
+		b[i]=Obrnuti(a[i]);
+	}	
+	for(i=0;i<n;i++)
+	{
+		if(JeLiProst(a[i]) && JeLiProst(b[i]))
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+	return j;
+
+}
+
+int JeLiProst(int broj)
+{
+	int i,brojac=0;
+
+	for(i=2;i<broj;i++)
+	{
+		if(broj%i==0)
+			brojac++;
+	}
+
+	if(brojac==0)
+		return 1; //broj je prost jer nije djeljiv s nijednim brojem
+
+	else 
+		return 0;
+}
+
+int Obrnuti(int broj)
+{
+	int broj2=0, temp, brojj,brzn=0;
+
+	brojj=broj;
+
+	while(brojj) //da vidimo koliko ima znamenki
+	{
+		brojj=brojj/10;
+		brzn++;
+	}
+	
+	while(broj)
+	{
+		temp=broj%10;
+		broj2=broj2+pow((float)10,(brzn-1))*temp; 
+		broj=broj/10;
+		brzn--;
+	}
+	
+	return broj2;
+
+}
+
+____________________________________________________
+
+37. /* Napisati funkciju koja za dva niza brojeva,ne nužno jednake duljine,vraæa treci niz u kojem su svi brojevi 
+   iz prva dva niza, ali tako da se nijedan broj ne ponavlja. Funkcija vraæa novonastali niz i njegovu velièinu. }  */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Funkcija (int*, int*, int, int, int*);
+
+int main()
+{
+   int* a;
+   int* b;
+   int* novi;
+   int i,n,m,velicina;
+
+	
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &n);
+
+		printf(" ! Unesite broj elemenata za drugi niz: ! \n ");
+		scanf("%d", &m);
+
+	a=(int*) malloc(n*sizeof(int));
+	b=(int*) malloc(m*sizeof(int));
+	novi=(int*) malloc((n+m)*sizeof(int));
+
+	printf("\n\n ! Unesite elemente prvog niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n ! Unesite elemente drugog niza: ! \n ");
+	for (i=0;i<m;i++)
+		scanf("%d",(b+i));
+
+
+	printf("\n\n---> Elementi prvog niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\n\n---> Elementi drugog niza su: <---\n");
+	for (i=0;i<m;i++)
+		printf("%d\t", *(b+i));
+
+	velicina=Funkcija(a,b,n,m,novi);
+
+	printf("\n\n Velicina NOVOG niza je %d. \n", velicina);
+
+	printf("\n\n---> Elementi NOVOG niza su: <---\n");
+	for (i=0;i<velicina;i++)
+		printf("%d\t", *(novi+i));
+
+
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Funkcija (int* a, int* b, int n, int m, int* novi)
+{
+	
+	int i,temp,j=0, max;
+	int* brojac;;
+	int* novi2;
+
+	novi2=(int*) malloc((n+m)*sizeof(int));
+
+	for(i=0;i<n;i++)
+	{
+		novi2[i]=a[i];
+	}
+
+	for(i=n;i<n+m;i++)
+	{
+		novi2[i]=b[j];
+		j++;
+	}
+
+    // sada iz tog niza izbacimo iste
+
+	max=novi2[0];
+	for(i=0;i<n+m;i++)
+	{
+		if(novi2[i]>max)
+			max=novi2[i];
+	}
+
+	brojac=(int*) malloc(max*sizeof(int)+1);
+
+
+	for(i=0;i<n+m;i++)
+	{
+		brojac[i]=0;
+		novi[i]=0;
+	}
+
+	for(i=0;i<n+m;i++)
+	{
+		brojac[novi2[i]]++;
+	}
+
+	j=0;
+
+	for(i=0;i<max+1;i++)
+	{
+		if(brojac[i]!=0)
+		{
+			*(novi+j)=i;
+			j++;
+		}
+	}
+
+	
+	return j;
+}
+
+_______________________________________________________
+
+38. /* Napisati funkciju koja za niz brojeva vraæa prosjeènu vrijednost brojeva u nizu 
+       koji su manji od 42 i maximalnu vrijednost brojeva koji su veæi od 42. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija(int*, int, float*, int*);
+
+int main()
+{
+   int* a;
+   int i,n,maxveci;
+   float prosjvrij=0;
+
+	
+	printf(" ! Unesite broj elemenata za niz: ! \n ");
+		scanf("%d", &n);
+
+	a=(int*) malloc(n*sizeof(int));
+
+	printf("\n\n ! Unesite elemente niza: ! \n ");
+	for (i=0;i<n;i++)
+		scanf("%d",(a+i));
+
+	printf("\n\n---> Elementi niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	Funkcija(a,n,&prosjvrij,&maxveci);
+
+
+	printf("\n\n Prosijecna vrijednost tih brojeva je %.3f \n Maksimalni element veci od 42 je %d \n", prosjvrij, maxveci);
+
+	printf("\n\n\n");
+	
+	return 0;
+
+}
+
+int Funkcija (int* a, int n, float* prosjvrij, int* maxveci)
+{
+	int i,br1=0,br2=0,sumamanji=0,k=0,l=0;
+	int* novi1;
+	int* novi2;
+
+	for(i=0;i<n;i++)
+	{
+		if( a[i]<42 )
+		{
+			br1++;
+		}
+
+		if( a[i]>42 )
+		{
+			br2++;
+		}
+	}
+
+		novi1=(int*)malloc(br1*sizeof(int));
+		novi2=(int*)malloc(br2*sizeof(int));
+
+	for(i=0;i<n;i++)
+	{
+		if( a[i]<42 )
+		{
+			novi1[k]=a[i];
+			k++;
+		}
+
+		if( a[i]>42 )
+		{
+			novi2[l]=a[i];
+			l++;
+		}
+	}
+
+
+		//racunanje prosijecne vrijednosti za elemente koji su manji od 42
+		for(i=0;i<br1;i++)
+		{
+			sumamanji=sumamanji+novi1[i];
+		}
+
+		*prosjvrij=(float) sumamanji/br1;
+
+	   //trazenje max elementa za brojeve koji su veci od 42
+		*maxveci=novi2[0];
+		for(i=0;i<br2;i++)
+		{
+			if(novi2[i]>*maxveci)
+				*maxveci=novi2[i];
+		}
+
+
+	return 0;
+}
+
+
+________________________________________
+
+39. /* Napisati funkciju koja iz niza char vrijednosti izbaci sve znakove koji nisu znakovi alfabeta,
+       te promijeni vrijednost parametra koji oznacava duljinu niza.*/
+
+char* nizZnakova(char* niz, int velicina, int* velicina_nova){ 
+    int i,j = 0; 
+    int novaVel=0; 
+    char* noviNiz; 
+    for(i=0; i<velicina;i++){ 
+        if(isalpha(niz[i])) 
+            novaVel++; 
+    } 
+    *velicina_nova = novaVel; 
+    noviNiz=malloc(novaVel*sizeof(char)); 
+    for(i=0;i<velicina;i++){ 
+        if(isalpha(niz[i])){ 
+            noviNiz[j]=niz[i]; 
+            j++; 
+        } 
+    } 
+    return noviNiz; 
+} 
+int main(void){ 
+    char niz[]={'1','a','c','5'}; 
+    int i=0; 
+    int velicina = sizeof(niz)/sizeof(char); 
+    int velicina_nova = 0; 
+    char* noviNiz = nizZnakova(niz, velicina, &velicina_nova); 
+    for(i = 0; i < velicina_nova; i++){ 
+        printf("%c", noviNiz[i]); 
+    } 
+ 
+    free(noviNiz); 
+    return 0; 
+} 
+ 
+
+_______________________________________
+
+40. /* . Napisati funkciju koja mijenja niz brojeva tako da na odgovarajuæem mjestu u nizu umetne n jedinica.
+         Odgovarajuæe mjesto u nizu i broj jedinica su parametri funkcije. Memoriju za niz alocirati dinamièki. */ 
+
+int* jedinice(int* niz, int velicina, int pozicija, int broj)
+{
+	int novaVelicina = 0;
+	int* origNiz = 0;
+	int* niz1 = 0;
+	int i = 0;
+
+	novaVelicina = velicina + (velicina - pozicija) + broj;
+	origNiz = malloc(velicina*sizeof(niz));
+
+	memcpy(origNiz, niz, velicina*sizeof(int));
+
+	if (!origNiz)
+		return NULL;
+
+	niz1 = realloc(niz, novaVelicina*sizeof(niz));
+	if (!niz1)
+		return NULL;
+
+	for (i = pozicija; i < novaVelicina; i++)
+	{
+		niz1[i] = 1;
+	}
+
+	for (i=pozicija+broj; i < novaVelicina; i++)
+	{
+		niz1[i] = origNiz[pozicija++];
+	}
+
+	free(origNiz);
+	free(niz);
+	return niz1;
+}
+
+int main(void)
+{
+	int* niz;
+	int* noviNiz;
+	int velicina = 5;
+	int pozicija = 2;
+	int broj = 3;
+	int *niz1;
+
+	niz = malloc(velicina*sizeof(niz));
+
+	niz[0] = 5;
+	niz[1] = 2;
+	niz[2] = 7;
+	niz[3] = 3;
+	niz[4] = 4;
+
+	niz = realloc(niz, 5*sizeof(niz));
+
+	noviNiz = jedinice(niz, velicina, pozicija, broj);
+
+	free(niz);
+	return 0;
+}
+
+______________________________________
+
+41. /* Napisati funkciju koja alocira niz brojeva duljine n u kojem su svi èlanovi 0 
+     (koristiti se calloc() funkcijom). Funkcija napuni parna mjesta u nizu brojem nula do
+     tog mjesta, te vrati novi niz. Primjer: za n = 10 novi niz je {0, 0, 2, 0, 3, 0, 4, 0, 5, 0}. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija (int*, int);
+
+int main()
+{
+   int* a;
+   int* novi;
+   int i,n,velicina;
+
+	
+	printf(" ! Unesite broj elemenata za prvi niz: ! \n ");
+		scanf("%d", &n);
+
+
+	a=(int*) calloc(n, sizeof(int));
+
+	printf("\n\n---> Elementi pocetnog niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+
+	Funkcija(a,n);
+
+	printf("\n\n---> Elementi PREPRAVLJENOG niza su: <---\n");
+	for (i=0;i<n;i++)
+		printf("%d\t", *(a+i));
+
+	printf("\n\n\n");
+
+	return 0;
+
+}
+
+int Funkcija (int* a, int n)
+{
+	int i,j,br;
+
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<i;j++)
+		{
+			if(a[j]==0)
+				br++;
+		}
+
+		if(i%2==0 && i!=0)
+		{
+			a[i]=br;
+		}
+
+		br=0;
+	}
+
+	return 0;
+}
+
+_________________________________________________
+
+42. ??? ne znamo je li tocan
+  /* Napisati funkciju koja niz brojeva poveca za k mjesta, gdje je k parametar funkcije
+   te tih novih k mjesta napuni nulama. Koristiti se funkcijom realloc(). 
+   Napomena: Funkcija realloc() može promijeniti lokaciju (adresu) niza. */
+
+void *funk(char *string1, char* string2,char *razmak) 
+
+{ 
+ int i; 
+ int vel1; 
+  int vel2; 
+  int velraz; 
+ char *string3; 
+ vel1=strlen(string1); 
+  vel2=strlen(string2); 
+  velraz =strlen(razmak); 
+ if (vel1>vel2) 
+ { 
+  string3=(char*)malloc(vel1+vel2+3); 
+  string3=strcat(string2,razmak); 
+  string3=strcat(string3,string1); 
+ } 
+ if (vel2>vel1) 
+ { 
+  string3=(char*)malloc(vel1+vel2+2); 
+  string3=strcat(string1,razmak); 
+  string3=strcat(string3,string2); 
+ } 
+ puts(string3); 
+} 
+
+
+ int main(void) 
+
+ { 
+  char string1[]="and thanks for all the fish"; 
+  char string2[]="so long"; 
+  char razmak[]=", "; 
+  char* string3; 
+  string3=funk(string1, string2,razmak); 
+  return 0; 
+ } 
+
+______________________*** STRINGOVI ***___________________________
+
+
+43. /* Napisati funkciju koja vraæa broj znamenki i broj slova u stringu.  */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int Funkcija (char[], int*, int*);
+
+int main()
+{
+	char a[100];
+	int brslova=0, brznamenki=0;
+
+	printf("Unesite neki string\n");
+	scanf("%s",a);
+
+	Funkcija(a,&brslova,&brznamenki);
+
+	printf("\n\n\nBroj slova u stringu je %d, a broj znamenki je %d \n\n", brslova, brznamenki);
+   
+
+}
+
+int Funkcija (char a[100], int* brslova, int* brznamenki)
+{
+	int i;
+
+	for(i=0;a[i]!='\0';i++)
+	{
+		if (a[i]>='a' && a[i]<='z')
+			*brslova=*brslova+1;
+
+		if (a[i]>='0' && a[i]<='9')
+			*brznamenki=*brznamenki+1;
+	}
+	
+	return 0;
+}
+
+___________________________________________
+
+44. /* Napisati funkciju koja provjerava je li uneseni string broj i ako je, izracuna prosjecnu vrijednost parnih i neparnih znamenaka. */ 
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int stringInt(char* string, int* neparniProsjek) {
+	int i;
+	int parnih = 0;
+	int neparnih = 0;
+	int parnaSuma = 0;
+	int neparnaSuma = 0;
+
+	for (i = 0; i < strlen(string); i++) {
+		if (!isdigit(string[i]))
+			return -1;
+	}
+
+	for (i = 0; i < strlen(string); i++) {
+		if (string[i] % 2 == 0) {
+			parnih++;
+			parnaSuma += string[i]-'0';
+		}
+		else {
+			neparnih++;
+			neparnaSuma += string[i] - '0';
+		}
+	}
+
+
+	*neparniProsjek = neparnaSuma / neparnih;
+	return parnaSuma/parnih;
+}
+
+int main(void) {
+	char broj[] = "123456";
+	int parniProsjek, neparniProsjek;
+
+
+	parniProsjek = stringInt(broj, &neparniProsjek);
+
+	return 0;
+}
+
+_______________________________
+
+45. /* Napisati funkciju koja provjerava da li string završava sa nekim podstingom. 
+       Primjer:za podstring ".csv" i string "datoteka.csv" funkcija vraæa pozitivan 
+       odgovor, a za string "datoteka.cvss" negativan. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Provjera(char[], char[]);
+
+int main()
+{
+	char a[100];
+	char b[100];
+	int check;
+
+	printf("Unesite neki string\n");
+	scanf("%s",a);
+
+	printf("Unesite neki podstring\n");
+	scanf("%s",b);
+
+	check=Provjera(a,b);
+
+	if (check==1)
+		printf("Zavrsava\n");
+
+	else
+		printf("Ne zavrsava\n");
+
+ return 0;
+}
+
+int Provjera(char a[100], char b[100])
+{
+	int i, brb=0, bra=0, j=0;
+	int* check;
+
+
+	for(i=0;a[i]!='\0';i++)
+	{
+		bra++;
+	}
+
+	for(i=0;b[i]!='\0';i++)
+	{
+		brb++;
+	}
+
+	check=(int*) calloc(brb,sizeof(int)); //niz s kojim cemo provjeravati "poklapaju" li se sva slova
+
+	for(i=bra-brb;i<bra;i++)
+	{
+		if(a[i]==b[j])
+		{
+			check[j]=check[j]+1;
+			j++;
+		}
+
+	}
+
+	for(i=0;i<brb;i++)
+	{
+		if(check[i]==0)
+			return 0;
+
+	}
+
+	return 1;
+
+}
+
+_____________________________________________
+46. /* Napisati funkciju koja alocira prostor za string, te generira niz znakova duljine n tako da se 
+    isti znak nikada ne ponavlja. Znakovi mogu biti velika slova alfabeta. Funkcija vraæa novonastali string.*/
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+
+int Funkcija(char*, int);
+
+int main()
+{
+	int n,i,velicina;
+	char* novi;
+
+	printf("Unesite broj elemenata niza\n");
+	scanf("%d",&n);
+
+	novi=(char*)malloc((n+1)*sizeof(char));
+
+    velicina=Funkcija(novi,n);
+
+	printf("\n\nNOVI NIZ JE:\n\n");
+	for(i=0;i!=velicina;i++)
+		printf("%c",novi[i]);
+
+	printf("\n\n\n");
+
+
+ return 0;
+}
+
+int Funkcija(char* novi, int n)
+{
+	char* a;
+	int max,i,j,check=0;
+	char temp;
+	int* brojac;
+	a=(char*)malloc((n+1)*sizeof(char));
+
+	printf("Unesite svoj string s maksimalno n velikih slova\n");
+	{
+		scanf("%s",a);
+	}
+
+	do{
+		for(i=0;a[i]!='\0';i++)
+		  if(a[i]<'A' || a[i]>'Z')
+			 {
+			 	 check=0;
+				 printf("Unjeli ste neko slovo koje nije veliko slovo alfabeta, ponovite unos:\n");
+				 scanf("%s",a);
+			 }
+
+		  else
+			  check=1;
+	}while(check==0);
+
+
+	printf("\n\nUNESENI NIZ JE:\n\n");
+	for(i=0;a[i]!='\0';i++)
+		printf("%c",a[i]);
+
+
+	//izbacimo ista slova
+	max=a[0];
+	for(i=0;a[i]!='\0';i++)
+	{
+		if(a[i]>max)
+			max=a[i];
+	}
+
+	brojac=(int*) calloc(max,sizeof(int)+1);
+
+
+	for(i=0;a[i]!='\0';i++)
+	{
+		brojac[a[i]]++;
+	}
+
+	j=0;
+
+	for(i=0;i<max+1;i++)
+	{
+		if(brojac[i]!=0)
+		{
+			*(novi+j)=i;
+			j++;
+		}
+	}
+
+	
+	return j;
+}
+
+_____________________________________
+
+47. /*Napisati funkciju koja okreèe svaku rijeè u reèenici. 
+      Primjer: string"Morski pas je gladan."postaje"iksoM sap ej nadalg." */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100][100], int n)
+{ 
+  int i,m,j;
+  char temp[100]={0};
+  char temp2;
+
+	for(i=0;i<n;i++)
+	{   
+		strcpy(temp,a[i]);
+		m=strlen(temp);
+
+		for(j=0;j<m/2;j++)
+		{
+			temp2=temp[j];
+			temp[j]=temp[m-1-j];
+			temp[m-1-j]=temp2;
+		}
+
+		strcpy(a[i],temp);
+		
+	}
+
+	return 0;
+}
+
+
+int main()
+{
+	char a[100][100];
+	int i,n;
+
+	printf("Unesite koliko rijeci zelite unijeti\n");
+	scanf("%d",&n);
+
+	printf("Unesite vasu recenicu sa %d. rijeci:\n\n", n);
+
+	for(i=0;i<n;i++)
+	{  
+		scanf("%s",&a[i]);
+	}
+	
+	printf("\n\nVasa recenica prije funkcije je:\n\n");
+	for(i=0;i<n;i++)
+	{
+	   printf("%s ",a[i]);
+	}
+	
+
+	Funkcija(a,n);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\nVasa recenica poslije funkcije je:\n\n");
+
+	for(i=0;i<n;i++)
+	{
+		printf("%s ",a[i]);
+	}
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+
+____________________________________________________
+
+48. ????????
+  /* Napisati funkciju koja preureðuje reèenicu tako da nakon svakog samoglasnika doda slovo ’p’ i sam samoglasnik. 
+    Realokaciju za dodatne znakoverealizirati dinamicki. Primjer: recenica "Ja sam dobro." postaje "Japa sapam dopo bropo." */
+
+???stvarno ne znam, ali evo bar unos niza i slanje u funkciju
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+
+int Funkcija(char*, int);
+
+int main()
+{
+	int n=0,i,velicina;
+	char a[100];
+
+	printf("Unesite svoj string s maksimalno 100 slova\n");
+	{
+		scanf("%[^\n]s",a);
+	}
+
+	for(i=0;a[i]!='\0';i++)
+		n++;
+
+	printf("\n\nNIZ JE:\n\n");
+	for(i=0;a[i]!='\0';i++)
+		printf("%c",a[i]);
+
+	Funkcija(a,n);
+
+	printf("\n\nNOVI NIZ JE:\n\n");
+	for(i=0;a[i]!='\0';i++)
+		printf("%c",a[i]);
+
+	printf("\n\n\n");
+
+
+ return 0;
+}
+
+int Funkcija(char* a, int n)
+{
+	int i;
+
+	for(i=0;i<n+1;i++)
+		if(toupper(a[i])=='A'|| toupper(a[i])=='E' || toupper(a[i]=='I') || toupper(a[i]=='O') || toupper(a[i]=='U'))
+		{
+			///???
+		}
+	
+	return 0;
+}
+
+
+___________________________________-
+
+49. 
+ /* Napisati funkciju koja zamjenjuje po dvije susjedne rijeci u recenici. 
+    Primjer: string"Morski pas je gladan."postaje"pas Morski gladan je." */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100][100], int n)
+{ 
+  int i;
+  char temp[100]={0};
+
+	for(i=0;i<n-1;i=i+2)
+	{
+		strcpy(temp,a[i]);
+		strcpy(a[i],a[i+1]);
+		strcpy(a[i+1],temp);
+	}
+
+	return 0;
+}
+
+
+int main()
+{
+	char a[100][100];
+	int i,n;
+
+	printf("Unesite koliko rijeci zelite unijeti\n");
+	scanf("%d",&n);
+
+	printf("Unesite vasu recenicu sa %d. rijeci:\n\n", n);
+
+	for(i=0;i<n;i++)
+	{  
+		scanf("%s",&a[i]);
+	}
+	
+	printf("\n\nVasa recenica prije funkcije je:\n\n");
+	for(i=0;i<n;i++)
+	{
+	   printf("%s ",a[i]);
+	}
+	
+
+	Funkcija(a,n);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\nVasa recenica poslije funkcije je:\n\n");
+
+	for(i=0;i<n;i++)
+	{
+		printf("%s ",a[i]);
+	}
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+
+___________________________________________
+
+ /* 50.  Napisati funkciju koja string, koji predstavlja bitovni zapis nekog broja, 
+         pretvara u broj. Funkcija vraæa dobijeni broj.  */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<math.h>
+
+int Obrni(int broj)
+{
+	int broj2=0, temp, brojj,brzn=0;
+
+	brojj=broj;
+
+	while(brojj) //da vidimo koliko ima znamenki
+	{
+		brojj=brojj/10;
+		brzn++;
+	}
+	
+	while(broj)
+	{
+		temp=broj%10;
+		broj2=broj2+pow((float)10,(brzn-1))*temp; 
+		broj=broj/10;
+		brzn--;
+	}
+	
+	return broj2;
+}
+
+int Funkcija(char* a, int n)
+{
+	int i;
+	int* novi,broj=0;
+
+	novi=(int*) malloc(n*sizeof(int));
+
+	for(i=0;a[i]!='\0';i++)
+	{
+		novi[i]=a[i]-'0';
+	}
+
+	printf("\n\nVas niz je \n\n");
+	for(i=0;i<n;i++)
+	{
+		printf("%d",novi[i]);
+	}
+
+	for(i=0;i<n;i++)
+	{
+		broj=broj+novi[i]*pow((float)10,i);
+	}
+
+	broj=Obrni(broj);
+
+	return broj;
+}
+
+
+int main()
+{
+	char a[100];
+	int i, n=0,broj;
+
+	printf("Unesite elemente niza (1 i 0) \n");
+	scanf("%s",a);
+
+	for(i=0;a[i]!='\0';i++)
+	{
+		n++;
+	}
+
+	broj=Funkcija(a,n);
+
+	printf("\n\nMOJ BROJ JE %d\n\n", broj);
+
+	return 0;
+
+}
+
+___________________________________________________________
+
+51.  /* Napisati funkciju koja u stringu zamijeni svaku prazninu sa drugim stringom.  */ 
+
+!!! ZADATAK RIJESEN DA SE NE ZAMJENI S DRUGIM STRINGOM NEGO S DRUGIM SLOVOM
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], int n)
+{ 
+  int i,m;
+  char slovo;
+
+	for(i=0;i<n;i++)
+	{   
+		if(a[i]==' ')
+		{
+			printf("\n\nUnesite neko drugo slovo\n");
+			scanf(" %c",&slovo);
+			a[i]=slovo;
+		}
+	}
+
+	return 0;
+}
+
+
+int main()
+{
+	char a[100];
+	int i,n;
+
+	printf("Unesite svoj string (max 100 rijeci) \n\n"); 
+	scanf("%[^\n]s",a);
+	
+	printf("\n\nVas string prije funkcije je:\n\n");
+	   printf("%s ",a);
+	
+	n=strlen(a);
+
+	Funkcija(a,n);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\nVas string nakon funkcije je: \n\n");
+
+	printf("%s ",a);
+
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+______________________________________________________________
+
+52. /*  Napisati funkciju koja modi?cira string tako da udvostruèuje sve znakove koji nisu ni slova ni brojevi,
+        a ostale znakove ne. Primjer: za string s = "24/07/gggg" novi string je s = "24//07//gggg".   */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], int n, char* novi)
+{ 
+  int i,j,brojac1=0,brojac2=0;
+
+	j=0;
+
+	for(i=0;i<n;i++)
+	{
+		novi[j]=a[i];
+		j++;
+		if( (a[i]<'a' || a[i]>'Z') && (a[i]<'0' || a[i]>'z') && (a[i]<'A' || a[i]>'Z') )
+		{
+			novi[j]=a[i];
+			j++;
+		}
+	}
+
+	
+	return 0;
+}
+
+
+int main()
+{
+	char a[100];
+	char* novi;
+	int i,n,brojac=0;
+
+	printf("Unesite svoj string (max 100 rijeci) \n\n"); 
+	scanf("%[^\n]s",a);
+	
+	printf("\n\nVas string prije funkcije je:\n\n");
+	   printf("%s ",a);
+	
+	n=strlen(a);
+
+	for(i=0;i<n;i++)
+	{   
+		if( (a[i]<'a' || a[i]>'z') && (a[i]<'0' || a[i]>'9') && (a[i]<'A' || a[i]>'Z'))
+		{
+			brojac++;
+		}
+
+	}
+
+	novi=(char*) calloc((brojac+n),sizeof(char)+1);
+
+	Funkcija(a,n,novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\nVas string nakon funkcije je: \n\n");
+
+	printf("%s",novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+_____________________________________________________________
+
+53. /* Napisati funkciju koja u zadanom stringu broji velièinu najveæeg niza uzastopnih istih znakova. */ 
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+char Funkcija (char a[100], int n, int* brojac, int* max)
+{ 
+  int i,j=0,naj;
+  char znak[100];
+
+	for(i=0;i<n-1;i++)
+	{
+		if(a[i]==a[i+1])
+		{
+			brojac[j]=brojac[j]+1; //svi clanovi u nizu su inicijalizirani na 1 da bi brojalo i onog prvog u nizu
+			znak[j]=a[i];
+		}
+
+		else
+			j++;
+	}
+
+	*max=brojac[0];
+	for(i=0;i<n;i++)
+		if(brojac[i]>*max)
+		{
+			*max=brojac[i];
+			naj=i;
+		}
+
+	
+	return znak[naj];
+}
+
+
+int main()
+{
+	char a[100];
+	int* brojac;
+	int max=0;
+	char znak;
+	int i,n,brojacc=0;
+
+	printf("Unesite svoj string (max 100 rijeci) \n\n"); 
+	scanf("%[^\n]s",a);
+	
+	printf("\n\nVas string prije funkcije je:\n\n");
+	   printf("%s ",a);
+	
+	n=strlen(a);
+
+
+	brojac=(int*) calloc(n, sizeof(int));
+
+	for(i=0;i<n;i++)
+	{
+		brojac[i]=1;
+	}
+
+	znak=Funkcija(a,n,brojac,&max);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n Najduzi takav niz ima %d brojeva. \n\n", max);
+	printf("To je niz:\n");
+
+	for(i=0;i<max;i++)
+	{
+		printf("%c\t",znak);
+	}
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+__________________________________________________________
+
+54. /* Napisati funkciju koja ubacuje uneseni string izmedu dva stringa. Prostor za rezultirajuæi string alocirati dinamièki. 
+    Napomena: Parametri funkcije su dva stringa. Korisnik unosi treæi string u funkciji.*/ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+char* Funkcija (char a[100], char b[100], char c[100])
+{ 
+  char* novi;
+  int i,n,m,k;
+
+  n=strlen(a);
+  m=strlen(b);
+  k=strlen(c);
+
+  novi=(char*) calloc((n+m+k),sizeof(char)+1); //+1 zbog \0
+
+  strcat(novi,a);
+  strcat(novi,c);
+  strcat(novi,b);
+	
+  return novi;
+}
+
+
+int main()
+{
+	char a[100], b[100], c[100];
+	char* novi;
+	int* brojac;
+	int i,n,brojacc=0;
+
+	printf("Unesite svoj prvi string \n\n"); 
+	scanf("%s",a);
+
+	printf("\n\n\n\nUnesite svoj drugi string \n\n"); 
+	scanf("%s",b);
+
+	printf("\n\n\n\nUnesite string kojeg zelite umetnuti izmedju ova dva\n\n"); 
+	scanf("%s",c);
+	
+	
+	printf("\n\n\n*** Vasi stringovi su: *** \n\n");
+	   printf("\n\nPRVI: %s ",a);
+	   printf("\n\nDRUGI: %s ",b);
+	   printf("\n\nUMETAJUCI: %s ",c);
+
+        novi=Funkcija(a,b,c);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf(" NOVI STRING GLASI: %s \n", novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+________________________________________________
+55./*Napisati funkciju koja vraæa broj rijeèi u stringu koje poèinju velikim slovom, 
+     broj rijeèi koje poèinju malim slovom i broj rijeèi koje poèinju sa znamenkom.     */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int* Funkcija (char a[100])
+{ 
+  int i,n;
+  int* brojac;
+  char prosli='z';
+  char iduci='z';
+  char pocetni=a[0];
+  char pocetni2=a[1];
+
+  n=strlen(a);
+
+  brojac=(int*) calloc(3,sizeof(int)); //postavimo sve brojace na nulu
+
+  for(i=0;i<n+1;i++)
+  {  
+	 if(iduci==' ' || i==n-1 || i==0)
+	  {
+		  if(pocetni>= 'a' && pocetni<='z')
+		  {
+			  brojac[0]=brojac[0]+1;
+			  printf("Brojac malih iznosi %d \n", brojac[0]);
+		  }
+
+		  else if(pocetni>='A' && pocetni<='Z')
+		  {
+			  brojac[1]=brojac[1]+1;
+			  printf("Brojac velikih iznosi %d \n", brojac[1]);
+		  }
+
+		  else if(pocetni>= '0' && pocetni<='9')
+		  {
+			  brojac[2]=brojac[2]+1;
+			  printf("Brojac brojeva iznosi %d \n", brojac[2]);
+		  }
+
+		  pocetni=a[i+1];
+	  }
+
+	  iduci=a[i+1];
+  }
+
+  //uvijek izbroji jedan vise onog znaka koji se nalazi na mjestu a[1], tj na drugom mjestu
+       if(pocetni2>= 'a' && pocetni2<='z')
+		  {
+			  brojac[0]=brojac[0]-1;
+		  }
+
+		  else if(pocetni2>='A' && pocetni2<='Z')
+		  {
+			  brojac[1]=brojac[1]-1;
+		  }
+
+		  else if(pocetni2>= '0' && pocetni2<='9')
+		  {
+			  brojac[2]=brojac[2]-1;
+		  }
+
+
+  return brojac;
+}
+
+
+int main()
+{
+	char a[100];
+	int* brojac;
+	int i;
+
+	printf("Unesite svoj string \n\n"); 
+	scanf("%[^\n]s",a);
+
+    brojac=Funkcija(a);
+
+	printf("\n\n______________________________________________\n\n");
+
+	
+    printf("\n\nVas string je:\n\n");
+	printf("%s ",a);
+
+	printf("\n\nBroj s MALIM je %d, s VELIKIM je %d, a s ZNAMENKOM je %d \n\n", brojac[0], brojac [1], brojac[2]);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+_________________________________________________________________--
+
+56. /* Napisati funkciju koja za zadani string vraca poziciju prvog i zadnjeg 
+       pojavljivanja danog znaka. Ukoliko danog znaka nema u stringu vraæa -1.    */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], char znak, int* pozicijaprvi, int* pozicijazadnji)
+{ 
+  int i,n,check=0;
+
+  n=strlen(a);
+
+   for(i=0;i<n+1;i++)
+   {  
+		  if(a[i]==znak)
+		  {
+			 *pozicijaprvi=i+1;
+			  check=1;
+			  break;
+		  }
+   }
+
+   if(check==0)
+	   return -1;
+
+    for(i=0;i<n+1;i++)
+   {  
+		  if(a[i]==znak)
+		  {
+			  *pozicijazadnji=i+1;
+		  }
+   }
+
+	return 0;
+
+
+  }
+
+
+int main()
+{
+	char a[100];
+	char znak;
+	int pozicijaprvi, pozicijazadnji,check;
+	int i;
+
+	printf("Unesite svoj string \n\n"); 
+	scanf("%[^\n]s",a);
+
+	printf("Unesite znak \n\n"); 
+	scanf(" %c",&znak);
+
+	printf("\n\nVas string je %s, a znak %c \n\n", a, znak);
+
+	printf("\n\n______________________________________________\n\n");
+
+	check=Funkcija(a,znak,&pozicijaprvi,&pozicijazadnji);
+
+	if(check==-1)
+	{
+		printf("\n ERROR!!! \n\n Nema toga znaka u stringu\n\n");
+	}
+
+	else
+	{
+		printf("\n\nVas zadani znak %c se u vasem stringu %s prvi put pojavljuje na poziciji %d,\n a zadnji put na poziciji %d \n\n", znak, a, pozicijaprvi, pozicijazadnji);
+	}
+
+	
+	printf("\n\n");
+	return 0;
+
+}
+
+_________________________________________________________
+
+57. /*  Napisati funkciju koja æe vratiti broj ponavljanja odredenog znaka u stringu i poziciju 
+        zadnjeg pojavljivanja tog znaka. Primjer: za string s = "tralalalalaaaa" i znak c = ’l’, 
+	broj pojavljivanja znaka ’l’ je 4, a pozicija zadnjeg znaka ’l’ je 10.    */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], char znak, int* brojponavljanja, int* pozicijazadnji)
+{ 
+  int i,n,check=0;
+
+  n=strlen(a);
+
+   for(i=0;i<n+1;i++)
+   {  
+		  if(a[i]==znak)
+		  {
+			 *pozicijazadnji=i+1;
+			 *brojponavljanja=*brojponavljanja+1;
+			  check=1;
+		  }
+   }
+
+   if(check==0)
+	   return -1;
+
+	return 0;
+
+
+  }
+
+
+int main()
+{
+	char a[100];
+	char znak;
+	int brojponavljanja, pozicijazadnji,check;
+	int i;
+
+	printf("Unesite svoj string \n\n"); 
+	scanf("%[^\n]s",a);
+
+	printf("Unesite znak \n\n"); 
+	scanf(" %c",&znak);
+
+	brojponavljanja=0;
+
+	printf("\n\nVas string je %s, a znak %c \n\n", a, znak);
+
+	printf("\n\n______________________________________________\n\n");
+
+	check=Funkcija(a,znak,&brojponavljanja,&pozicijazadnji);
+
+	if(check==-1)
+	{
+		printf("\n ERROR!!! \n\n Nema toga znaka u stringu\n\n");
+	}
+
+	else
+	{
+		printf("\n\nVas zadani znak %c se u vasem stringu %s pojavljuje %d puta,\n a zadnji put na poziciji %d \n\n", znak, a, brojponavljanja, pozicijazadnji);
+	}
+
+	
+	printf("\n\n");
+	return 0;
+
+}
+
+
+__________________________________________________________
+
+58. !!!!RADI SAMO AKO JE SAMO JEDAN ZAREZ ILI SAMO JEDNA TOCKA U STRINGU
+
+ /*Napisati funkciju koja u neki string nakon toèke ili zareza ubaci razmak ako ne postoji na tom mjestu. */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], char* novi)
+{ 
+  int i,n,check=0,m,j=0;
+  char* pom[200];
+  char pom2[200]={0};
+  n=strlen(a);
+
+   for(i=0;i<n+1;i++)
+   {  
+		  if(a[i]=='.' || a[i]==',')
+		  {	 
+			 pom2[j]=a[i];
+			 check=1; //da li uopce ima . ili ,
+			 break;
+		  }
+
+		    pom2[j]=a[i];
+		  	j++;
+   }
+
+
+   if(check==1)
+   {
+		for(i=0;i<n+1;i++)
+			{  
+				if(a[i]=='.' || a[i]==',')
+				  {	 
+					 *pom=strchr(a,a[i])+1; //izrezimo dio odakle pocinje tocka
+					 strcat(novi,pom2);	 //zaljepimo u novi dio koji je do te tocke koji smo spremili u pom2
+					 m=strlen(novi);
+					 novi[m]=' '; //dodajmo razmak
+					 strcat(novi,*pom);	//zaljepimo dio iza tocke		  
+				  }
+			 }
+   }
+
+   else
+	   return -1;
+
+	return 0;
+
+
+  }
+
+
+int main()
+{
+	char a[100];
+	char* novi;
+	int n,brojac=0,i;
+
+	printf("Unesite svoj string \n\n"); 
+
+	do
+	{
+		brojac=0;
+
+		scanf(" %[^\n]s",a);
+
+		for(i=0;i<strlen(a);i++)
+		{
+			if(a[i]=='.' || a[i]==',')
+				brojac++;
+		}
+
+		if(brojac>1)
+		{
+			printf("\nUnijeli ste rijec koja ima vise od jednog zareza ili tocke, ponovite unos!\n");
+		}
+
+	}while(brojac>1);
+
+	n=strlen(a)+1;
+	novi=(char*) calloc(n,sizeof(char));
+
+	printf("\n\nVas string je %s \n\n", a);
+
+	printf("\n\n______________________________________________\n\n");
+
+	Funkcija(a,novi);
+
+	printf("\n NOVI GLASI %s", novi);
+	
+	printf("\n\n");
+	return 0;
+
+}
+
+
+___________________________________________________________________
+
+59. !!! IZ NEKOG RAZLOGA RADI SAMO ZA PRVI RAZMAK...
+
+/* Napisati funkciju koja modi?cira string tako da nakon svake rijeèi ubaci oznaku za novi red. 
+Primjer: za string s = "Ovo je recenica", modi?cirani string je s = "Ovo \nje\nrecenica.". */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+
+int Funkcija (char a[100], char* novi)
+{ 
+  int i,n,check=0,m,j=0,l=0;
+  char pom2[200]={0};
+  char pom3[200]={0};
+  int pamti;
+  n=strlen(a);
+
+   for(i=0;i<n;i++)
+   {  
+		  if(a[i]==' ')
+		  {	 
+			 pom2[j]=a[i];
+			 check=1; //da li uopce ima razmak
+			 pamti=i;
+			 break;
+		  }
+
+		    pom2[j]=a[i];
+		  	j++;
+   }
+
+   j=0;
+
+ printf("\n%s\n",a);
+
+   if(check==1)
+   {
+		for(i=0;i<strlen(a);i++)
+			{  
+				if(a[i]==' ')
+				  {	 
+					 pamti=i;
+					 
+						 for(l=0;l<strlen(pom3);l++)
+							pom3[l]=0;
+						 for(i=pamti;i<n;i++)
+						 {
+						    pom3[j]=a[i]; //da spremimo dio nakon razmaka da ga mozemo zaljepiti
+							j++;
+						 }
+					 
+					 strcat(novi,pom2);	 //zaljepimo u novi dio koji smo do tog razmaka spremili u pom2
+					 m=strlen(novi);
+					 novi[m]='\n'; 		//dodajmo novi red
+					 strcat(novi,pom3);	//zaljepimo dio iza razmaka		  
+				  }
+
+			 }
+   }
+
+   else
+	   return -1;
+
+	return 0;
+
+
+  }
+
+int main()
+{
+	char a[100];
+	char* novi;
+	int n,brojac=0;
+
+	printf("Unesite svoj string \n\n"); 
+
+		scanf(" %[^\n]s",a);
+
+	n=strlen(a);
+	novi=(char*) calloc((n*2),sizeof(char));
+
+	printf("\n\nVas string je %s \n\n", a);
+
+	printf("\n\n______________________________________________\n\n");
+
+	Funkcija(a,novi);
+
+	printf("\n NOVI GLASI %s", novi);
+	
+	printf("\n\n");
+	return 0;
+
+}
+
+______________________________________________________
+
+60. /* Napisati funkciju koja prima tri stringa, te vraæa novi string koji je rezultat spajanja dva kraæa stringa.
+       Memoriju za novi string alocirati dinamièki. */
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+char* Funkcija (char a[100], char b[100], char c[100])
+{ 
+  char* novi;
+  int i,n,m,k,max;
+  int brojac[3];
+
+  n=strlen(a);
+  m=strlen(b);
+  k=strlen(c);
+
+  brojac[0]=n;
+  brojac[1]=m;
+  brojac[2]=k;
+
+  max=brojac[0];
+
+  for(i=0;i<n;i++)
+  {
+	  if(brojac[i]>max)
+		  max=brojac[i];
+  }
+
+  if(max==n)
+  {
+	  novi=(char*) calloc((m+k),sizeof(char)+1); //+1 zbog \0
+	  strcat(novi,b);
+	  strcat(novi,c);
+	
+  }
+
+  else if(max==m)
+  {
+	  novi=(char*) calloc((n+k),sizeof(char)+1);
+	  strcat(novi,a);
+	  strcat(novi,c);
+  }
+
+  else
+  {
+	  novi=(char*) calloc((n+m),sizeof(char)+1);
+	  strcat(novi,a);
+	  strcat(novi,b);
+  }
+
+  
+  return novi;
+}
+
+
+int main()
+{
+	char a[100], b[100], c[100];
+	char* novi;
+	int* brojac;
+	int i,n,brojacc=0;
+
+	printf("Unesite svoj prvi string \n\n"); 
+	scanf("%s",a);
+
+	printf("\n\n\n\nUnesite svoj drugi string \n\n"); 
+	scanf("%s",b);
+
+	printf("\n\n\n\nUnesite svoj treci string\n\n"); 
+	scanf("%s",c);
+	
+	
+	printf("\n\n\n*** Vasi stringovi su: *** \n\n");
+	   printf("\n\nPRVI: %s ",a);
+	   printf("\n\nDRUGI: %s ",b);
+	   printf("\n\nTRECI: %s ",c);
+
+        novi=Funkcija(a,b,c);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf(" NOVI STRING GLASI: %s \n", novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+
+________________________________________________________________
+
+61. /* Napisatifunkcijukoja æe vratiti broj ponavljanja odredenog znaka u stringu i poziciju prvog pojavljivanja 
+       tog znaka. Ukoliko znak nije pronaden, funkcija vraæa 0. */
+ 
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], char znak, int* pozicijaprvi, int* brojponavljanja)
+{ 
+  int i,n,check=1;
+
+  n=strlen(a);
+
+   for(i=0;i<n+1;i++)
+   {  
+		  if(a[i]==znak)
+		  {
+			 *pozicijaprvi=i+1;
+			  check=0;
+			  break;
+		  }
+   }
+
+   if(check==1)
+	   return 0;
+
+    for(i=0;i<n+1;i++)
+   {  
+		  if(a[i]==znak)
+		  {
+			  *brojponavljanja=*brojponavljanja+1;
+		  }
+   }
+
+	return 1;
+
+
+  }
+
+
+int main()
+{
+	char a[100];
+	char znak;
+	int pozicijaprvi, brojponavljanja=0,check;
+	int i;
+
+	printf("Unesite svoj string \n\n"); 
+	scanf("%[^\n]s",a);
+
+	printf("Unesite znak \n\n"); 
+	scanf(" %c",&znak);
+
+	printf("\n\nVas string je %s, a znak %c \n\n", a, znak);
+
+	printf("\n\n______________________________________________\n\n");
+
+	check=Funkcija(a,znak,&pozicijaprvi,&brojponavljanja);
+
+	if(check==0)
+	{
+		printf("\n ERROR!!! \n\n Nema toga znaka u stringu\n\n");
+	}
+
+	else
+	{
+		printf("\n\nVas zadani znak %c se u vasem stringu %s prvi put pojavljuje na poziciji: %d\n\n\nBroj ponavljanja je: %d \n\n", znak, a, pozicijaprvi, brojponavljanja);
+	}
+
+	
+	printf("\n\n");
+	return 0;
+
+}
+
+____________________________________________________
+
+62./* Napisati funkciju koja za string oblika "xxx-xxx-xxx vrati informaciju, može li 
+   string predstavljati telefonski broj.Telefonski broj ima ukupno 9 ili 10 znamenki i pocinje sa nulom.
+   Primjer: string"021-333-444"je telefonski broj,a"02a-aa1-11a"nije telefonski broj. */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100])
+{ 
+  int i,n,check=0, brojac=0;
+
+  n=strlen(a);
+
+  if(a[0]!='0')
+	  return -1; //automatski znamo da nije
+
+  for(i=0;i<n;i++)
+  {
+	  if(a[i]>='0' && a[i]<='9')
+		  brojac++;
+  }
+
+  if(brojac==9 || brojac==10)
+	  return 0;
+
+	return -1;
+
+  }
+
+
+int main()
+{
+	char a[100];
+	int check;
+
+	printf("Unesite svoj string \n\n"); 
+	scanf("%[^\n]s",a);
+
+
+	printf("\n\nVas string je %s \n\n", a);
+
+	printf("\n\n______________________________________________\n\n");
+
+	check=Funkcija(a);
+
+	if(check==-1)
+	{
+		printf("\n ERROR!!! \n\n Ne moze!\n\n");
+	}
+
+	else
+	{
+		printf("\n\n Vas broj MOZE predstavljati telefonski broj! :) \n");
+	}
+
+	
+	printf("\n\n");
+	return 0;
+
+}
+
+__________________________________________________
+
+63./* Napisati funkciju koja iz dva stringa koji predstavljaju ime izvodaca i naziv pjesme,
+      kreira treci string koji ima oblik "izvodac-pjesma.mp3" tako da prvo slovo imena izvodaca i 
+      imena pjesme bude zapisano velikim slovom, a svi drugi znakovi malim.
+      Napomena: Ime izvodaca i ime pjesme su parametri funkcije. Funkcija vraæa novi string. */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+char* Funkcija (char a[100], char b[100])
+{ 
+  char* novi;
+  char c[]=".mp3";
+  char d[]="-";
+  int i,n,m,k,l,p;
+
+  n=strlen(a);
+  m=strlen(b);
+  k=strlen(c);
+  l=strlen(d);
+
+  novi=(char*) calloc((n+m+k+l),sizeof(char)+1); //+1 zbog \0
+
+  strcat(novi,a);
+  strcat(novi,d);
+  strcat(novi,b);
+  strcat(novi,c);
+
+  p=strlen(novi);
+
+  novi[0]=toupper(novi[0]);
+  for(i=1;i<p;i++)
+  {
+	  novi[i]=tolower(novi[i]);
+  }
+
+	
+  return novi;
+}
+
+
+int main()
+{
+	char a[100], b[100];
+	char* novi;
+	int i,n;
+
+	printf("Unesite svoj prvi string \n\n"); 
+	scanf("%s",a);
+
+	printf("\n\n\n\nUnesite svoj drugi string \n\n"); 
+	scanf("%s",b);
+
+	
+	
+	printf("\n\n\n*** Vasi stringovi su: *** \n\n");
+	   printf("\n\nPRVI: %s ",a);
+	   printf("\n\nDRUGI: %s ",b);
+
+        novi=Funkcija(a,b);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf(" NOVI STRING GLASI: %s \n", novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+___________________________________________________
+
+64./*   Napisati funkciju koja od dva stringa kreira treæi tako da oba stringa okrene naopako i spoji.
+     Memoriju za novi string alocirati dinamièki. 
+     Primjer: za stringove "Hello" i "world" rezultirajuc´i string je "olleHdlrow". . */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+char* Funkcija (char a[100], char b[100])
+{ 
+  char* novi;
+  int i,n,m;
+  char temp;
+
+  n=strlen(a);
+  m=strlen(b);
+
+  novi=(char*) calloc((n+m),sizeof(char)+1); //+1 zbog \0
+
+  for(i=0;i<n/2;i++)
+  {
+	  temp=a[i];
+	  a[i]=a[n-1-i];
+	  a[n-1-i]=temp;
+  }
+
+    for(i=0;i<m/2;i++)
+  {
+	  temp=b[i];
+	  b[i]=b[m-1-i];
+	  b[m-1-i]=temp;
+  }
+
+   printf("\n\n\n*** Vasi stringovi nakon okretanja su: *** \n\n");
+   printf("\n\nPRVI: %s ",a);
+   printf("\n\nDRUGI: %s ",b);
+
+  strcat(novi,a);
+  strcat(novi,b);
+
+  return novi;
+}
+
+
+int main()
+{
+	char a[100], b[100];
+	char* novi;
+	int i,n;
+
+	printf("Unesite svoj prvi string \n\n"); 
+	scanf("%s",a);
+
+	printf("\n\n\n\nUnesite svoj drugi string \n\n"); 
+	scanf("%s",b);
+
+	
+	
+	printf("\n\n\n*** Vasi stringovi su: *** \n\n");
+	printf("\n\nPRVI: %s ",a);
+        printf("\n\nDRUGI: %s ",b);
+
+       novi=Funkcija(a,b);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf(" NOVI STRING GLASI: %s \n", novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+______________________________________________________________________________
+
+65. /* Napisati funkciju koja iz stringa koji je oblika "broj-broj-broj" proèita i vrati sumu
+      i prosjeènu vrijednost brojeva. 
+      Primjer: za string "021-220-2002" funkcija vraca 2243 i 2243/3 tj. 747,67. */
+
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+void RacunajSve(char[]);
+void DodajStringove(char[], char[], char[]);
+
+int main()
+{
+	charniz[20];
+	int num1, num2, num3;
+	int rez;
+	printf("Upisi niz u obliku broj-broj-broj:\n");
+	fgets(niz, sizeof(niz), stdin);
+
+
+	RacunajSve(niz);
+
+	printf("\n");
+	system("pause");
+	return 0;
+}
+
+voidRacunajSve(chararray[20])
+{
+	int i = 0, j, k, size, brojevi[3];
+	int suma = 0, prosjek;
+	size = strlen(array);
+	for (j = 0; j<3; j++) {
+		char new_array[20];
+		k = 0;
+		while (array[i] != '-'&& i<size)
+		{
+			new_array[k] = array[i];
+			i++;
+			k++;
+		}
+		brojevi[j] = atoi(new_array);
+		i++;
+	}
+
+	for (j = 0; j<3; j++) {
+		printf("Broj:%d\n", brojevi[j]);
+		suma += brojevi[j];
+	}
+	prosjek = suma / 3;
+
+	printf("Suma brojeva je %d\nA prosjek %d", suma, prosjek);
+}
+
+voidDodajStringove(charstr1[15], charstr2[15], charstr3[15]) {
+	char * new_str;
+	if ((new_str = (char*)malloc(strlen(str1) + strlen(str2) + strlen(str3) + 2)) != NULL) {
+		new_str[0] = '\0';   // ensures the memory is an empty string
+		strcat(new_str, str1);
+		strcat(new_str, " ");
+		strcat(new_str, str3);
+		strcat(new_str, " ");
+		strcat(new_str, str2);
+	}
+	else {
+		printf("Greska!\n");
+
+	}
+	printf("Novi string je : \n%s", new_str);
+}
+ 
+
+___________________________________________________________
+
+66./* Napisati funkciju koja generira string proizvoljne duljine (duljinu stringa unosi korisnik).
+      Funkcija vraæa novi string. String se može sastojati od slova i znamenki.  */ 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+char* Funkcija (int n)
+{ 
+  char* novi;
+  char* a;
+  int i,m=0,j=0;
+
+  a=(char*) calloc(n,sizeof(char)+1); //+1 zbog \0
+
+  printf("Unesite duljinu stringa s max %d slova! \n", n);
+  scanf("%s",a);
+
+  for(i=0;i<n;i++)
+  {
+	  if( (a[i]>='a' && a[i]<='z') || (a[i]>='0' && a[i]<='9') || (a[i]>='A' && a[i]<='Z'))
+		  m++;
+	 
+  }
+
+   novi=(char*) calloc(m,sizeof(char)+1); //+1 zbog \0
+
+    for(i=0;i<n;i++)
+  {
+	  if( (a[i]>='a' && a[i]<='z') || (a[i]>='0' && a[i]<='9') || (a[i]>='A' && a[i]<='Z'))
+	  {
+		  novi[j]=a[i];
+		  j++;
+	  }
+	 
+  }
+
+  return novi;
+}
+
+
+int main()
+{
+	char* novi;
+	int i,n;
+
+	printf("Unesite duljinu stringa \n\n"); 
+	scanf("%d",&n);
+
+    novi=Funkcija(n);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf(" NOVI STRING GLASI: %s \n", novi);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+_______________________________________________________________
+67. /* Napisati funkciju koja za string u kojem su brojevi odvojeni znakom ’-’ 
+       vraca koliko ima brojeva u stringu, te najveæi broj medu njima. 
+       Primjer: za string "225-11-23-2456-2" funkcija vrac´a broj brojeva 5 te najvec´i broj 2456. */
+
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<ctype.h>
+
+void RacunajSve(char[]);
+
+int main()
+{
+	charniz[20];
+
+	printf("Upisi niz u obliku broj-broj-broj:\n");
+
+	scanf("%[^\n]s", niz);
+	RacunajSve(niz);
+
+	printf("\n");
+
+	system("pause");
+	return 0;
+}
+
+void RacunajSve(chararray[20])
+{
+	int i = 0, j = 0, k, size, brojevi[20];
+	int suma = 0, prosjek;
+	int najveci = 0;
+
+	size = strlen(array);
+
+	printf("%d\n", size);
+	char *new_array;
+	new_array = (char*)malloc(20 * sizeof(char));
+	k = 0;
+
+	while (i<size)
+	{
+		if (array[i] != '-') {
+			new_array[k] = array[i];
+			k++;
+		}
+		if (array[i] == '-' || i == size - 1) {
+			new_array[k + 1] = '\0';
+
+			brojevi[j] = atoi(new_array);
+			j++;
+			k = 0;
+
+			free(new_array);
+			new_array = (char*)malloc(k * sizeof(char));
+		}
+		i++;
+	}
+	for (i = 0; i < j; i++)
+		printf("%d\t", brojevi[i]);
+
+
+	for (i = 0; i < j; i++) {
+		if (brojevi[i] > najveci)
+			najveci = brojevi[i];
+	}
+
+	printf("\nU nizu imamo %d brojeva,a najveci broj je : %d\n", j, najveci);
+} 
+
+
+____________________________________________________
+
+68.  /* Napisati funkciju koja vraæa ukupan broj pojavljivanja samoglasnika u stringu,
+        te broj pojavljivanja najèešæeg samoglasnika u stringu.  */ 
+
+// !! IZ NEKOG RAZLOGA NE BROJI KAD JE NAJVISE SAMOGLASNIKA U ??? ostalo radi...
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int Funkcija (char a[100], int* brojac, char* najcesci)
+{ 
+  int ponavljanje[5];
+  int n,i,max;
+
+  for(i=0;i<5;i++)
+	  ponavljanje[i]=0;//postavimo ih sve na nulu
+
+  n=strlen(a);
+
+	for(i=0;i<n;i++)
+	{
+		if(toupper(a[i])=='A' || toupper(a[i])=='E' || toupper(a[i])=='I' || toupper(a[i])=='O' || toupper(a[i])=='U')
+		{
+			*brojac=*brojac+1;
+		}
+
+		if(toupper(a[i])=='A')
+		{
+			ponavljanje[0]++;
+		}
+
+		if(toupper(a[i])=='E')
+		{
+			ponavljanje[1]++;
+		}
+
+		if(toupper(a[i])=='I')
+		{
+			ponavljanje[2]++;
+		}
+
+		if (toupper(a[i])=='O')
+		{
+			ponavljanje[3]++;
+		}
+
+		if (toupper(a[i])=='U')
+		{
+			ponavljanje[4]++;
+		}
+
+	 }
+
+
+	max=ponavljanje[0];
+	for(i=0;i<4;i++)
+	{
+	
+		if(ponavljanje[i]>max)
+			max=ponavljanje[i];
+	}
+
+	*najcesci=max;
+
+	return 0;
+}
+
+
+int main()
+{
+	char a[100];
+	char najcesci=0;
+	int i,n;
+	int brojac=0;
+
+	printf("Unesite svoj string (max 100 rijeci) \n\n"); 
+	scanf("%[^\n]s",a);
+
+	Funkcija(a,&brojac,&najcesci);
+	
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\nSamoglasnika ima %d, a najcesci se ponavlja %d puta \n\n", brojac, najcesci);
+
+	printf("\n\n______________________________________________\n\n");
+
+	printf("\n\n");
+	return 0;
+
+}
+
+________________________________________________
+
+69. /*Napisati funkciju koja provjerava da li je reèenica heterogram. Heterogram je reèenica u kojoj se nijedno
+ slovo u reèenici ne pojavljuje više od jednom. Primjer: string "The big dwarf only jumps." je heterogram. */
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<ctype.h>
+int Provjeri(char[], int);
+
+int main()
+{
+	char niz[50];
+	int velicina;
+	printf("Unesi niz:");
+
+	fgets(niz, sizeof(niz), stdin);
+	velicina = strlen(niz);
+
+	Provjeri(niz, velicina);
+
+	system("pause");
+	return 0;
+}
+int Provjeri(char niz[50], intvelicina)
+{
+	int i, j;
+	for (i = 0; i<velicina - 1; i++)
+	{
+		niz[i] = toupper(niz[i]);
+		for (j = i + 1; j<velicina; j++)
+
+			niz[j] = toupper(niz[j]);
+		if (niz[i] == niz[j] &&niz[i] != ' ') {
+			printf("Nije heterogram\n");
+			return 0;
+
+		}
+	}
+	printf("Heterogram je\n");
+	return 0;
+}
+
+____________________________________________________________________
+
+70. /* Napisati funkciju koja provjerava je li reèenica izogram. Izogram je
+       reèenica u kojoj se svako slovo u reèenici pojavljuje jednak broj puta. 
+       Primjer: stringovi "Caucasus" ili "Abba" su izogrami.*/ 
+
+#include <stdio.h>
+#include <string.h>
+
+void velikaSlova1(char* string) {
+	int i;
+
+	for (i = 0; i < strlen(string); i++){
+		string[i] = toupper(string[i]);
+
+	}
+}
+
+void izogram(char* string) {
+	int i,j;
+	char slovo;
+	int broj1 = 0;
+	int broj2 = 0;
+	char* pokazivac;
+
+	velikaSlova1(string);
+
+	for (i = 0; i < strlen(string); i++) {
+		slovo = string[i];
+
+		broj1 = 0;
+		pokazivac = string;
+		for (j = 0; j < strlen(string); j++) {
+			if (strchr(pokazivac, slovo)) {
+				pokazivac = strchr(pokazivac, slovo) + 1;
+				broj1++;
+			}
+				
+		}
+		
+		if (!broj2 || (broj1 == broj2))
+			broj2 = broj1;
+		else {
+			printf("Nije izogram");
+			return;
+		}
+
+
+	}
+	printf("Izogram je");
+
+}
+
+int main(void) {
+	char string[] = "Caucasus";
+
+	izogram(string);
+
+	return 0;
+}
+ 
+
+
+***************************TEKST ZADATAKA*********************************
+
+71. Napisati funkciju koja vraæa ukupan broj slova u stringu koji se ne pojavljuju i kao malo i kao veliko slovo alfabeta. Primjer: u stringu "Alpha, Beta, Theta", slova ’l’, ’p’, ’h’, ’b’, ’e’, ’g’ i ’m’ se ne pojavljuju kao malo i kao veliko slovo. 
+72. OVO MI JE BILO U ISPITI-Napisati funkciju koja iz stringa koji se sastoji od nekoliko rijeèi kreira akronim (poèetna velika slova svake od rijec¡i u stringu). Primjer: za string "Asynchronous JavaScript and XML" akronim je "AJAX".
+ 73. Napisatifunkcijukojazastringprovjeravadalijenjegov akronim(poèetna slova svake od rijeèi u stringu) rekurzivni akronim (prva rijeè stringa je jednaka njegovom akronimu). Primjer: za string "SPARQL Protocol And RDF Query Language" akronim je "SPARQL", dakle rekurzivan je. 
+74.. OVO BILO U KOLOKVIJU- Napisati funkciju koja iz dva stringa kreira i vraæa treæi string tako da u njemu prvo bude kraæi, pa duži string, odvojeni zarezom i razmakom. 
+75. BILO U KOLOKVIJU-Napisati funkciju koja c´e izmedu dva stringu umetnuti treæi, ali tako da izmedu rijeæi doda jedan razmak. Primjer: za stringove "Veni" i "vici", i trec´i "vidi", rezultirajuc´i string treba biti "Veni vidi vici". 
+77. Napisati funkciju koja provjerava je li reèenica pangram. Pangram je recenica u kojoj se svako slovo alfabeta (abecede) pojavljuje najmanje jednom. Primjer: string "The quick brown fox jumps over the lazy dog" je pangram. Ili, na hrvatskom "Gojazni —dac¡ic´ s biciklom drži hmelj i ?nu vatu u džepu nošnje.
+78. Napisati funkciju koja za dva stringa provjerava jesu li zadnja dva slova jednoga stringa prva dva slova drugoga stinga. 
+79. Napisati funkciju koja iz stringa èita znakove i ako je znak znamenka sprema u niz brojeva. Funkcija vraæa novonastali niz. Primjer: "Kaladont" i "jabuka" imaju takvo svojstvo.
+ 80. Napisati funkciju koja za neki string vraæa informaciju da li je string palindrom i je li string "dupli string". Napomena: Primjer palindroma: "Ana nabra par banana." Primjer duplog stringa: "Jalta, Jalta".
+81. Napisati funkciju koja za neki string broji sva pojavljivanja podstringa u njemu. Primjer: za podstring "Homer" u stringu "The author of the Iliad is either Homer or, if not Homer, somebody else of the same name." funkcija treba vratiti broj dva. 
+82. Napisati funkciju koja iz stringa izbaci sve znakove koji nisu znamenka, te od preostalih znakova formira i vrac´a broj. Primjer: za string "6 puta 9 je 42.", funkcija vraæa broj 6942. 
+83. Napisati funkciju koja za string oblika "DD.MM.YYYY" raèuna koliko osoba s tim datumom rodenja ima godina. 
+84. Napisati funkciju koja modi?cira string tako da udvostruèuje sve brojeve, a ostale znakove ne. Primjer: s = "24/07/gggg" Novi string: s = "2244/0077/gggg" 
+85. Napisatifunkciju raèunasumuiumnožakkubova èlanovaniza. Zakubiranje napisati predprocesorsku direktivu. 
+86. Napisati funkciju koja postojeæi niz proširuje tako da izmedu svaka dva elementa ubaci njihovu aritmetièku sredinu. Funkcija vraæa novi niz. Primjer: za niz brojeva A = 1, 2, 3, 4, 6 novi niz je B = 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6. 
+87. Napisati funkciju koja na mjestu pojavljivanja znamenke u stringu ubacuje tekstualni naziv znamenke. Primjer: string"3 2 1 kreni!"zamjenombipostao"tri dva jedan kreni!"
+88. Napisati funkciju koja æe iz sluèajno generiranih brojeva iz intervala [10, 1000] kreirati niz i to tako da, ako je novi broj vec´i od prethodno izgeneriranog broja, novi broj stavlja na kraj niza, a ako je manji na poèetak niza.
+
+STRUKTURA
+89. De?nirati strukturu seminar. Seminar se sastoji od imena autora, imena seminara, godine izdavanja, ocjena i datoteke u kojoj se nalazi sam rad. Napisati funkciju koja za niz seminara nalazi (i vrac´a) one c¡ije u c¡ijem je naslovu odre —dena rijec¡ (rijec¡ je parametar funkcije). Napomena: Funkcija može vratiti više rezultata. 
+90. De?nirati strukturu završni rad. Završni rad se sastoji od imena autora, imena završnog rada, godine izdavanja, ocjena i datoteke u kojoj se nalazi sam rad. Napisati funkciju koja za niz završnih radova nalazi (i vrac´a) one koji su dobili odre —denu ocjenu (ocjena je parametar funkcije). Napomena: Funkcija može vratiti više rezultata. 
+91. De?nirati strukturu trokut. Napisati funkciju koja za niz trokuta rac¡una i vrac´a trokut najvec´eg opsega. 
+92. De?nirati strukturu trokut. Napisati funkciju koja za niz trokuta rac¡una ivrac´a trokut najvec´e površine i trokut najvec´eg opsega. 
+93. De?niratistrukturukvadrat. Napisatifunkcijukojazanizkvadratarac¡una i vrac´a kvadrat najvec´e površine i kvadrat najvec´eg opsega. 
+94. De?nirati strukturu trokut. Napisati funkciju koja za niz trokuta vrac´a najvec´u stranicu me —du svim trokutima. 
+95. De?nirati strukturu datum koja predstavlja datum. Napisati funkciju za unošenje niza datuma, koja provjerava da li je datum korektno unesen, te vrac´abrojkorektnounesenih,tebrojpojavljivanjadatumaizljetnihmjeseci (lipanj, srpanj i kolovoz). 
+96. Napisati strukturu koja opisuje kvadar. Napisati funkciju koja za niz kvadara vrac´a one koji imaju najmanji volumen. Napomena: Dva ili više kvadara mogu imati jednaki volumen. 
+97. Napisati funkciju koja za radijus kružnice rac¡una i vrac´a površinu i opseg kružnice. 
+98. De?nirati strukturu razlomak, te napisati funkcije za 4 osnovne operacije sa razlomcima. Napomena: razlomak koji funkcija vrac´a mora biti skrac´en. 
+99. De?nirati strukturu stol. Stol je odre —den sa svojom duljinom, širinom i visinom. Napisati funkciju koja za niz stolova vrac´a one stolove koji imaju najvec´u pisac´u površinu. Napomena: Funkcija treba, osim niza stolova, vratiti i duljinu novonastalog niza stolova.
+** u kolokviju bilo- Definiraj strukturu karta u kojoj su broj i boja karte. Napisati funkciju koja generira 10 karata, gdje broj karte moze biti bilo koji broj iz skupa {1,2,3,4,5,6,7,11,12,13} a boja iz skupa {bastone, spade, kupe, dinare} te ih zapisuje u niz struktura. Funkcija vraca niz struktura.
+
+DATOTEKE
+100. Napisatifunkcijukoja æeotvoriti postojeæutekstualnudatotekui izraèunati njezinuduljinuubajtovima. Duljinainazivdatotekeargumentisufunkcije. 
+101. Napisati funkciju koja æe otvoriti zadanu tekstualnu datoteku i odrediti koliko ukupno 
+102. Napisati funkciju koja æe otvoriti tekstualnu datoteku i u njoj izbrisati svakopojavljivanjezadane rijeèi. Funkcija vraæajedanu sluèajuneuspjelog otvaranja datoteke, odnosno nulu u sluèaju uspješnog izvršavanja zadatka. Ime datoteke i rijeè koju treba izbrisati ulazni su argumenti funkcije: int izbrisi_rijec(const char* ime_dat, char* rijec);
+103. Napisati funkciju koja za neku datoteku vraæa broj redaka koji su prazni ili poèinju sa znakom ’#’. 
+104. Napisatifunkcijukojaizdatoteke vraæabrojredakaukojemsenalazi toèno dva pojavljivanja odredenog slova (slovo je parametar funkcije). 
+105. Napisatifunkcijukojaizdatoteke vraæabrojredakaukojemsenalazi toèno dvije znamenke. 
+106. Napisati funkciju koja èita datoteku u kojoj svaki red predstavlja ime studenata, matièni broj i broj ostvarenih ECTS bodova, te vraæa ukupan broj ostvarenih ETCS bodova svih studenata. 
+107. Napisati funkciju koja kreira datoteku u kojoj je svaki red niz znakova upisan sa tastature. Funkcija vraæa ukupan broj zapisanih znakova u datoteci. 
+108. Napisati funkciju koja kopira datoteku, ali tako da kopira samo one znakove koji se pojavljuju više od jednom u retku. 
+107. Napisati funkciju koja èita datoteku i u drugu zapisuje sve znakove koji su mala slova. Sve druge preskaèe. 
+108. Napisati funkciju u kojoj se èitaju znakovi iz datoteke, te raèuna zbroj vrijednosti znakova koji su znamenke. 
+109. Danajedatotekatest.txt. Napisati funkciju koja èitadatotekuredpo red, te vraæa duljinu najdužeg reda. 
+110. Napisati funkciju koja za datoteku i niz znakova, na ekran ispiše one retke iz datoteke u kojima se nalazi taj niz znakova. 
+111. Napisati funkciju koja èita datoteku u kojoj su brojevi, te iz njih kreira niz brojeva tako da se nijedan broj u njemu ne ponavlja. Funkcija vraæa novonastali niz i njegovu duljinu. 
+112. Napisati funkciju koja kopira tekstualnu datoteku, ali tako da kopira samo one znakove koji se pojavljuju više od jednom u retku. 
+113. Napisati funkciju koja za datoteku u kojoj je u svakom retku jedan broj i jedna rijec¡, ispisuje na ekran rijec¡ onoliko puta koliki je broj. Primjer: Ako u datoteci piše: 4 psa 2 tigra 1 deva ispisat c´e se psapsapsapsa tigratigra deva 
+
+*******************************************************************************************************
+
+72.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+#defineBrojRijeci 5
+
+void Prebaci(char[]);
+
+int main()
+{
+	char str1[100];
+
+
+	printf("\n\n Ubaci svoj niz rijeci:\n");
+
+	fgets(str1, sizeof str1, stdin);
+
+	Prebaci(str1);
+
+	system("pause");
+	return 0;
+}
+void Prebaci(charstr1[]) {
+	char newString[10][10];
+	char Akronim[10];
+	int i, j, ctr;
+
+	j = 0; ctr = 0;
+	for (i = 0; i <= (strlen(str1)); i++)
+	{
+		// ako je space ili prazno -> NULL na prostoru inicijaliziran
+		if (str1[i] == ' ' || str1[i] == '\0')
+		{
+			newString[ctr][j] = '\0';
+			ctr++;  //za iducu rijec
+			j = 0;   //za iducu rijec,inicijalizirat indeks na 0
+		}
+		else
+		{
+			newString[ctr][j] = str1[i];
+			j++;
+		}
+	}
+	printf("\n Rijeci rastavljene :\n");
+	for (i = 0; i < ctr; i++)
+		printf(" %s\n", newString[i]);
+
+	for (i = 0; i < ctr; i++)
+	{
+		Akronim[i] = newString[i][0];
+	}
+
+	printf("Akronim:");
+	for (i = 0; i<ctr; i++)
+	{
+		printf("%c", Akronim[i]);
+	}
+
+	printf("\n");
+
+}
+
+______________________________________________________________________
+ 
+73.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void JeLiAkronim(char[]);
+
+intmain()
+{
+	charniz[50];
+
+
+	printf("Unesi niz: ");
+
+	fgets(niz, sizeof(niz), stdin);
+
+	JeLiAkronim(niz);
+
+	system("pause");
+	return 0;
+}
+
+voidJeLiAkronim(charniz[50])
+{
+	int i = 0, j = 1, velicina;
+
+	velicina = strlen(niz);
+
+	while (i < velicina)
+	{
+		if (niz[i] != ' ')
+			i++;
+		else {
+			i++;
+			if (niz[i] != niz[j]) {
+				printf("Nije akronim\n");
+				i = velicina;
+				j = -2;
+			}
+			j++;
+			i++;
+		}
+	}
+	if (j >= 0)
+		printf("Akronim je\n");
+
+}
+ 
+__________________________________________________________________________
+
+75.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+#defineDuljinaStr 10
+
+void DodajStringove(char[], char[], char[]);
+
+intmain() {
+	char niz1[DuljinaStr], niz2[DuljinaStr], niz3[DuljinaStr];
+	char tresh;
+
+	printf("Unesite prvi string:\n");
+	scanf("%[^\n]s", niz1);
+	scanf("%c", &tresh);
+	printf("Unesi drugi string:");
+	scanf("%[^\n]s", niz2);
+	scanf("%c", &tresh);
+	printf("Unesi treci string:");
+	scanf("%[^\n]s", niz3);
+	scanf("%c", &tresh);
+
+	DodajStringove(niz1, niz2, niz3);
+
+	printf("\n");
+	system("pause");
+	return 0;
+}
+
+voidDodajStringove(charstr1[DuljinaStr], charstr2[DuljinaStr], charstr3[DuljinaStr]) {
+	char * new_str;
+	if ((new_str = (char*)malloc(strlen(str1) + strlen(str2) + strlen(str3) + 2)) != NULL) {
+		new_str[0] = '\0';   // ensures the memory is an empty string
+		strcat(new_str, str1);
+		strcat(new_str, " ");
+		strcat(new_str, str3);
+		strcat(new_str, " ");
+		strcat(new_str, str2);
+	}
+	else {
+		printf("Greska!\n");
+
+	}
+	printf("Novi string je : \n%s", new_str);
+}
+________________________________________________________________________ 
+78.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+int Provjeri(char[], char[], int, int);
+
+intmain()
+{
+	char niz1[20], niz2[20];
+	int vel1, vel2;
+	printf("Unesi prvi string:");
+	fgets(niz1, sizeof(niz1), stdin);
+
+	printf("\nUnesi drugi string:");
+	fgets(niz2, sizeof(niz2), stdin);
+
+	vel1 = strlen(niz1);
+	vel2 = strlen(niz2);
+	printf("%d velicina prvog \n %d velicina drugog\n", vel1, vel2);
+	Provjeri(niz1, niz2, strlen(niz1), strlen(niz2));
+
+	system("pause");
+	return 0;
+}
+
+intProvjeri(chararray1[20], chararray2[20], intsize1, intsize2)
+{
+	printf("%s \t%s\n", array1, array2);
+	if (array1[0] == array2[size2 - 3] &&array1[1] == array2[size2 - 2])
+	{
+		printf("Jesu!\n");
+		return 0;
+	}
+	elseif (array1[size1 - 3] == array2[0] &&array1[size1 - 2] == array2[1])
+	{
+		printf("Jesu !\n");
+		return 0;
+	}
+	elseprintf("Nisu ! \n");
+}
+ 
+_____________________________________________________________________
+80.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+int JeLiPalindrom(char[], int);
+int JeLiDupli(char[], int);
+
+intmain()
+{
+	charniz[30];
+	int velicina, i;
+	int istina = 1;
+	printf("Unesite svoj niz:");
+
+	fgets(niz, sizeof(niz), stdin);
+
+	velicina = strlen(niz) - 1;
+	printf("\n%d\n", velicina);
+
+	for (i = 0; i < velicina; i++)
+	{
+		printf("%c", niz[i]);
+	}
+	istina = JeLiPalindrom(niz, velicina);
+	if (istina)
+		printf("\nPalindrom je!\n");
+
+	istina = 1;
+
+	istina = JeLiDupli(niz, velicina);
+	if (istina)
+		printf("\nDupli su\n");
+
+	system("pause");
+	return 0;
+}
+// NAPOMENA:UNOSITI RIJECI ZAJEDNO,NE ODVOJENO(npr ne Ana voli milovana,nego anavolimilovana)
+intJeLiPalindrom(chararray[30], intsize)
+{
+	chararrayTemp[30];
+	int i;
+
+	printf("\nPrvi niz:\t");
+	for (i = 0; i <size; i++)
+		printf("%c", array[i]);
+
+	for (i = 0; i<size; i++)
+		arrayTemp[i] = array[size - i - 1];
+
+	printf("\nDrugi niz:\t");
+	for (i = 0; i<size; i++)
+		printf("%c", arrayTemp[i]);
+
+	for (i = 0; i <size; i++)
+		if (array[i] != arrayTemp[i]) {
+			printf("\nNije palindrom!");
+			return 0;
+		}
+
+}
+intJeLiDupli(chararray[30], intsize)
+{
+	int pola, i;
+	pola = size / 2;
+	char arrayTemp1[10], arrayTemp2[10];
+
+	for (i = 0; i < pola; i++)
+		arrayTemp1[i] = array[i];
+
+	for (i = 0; i < pola; i++)
+		arrayTemp2[i] = array[i + pola];
+
+
+	printf("\nTemp niz 1 : ");
+	for (i = 0; i<pola; i++)
+		printf("%c", arrayTemp1[i]);
+
+	printf("\nTemp niz 2 : ");
+	for (i = 0; i < pola; i++)
+		printf("%c", arrayTemp2[i]);
+	//  POPRAVI OVO
+	printf("\n\n");
+	for (i = 0; i < pola; i++)
+		if (arrayTemp1[i] != arrayTemp2[i])
+		{
+			printf("Nisu dupli\n");
+			return 0;
+		}
+
+}
+_______________________________________________________________________________ 
+81.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+charstr[100], sub[100];
+int count = 0, count1 = 0;
+//Ako trazimo ric "auto",nemoj je upisat na kraj !
+//Na primjer Upisi niz -> " auto motor bicikla sladoled auto avion" -> ni slucajno auto ne smi bit na kraju
+voidmain()
+{
+	int i, j, l, l1, l2;
+
+	printf("\nUnesi niz : ");
+	scanf("%[^\n]s", str);
+
+	l1 = strlen(str);
+
+	printf("\nUnesi podniz : ");
+	scanf(" %[^\n]s", sub);
+
+	l2 = strlen(sub);
+
+	for (i = 0; i < l1;)
+	{
+		j = 0;
+		count = 0;
+		while ((str[i] == sub[j]))
+		{
+			count++;
+			i++;
+			j++;
+		}
+		if (count == l2)
+		{
+			count1++;
+			count = 0;
+		}
+		else
+			i++;
+	}
+	printf("%s se ponavlja %d puta u %s", sub, count1, str);
+
+	printf("\n\n");
+	system("pause");
+}
+ 
+__________________________________________________________________
+82.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void removechar(char[]);
+intmain()
+{
+	charniz[30],slovo;
+	printf("Unesi niz:");
+
+	fgets(niz, sizeof(niz), stdin);
+
+	removechar(niz);
+
+	system("pause");
+	return 0;
+}
+
+voidremovechar(charstr[])
+{
+	int i, j;
+	i = 0;
+	while (i<strlen(str))
+	{
+		if (str[i] >= 'A'&&str[i] <= 'Z' || str[i] >='a'&&str[i] <= 'z')
+		{
+			for (j = i; j<strlen(str); j++)
+				str[j] = str[j + 1];
+		}
+		else i++;
+	}
+	printf("%s", str);
+} 
+________________________________________________________________________
+
+83.
+
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+
+intmain()
+{
+	charbuffer[100];
+	structtm date;
+	int rezultat = 0;
+
+	memset(&date, 0, sizeof(date));
+	//NAPOMENA: Unos tocno kako pise,npr 07/02/1995
+	printf("Enter date (dd/mm/yyyy): ");
+	if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+		return -1;
+	if (sscanf(buffer, "%d/%d/%d", &date.tm_mday, &date.tm_mon, &date.tm_year) == 3)
+	{
+		constchar *format;
+		date.tm_mon -= 1;
+		date.tm_year -= 1900;
+		format = "Unijeli ste %d.%B, %Y";
+		if (strftime(buffer, sizeof(buffer), format, &date) >sizeof(buffer))
+			fprintf(stderr, "there was a problem converting the string\n");
+		else
+			fprintf(stdout, "%s\n", buffer);
+	}
+
+	
+	if(date.tm_mon < 2)
+		if(date.tm_mday < 23)
+			rezultat = 2018 - date.tm_year - 1900;
+		else rezultat = 2017 - date.tm_year - 1900;
+	printf("Osoba ima:%d godina.\n", rezultat);
+	system("pause");
+	return 0;
+}
+
+______________________________________________________________________________
+ 
+84.
+
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+structlista;
+typedefstructlista *pokLista;
+typedefstructlista{
+	char znak;
+	pokLista next;
+}Znakovi;
+//NAPOMENA : Samo prvi broj udvostrucuje,druge nije
+pokListaCreateNode();
+void IspisListe(pokLista);
+pokLista Provjeri(pokLista);
+void UdvostruciBrojku(pokLista);
+pokListaUbaciUListu(pokLista, char);
+intmain()
+{
+	pokLista L;
+	L = NULL;
+	L = CreateNode();
+	L->next = NULL;
+	int i;
+	charniz[20];
+
+	fgets(niz, sizeof(niz), stdin);
+
+	for (i = 0; i < strlen(niz); i++)
+		UbaciUListu(L, niz[i]);
+
+	printf("Ispis liste:\t");
+	IspisListe(L->next);
+	printf("\nLista ispisana,udvostrucivanje brojeva:\n");
+	
+	
+	UdvostruciBrojku(L);
+
+	IspisListe(L);
+	system("pause");
+	return 0;
+}
+
+pokListaCreateNode()
+{
+	pokLista Q = (pokLista)malloc(sizeof(Znakovi));
+	if (Q == NULL)
+		returnNULL;
+	elsereturn Q;
+}
+
+voidIspisListe(pokListaL)
+{
+	//L = L->next;
+	while(L != NULL)
+	{
+		printf("%c", L->znak);
+		L = L->next;
+	}
+}
+pokListaUbaciUListu(pokListaL, charslovo)
+{
+	pokLista Q = CreateNode();
+	Q->znak = slovo;
+
+	while (L->next!=NULL)
+		L = L->next;
+	Q->next = L->next;
+	L->next = Q;
+
+	returnL;
+}
+voidUdvostruciBrojku(pokListaL)
+{
+	L = L->next;
+	while (L != NULL)
+	{
+		
+		if (L->znak >= '0'&&L->znak <= '9')
+		{
+			pokLista Q = CreateNode();
+
+			Q->znak = L->znak;
+			
+			Q->next = L->next;
+			L->next = Q;
+			
+			
+			break;
+		}
+		L = L->next;
+	}
+}
+________________________________________________________________
+ 
+85.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<math.h>
+
+void Racunaj(double[]);
+
+intmain()
+{
+	doubleniz[5];
+	int i;
+
+	for (i = 0; i<5; i++)
+	{
+		printf("A[%d] = ", i + 1);
+		scanf("%lf", &niz[i]);
+	}
+
+	Racunaj(niz);
+
+	printf("\n");
+
+	system("pause");
+	return 0;
+}
+
+voidRacunaj(doublearray[5])
+{
+	double suma = 0, umnozak = 1;
+	int i;
+
+	for (i = 0; i<5; i++)
+	{
+		array[i] = pow(array[i], 3);
+	}
+
+	for (i = 0; i <5; i++)
+	{
+		suma += array[i];
+		umnozak *= array[i];
+	}
+
+	printf("\nUkupna suma kubiranih clanova:%f\nUkupni umnozak kubiranih clanova:%f", suma, umnozak);
+}
+
+_________________________________________________________________
+ 
+86.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+
+structlista;
+typedefstructlista *pok;
+typedefstructlista {
+	float broj;
+	pok next;
+}Brojevi;
+
+pokCreateNode();
+void IspisListe(pok);
+pok UbaciUListu(pok,float);
+void UbaciIzmedu(pok);
+
+intmain()
+{
+	pok L;
+	L = NULL;
+
+	float broj;
+	int  i;
+
+	L = CreateNode();
+	L->next = NULL;
+	for (i = 0; i < 5; i++) {
+		printf("\nUbaci broj A[%d]=", i + 1);
+		scanf("%f", &broj);
+		UbaciUListu(L, broj);
+	}
+	
+	IspisListe(L);
+	printf("\nGotov ispis!\n");
+
+	
+	UbaciIzmedu(L);
+
+	IspisListe(L);
+	system("pause");
+	return 0;
+}
+pokCreateNode()
+{
+	pok Q = (pok)malloc(sizeof(Brojevi));
+	if (Q == NULL)
+		returnNULL;
+	elsereturn Q;
+}
+voidIspisListe(pokL)
+{
+	L = L->next;
+	while (L != NULL)
+	{
+		printf("%f\t", L->broj);
+		L = L->next;
+	}
+}
+pokUbaciUListu(pokL, floatbr)
+{
+	pok Q = CreateNode();
+	
+	while(L->next != NULL)
+		L = L->next;
+
+	Q->broj = br;
+	Q->next = L->next;
+	L->next = Q;
+
+	
+	returnL;
+}
+voidUbaciIzmedu(pokL)
+{
+	L = L->next;
+	while (L->next != NULL)
+	{
+		pok Q = CreateNode();
+		Q->broj = (L->broj + L->next->broj) / 2;
+		Q->next = L->next;
+		L->next = Q;
+
+		L = Q->next;
+	}
+}
+
+________________________________________________________________ 
+87.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+structlista;
+typedefstructlista *pok;
+typedefstructlista {
+	charrijec[50];
+	pok next;
+}Znakovi;
+
+void PrebaciBrojeve(pok);
+pokCreateNode();
+voidUbaciUListu(pok, char*);
+void IspisListe(pok);
+
+intmain()
+{
+	charniz[50];
+	int i, brojRijeci;
+	pok L;
+	L = NULL;
+	L = CreateNode();
+	L->next = NULL;
+	printf("Unesi koliko rijeci/brojki zelis:");
+
+	scanf("%d", &brojRijeci);
+
+	for (i = 0; i<brojRijeci; i++) {
+		scanf("%s", niz);
+		UbaciUListu(L, niz);
+	}
+
+
+
+	printf("\nIspis programa\n");
+	IspisListe(L);
+
+
+	PrebaciBrojeve(L);
+
+	printf("\nPrebacivanje:\n");
+	IspisListe(L);
+	printf("\n");
+
+
+	system("pause");
+	return 0;
+}
+
+pokCreateNode() {
+	pok Q = (pok)malloc(sizeof(Znakovi));
+	if (Q == NULL)
+		returnNULL;
+	elsereturn Q;
+}
+voidIspisListe(pokL) {
+	L = L->next;
+	while (L != NULL)
+	{
+		printf("%s ", L->rijec);
+		L = L->next;
+	}
+}
+voidUbaciUListu(pokL, char *slova) {
+	pok Q = CreateNode();
+
+
+	strcpy(Q->rijec, slova);
+
+	while (L->next != NULL)
+		L = L->next;
+
+	Q->next = L->next;
+	L->next = Q;
+}
+
+voidPrebaciBrojeve(pokL)
+{
+	L = L->next;
+
+	while (L != NULL)
+	{
+		if (strcmp(L->rijec, "0") == 0)
+			strcpy(L->rijec, "nula");
+		else if (strcmp(L->rijec, "1") == 0)
+			strcpy(L->rijec, "jedan");
+
+		else if (strcmp(L->rijec, "2") == 0)
+			strcpy(L->rijec, "dva");
+		else if (strcmp(L->rijec, "3") == 0)
+			strcpy(L->rijec, "tri");
+
+		else if (strcmp(L->rijec, "4") == 0)
+			strcpy(L->rijec, "cetiri");
+		else if (strcmp(L->rijec, "5") == 0)
+			strcpy(L->rijec, "pet");
+
+		else if (strcmp(L->rijec, "6") == 0)
+			strcpy(L->rijec, "sest");
+		else if (strcmp(L->rijec, "7") == 0)
+			strcpy(L->rijec, "sedam");
+
+		else if (strcmp(L->rijec, "8") == 0)
+			strcpy(L->rijec, "osam");
+		else if (strcmp(L->rijec, "9") == 0)
+			strcpy(L->rijec, "devet");
+
+		L = L->next;
+	}
+}
+________________________________________________________________
+ 
+88.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+
+#defineMIN 10
+#defineMAX 1000
+
+structlista;
+typedefstructlista *pok;
+typedefstructlista {
+	int br;
+	pok next;
+}Brojevi;
+
+pokCreateNode();
+void IspisListe(pok);
+voidUbaciUListu(pok, int);
+voidUbaciNaKraj(pok, int);
+
+intmain()
+{
+	srand(time(NULL));
+
+	pok L = NULL;
+	L = CreateNode();
+	L->next = NULL;
+	intbroj[20], i;
+
+	for (i = 0; i<20; i++)
+	{
+		broj[i] = rand() % MAX - MIN + 1;
+		printf("A=%d\t", broj[i]);
+		if (i == 0)
+			UbaciUListu(L, broj[i]);
+		elseif (broj[i] >broj[i - 1])
+			UbaciNaKraj(L, broj[i]);
+		elseif (broj[i] <broj[i - 1])
+			UbaciUListu(L, broj[i]);
+	}
+
+	IspisListe(L);
+
+
+	system("pause");
+	return 0;
+}
+
+pokCreateNode() {
+	pok Q = (pok)malloc(sizeof(Brojevi));
+	if (Q == NULL)
+		returnNULL;
+	elsereturn Q;
+}
+
+voidUbaciUListu(pokL, intbroj)
+{
+	pok Q = CreateNode();
+
+	Q->br = broj;
+
+	Q->next = L->next;
+	L->next = Q;
+
+}
+voidUbaciNaKraj(pokL, intbroj)
+{
+	pok Q = CreateNode();
+	Q->br = broj;
+
+	while (L->next != NULL)
+		L = L->next;
+
+	Q->next = L->next;
+	L->next = Q;
+}
+
+voidIspisListe(pokL) {
+	L = L->next;
+	while (L != NULL)
+	{
+		printf("%d\t", L->br);
+		L = L->next;
+	}
+}
+ 
+______________________________________________________________________
+89.
+
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+typedefstructstruktura {
+	charimeAutora[20];
+	charimeSeminara[20];
+	int god_izd;
+	int ocjena;
+}seminar;
+
+voidPotrazi(seminar, char[]);
+
+intmain()
+{
+	charimedatoteke[15]; //Napravi datoteku "primjer.txt" u isti folder kao i projekt
+	int brojac = 0, i=0;
+	charrijec[20];
+	FILE *fp;
+
+	printf("Unesi ime datoteke iz koje zelis citati podatke:"); // Pazi na velika i mala slova
+	scanf("%s", imedatoteke);
+	fp = fopen(imedatoteke, "r");
+	if (fp == NULL)
+	{
+		printf("Ne mogu otvorit datoteku.\n"); // Ako se ovo pojavi,datoteka
+											// mora bit u istom folderu kao i projekt
+		//exit(1);
+	}
+	else
+	{
+		while(!feof(fp))
+			if (fgetc(fp) == '\n')
+				brojac++;
+
+		fclose(fp);
+	}
+	seminarS[5];
+
+
+	fp = fopen(imedatoteke, "r");
+	if (fp == NULL) {
+		printf("Neuspjesno!\n");
+		//exit(1);
+	}
+	else {
+		while(!feof(fp))
+		{
+			fscanf(fp, "%s %s %d %d", S[i].imeAutora, S[i].imeSeminara, &S[i].god_izd, &S[i].ocjena);
+			printf("\n%s %s %d %d ", S[i].imeAutora, S[i].imeSeminara, S[i].god_izd, S[i].ocjena);
+			i++;
+		}
+		fclose(fp);
+	}
+
+	printf("Upisi koju rijec zelis potraziti:");
+	scanf("%s", rijec);
+	for (i = 0; i < brojac; i++)
+		Potrazi(S[i], rijec);
+
+	system("pause");
+	return 0;
+}
+
+voidPotrazi(seminarS, charword[])
+{
+	if (strcmp(S.imeSeminara, word) == 0)
+		printf("Ime autora koji imaju tu temu:%s\n", S.imeAutora);
+}
+
+_____________________________________________________________
+ 
+90.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<conio.h>
+
+typedefstructstruktura {
+	charimeAutora[20];
+	charimeSeminara[20];
+	int god_izd;
+	int ocjena;
+}zavrsni;
+
+voidPotrazi(zavrsni, int);
+
+intmain()
+{
+	charimedatoteke[15]; //Napravi datoteku "primjer.txt" u isti folder kao i projekt
+	int brojac = 0, i=0;	// U datoteku upisi tocno 5 redova 
+	int num;
+	FILE *fp;
+
+	printf("Unesi ime datoteke iz koje zelis citati podatke:"); // Pazi na velika i mala slova
+	scanf("%s", imedatoteke);
+	fp = fopen(imedatoteke, "r");
+	if (fp == NULL)
+	{
+		printf("Ne mogu otvorit datoteku.\n"); // Ako se ovo pojavi,datoteka
+											// mora bit u istom folderu kao i projekt
+		//exit(1);
+	}
+	else
+	{
+		while(!feof(fp))
+			if (fgetc(fp) == '\n')
+				brojac++;
+
+		fclose(fp);
+	}
+	zavrsniS[5];
+
+
+	fp = fopen(imedatoteke, "r");
+	if (fp == NULL) {
+		printf("Neuspjesno!\n");
+		//exit(1);
+	}
+	else {
+	
+		while(!feof(fp))
+		{
+			fscanf(fp, "%s %s %d %d", S[i].imeAutora, S[i].imeSeminara, &S[i].god_izd, &S[i].ocjena);
+			printf("\n%s %s %d %d ", S[i].imeAutora, S[i].imeSeminara, S[i].god_izd, S[i].ocjena);
+			i++;
+		}
+		fclose(fp);
+	}
+
+	printf("Upisi koju rijec zelis potraziti:");
+	scanf("%d", &num);
+	for (i = 0; i < brojac; i++)
+		Potrazi(S[i], num);
+
+	
+	system("pause");
+	return 0;
+}
+
+voidPotrazi(zavrsniZ, intnum)
+{
+	if (Z.ocjena == num)
+		printf("Ime autora koji ima tu ocjenu:%s\n", Z.imeAutora);
+}
+
+_______________________________________________________________
+ 
+91.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+#definebrojTrokuta 5
+
+typedefstructstruktura {
+	int stranica1;
+	int stranica2;
+	int stranica3;
+	int opseg;
+}trokut;
+
+void PotraziNajveciOpseg(trokut[], trokut*);
+intmain()
+{
+
+	int i;
+	trokut *pokazivac;
+
+	trokut T[brojTrokuta];
+
+	pokazivac = T;
+	for (i = 0; i<brojTrokuta; i++)
+	{
+		printf("Unesi stranice za %d. trokut", i + 1);
+		scanf("%d %d %d", &T[i].stranica1, &T[i].stranica2, &T[i].stranica3);
+	}
+
+
+	for (i = 0; i <brojTrokuta; i++)
+		PotraziNajveciOpseg(T + i, pokazivac);
+
+	printf("Najveci opseg ima trokut sa opsegom %d.\n", pokazivac->opseg);
+
+
+	system("pause");
+	return 0;
+}
+
+voidPotraziNajveciOpseg(trokutT[brojTrokuta], trokut *pok)
+{
+	T->opseg = T->stranica1 + T->stranica2 + T->stranica3;
+
+	if (T->opseg >pok->opseg)
+		pok->opseg = T->opseg;
+}
+
+__________________________________________________________________
+ 
+92.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+#definebrojTrokuta 5
+
+int brTrokutaO;
+int brTrokutaP;
+
+typedefstructstruktura {
+	int stranica1;
+	int stranica2;
+	int stranica3;
+	int visina1;
+	int visina2;
+	int visina3;
+	int opseg;
+	int povrsina;
+}trokut;
+
+void PotraziNajveciOpseg(trokut[], trokut*, int);
+void PotraziNajvecuPovrsinu(trokut[], trokut*, int);
+intmain()
+{
+
+	int i;
+	trokut *pokazivac;
+	trokut *pokazivac2;
+	trokut T[brojTrokuta];
+
+	pokazivac = T;
+	pokazivac2 = T;
+	for (i = 0; i<brojTrokuta; i++)
+	{
+		printf("Unesi stranice i visine za %d. trokut\n", i + 1);
+		printf("Str 1:");
+		scanf("%d", &T[i].stranica1);
+		printf("\nStr 2:");
+		scanf("%d", &T[i].stranica2);
+		printf("\nStr 3:");
+		scanf("%d", &T[i].stranica3);
+		printf("\nVisina 1:");
+		scanf("%d", &T[i].visina1);
+		printf("\nVisina 2:");
+		scanf("%d", &T[i].visina2);
+		printf("\nVisina 3:");
+		scanf("%d", &T[i].visina3);
+	}
+
+
+	for (i = 0; i <brojTrokuta; i++)
+		PotraziNajveciOpseg(T + i, pokazivac, i + 1);
+
+	printf("Najveci opseg ima %d. trokut sa opsegom %d.\n", brTrokutaO, pokazivac->opseg);
+
+	for (i = 0; i <brojTrokuta; i++)
+		PotraziNajvecuPovrsinu(T + i, pokazivac2, i + 1);
+
+	printf("Najvecu povrsinu ima %d. trokut sa povrsinom %d.\n", brTrokutaP, pokazivac2->povrsina);
+	
+	system("pause");
+	return 0;
+}
+
+voidPotraziNajveciOpseg(trokutT[brojTrokuta], trokut *pok, intnum)
+{
+	T->opseg = T->stranica1 + T->stranica2 + T->stranica3;
+
+	if (T->opseg >pok->opseg) {
+		pok->opseg = T->opseg;
+		brTrokutaO = num;
+	}
+}
+
+voidPotraziNajvecuPovrsinu(trokutT[brojTrokuta], trokut *pok, intnum)
+{
+	if (T->stranica1*T->visina1 >T->stranica2*T->visina2 &&T->stranica1*T->visina1 >T->stranica3*T->visina3)
+		T->povrsina = (T->stranica1 * T->visina1) / 2;
+	elseif (T->stranica2*T->visina2 >T->stranica1*T->visina1 &&T->stranica2*T->visina2 >T->stranica3*T->visina3)
+		T->povrsina = (T->stranica2 * T->visina2) / 2;
+	elseT->povrsina = (T->stranica3*T->visina3) / 2;
+
+	if (T->povrsina >pok->povrsina) {
+		pok->povrsina = T->povrsina;
+		brTrokutaP = num;
+	}
+} 
+
+____________________________________________________________________________
+
+93.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+#definebrojKvadrata 5
+
+int brKvadrataPovrs;
+int brKvadrataOpseg;
+
+
+typedefstructstruktura {
+	int stranica;
+	int opseg;
+	int povrsina;
+}kvadrat;
+
+void PotraziNajveciOpseg(kvadrat[], kvadrat*, int);
+void PotraziNajvecuPovrsinu(kvadrat[], kvadrat*, int);
+
+intmain()
+{
+
+	int i;
+	kvadrat *pokazivac;
+	kvadrat *pokazivac2;
+	kvadrat K[brojKvadrata];
+
+	pokazivac = K;
+	pokazivac2 = K;
+	for (i = 0; i<brojKvadrata; i++)
+	{
+		printf("Unesi stranicu za %d. kvadrat:", i + 1);
+		scanf("%d", &K[i].stranica);
+	}
+
+
+	for (i = 0; i <brojKvadrata; i++)
+		PotraziNajveciOpseg(K + i, pokazivac, i + 1);
+
+	printf("Najveci opseg ima kvadrat %d. sa opsegom %d.\n", brKvadrataOpseg, pokazivac->opseg);
+
+	for (i = 0; i <brojKvadrata; i++)
+		PotraziNajvecuPovrsinu(K + i, pokazivac, i + 1);
+
+	printf("Najvecu povrsinu ima kvadrat %d. sa povrsinom %d.\n", brKvadrataPovrs, pokazivac->povrsina);
+
+	system("pause");
+	return 0;
+}
+
+voidPotraziNajveciOpseg(kvadratK[brojKvadrata], kvadrat *pok, intnum)
+{
+	K->opseg = 4 * K->stranica;
+
+	if (K->opseg >pok->opseg) {
+		pok->opseg = K->opseg;
+		brKvadrataOpseg = num;
+	}
+}
+voidPotraziNajvecuPovrsinu(kvadratK[brojKvadrata], kvadrat *pok, intnum)
+{
+	K->povrsina = K->stranica * K->stranica;
+
+	if (K->povrsina >pok->povrsina) {
+		pok->povrsina = K->povrsina;
+		brKvadrataPovrs = num;
+	}
+}
+
+___________________________________________________________________________
+ 
+
+94.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+#definebrojTrokuta 5
+
+typedefstructstruktura {
+	int stranica1;
+	int stranica2;
+	int stranica3;
+	int najvecaStr;
+	int opseg;
+}trokut;
+
+trokut PotraziNajveciOpseg(trokut[], trokut*);
+intmain()
+{
+
+	int i;
+	trokut *pokazivac;
+
+	trokut T[brojTrokuta];
+
+	pokazivac = T;
+	for (i = 0; i<brojTrokuta; i++)
+	{
+		printf("Unesi stranice za %d. trokut", i + 1);
+		scanf("%d %d %d", &T[i].stranica1, &T[i].stranica2, &T[i].stranica3);
+	}
+
+
+	for (i = 0; i <brojTrokuta; i++)
+		PotraziNajveciOpseg(T + i, pokazivac);
+
+	printf("Najveca stranica medu trokutima iznosi %d.\n", pokazivac->najvecaStr);
+
+	system("pause");
+	return 0;
+}
+
+trokutPotraziNajveciOpseg(trokutT[brojTrokuta], trokut *pok)
+{
+	if (T->stranica1 >T->stranica2 &&T->stranica1 >T->stranica3)
+		T->najvecaStr = T->stranica1;
+	elseif (T->stranica2 >T->stranica1 &&T->stranica2 >T->stranica3)
+		T->najvecaStr = T->stranica2;
+	elseT->najvecaStr = T->stranica3;
+
+	if (T->najvecaStr >pok->najvecaStr)
+		pok->najvecaStr = T->najvecaStr;
+
+	return *pok;
+}
+
+_____________________________________________________________
+ 
+95.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+typedefstructstruktura {
+	int dan;
+	int mjesec;
+}datum;
+
+void UnesiDatume(datum[], datum*);
+
+intmain()
+{
+	datumD[10];
+
+	datum *pokazivac;
+	
+	pokazivac = D;
+	
+	UnesiDatume(D, pokazivac);
+
+
+	system("pause");
+	return 0;
+}
+
+voidUnesiDatume(datumD[10], datum *pok)
+{
+	int i, brojac = 1;
+	int brojacLjetnih = 0;
+
+	for (i = 0; i<10; i++)
+	{
+		printf("Unesi dan:");
+		scanf("%d", &(D + i)->dan);
+
+		printf("Unesi mjesec:");
+		scanf("%d", &(D + i)->mjesec);
+
+		if ((D + i)->mjesec == 2) {
+			if(!((D + i)->dan >= 1 && (D + i)->dan <= 28))
+				printf("Krivi datum!Veljaca ima 28 dana");
+		}
+		elseif(!((D + i)->dan >= 1 && (D + i)->dan <= 31))
+			printf("Krivi unos!Dan mora biti izmedu 1. i 31.");
+
+		elseif(!((D + i)->mjesec >0 && (D + i)->mjesec <= 12))
+			printf("Krivi unos!Mjesec mora biti izmedu 1. i 12.");
+		else
+		{
+			brojac++;
+			if ((D + i)->mjesec >= 6 && (D + i)->mjesec <= 8)
+				brojacLjetnih++;
+
+		}
+
+		
+	}
+	printf("Broj korektno unesenih:%d\n", brojac);
+	printf("Broj ljetnih:%d\n", brojacLjetnih);
+}
+
+______________________________________________________________________________
+ 
+96.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#definebrojKvadrova 5
+
+typedefstructstruktura {
+	int stranica1;
+	int stranica2;
+	int visina;
+	int volumen;
+}kvadar;
+
+voidRacunajVolumen(kvadar, kvadar*);
+void UpisiKvadar(kvadar*);
+intmain()
+{
+	int i;
+	kvadar K[brojKvadrova];
+	kvadar* pokazivac;
+
+	pokazivac = K;
+	for (i = 0; i <brojKvadrova; i++) {
+		UpisiKvadar(K + i);
+
+	}
+	pokazivac->volumen = 1000;
+
+	for (i = 0; i<brojKvadrova; i++)
+		RacunajVolumen(K[i], pokazivac);
+
+	printf("Najmanji volumen iznosi:%d\n", pokazivac->volumen);
+
+	system("pause");
+	return 0;
+}
+
+voidRacunajVolumen(kvadarK, kvadar *pok)
+{
+	printf("Poslan kvadar sa %d %d %d dimenzijama.\n", K.stranica1, K.stranica2, K.visina);
+	K.volumen = K.stranica1*K.stranica2*K.visina;
+
+	if (K.volumen<pok->volumen)
+		pok->volumen = K.volumen;
+}
+voidUpisiKvadar(kvadar *K)
+{
+	printf("Za kvadar unesi stranicu 1:");
+	scanf("%d", &K->stranica1);
+	printf("Unesi stranicu 2:");
+	scanf("%d", &K->stranica2);
+	printf("Unesi visinu:");
+	scanf("%d", &K->visina);
+}
+97.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+typedefstructstruktura {
+	float radijus;
+	float opseg;
+	float povrsina;
+}kruznica;
+
+float RacunajOpseg(float);
+float RacunajPovrsinu(float);
+
+intmain()
+{
+	kruznica K;
+	float rad, opseg, povrsina;
+
+	printf("Upisi radijus kruznice:");
+	scanf("%f", &rad);
+
+	opseg = RacunajOpseg(rad);
+	povrsina = RacunajPovrsinu(rad);
+
+
+	printf("Opseg kruznice:%f\nPovrsina kruznice:%f\n", opseg, povrsina);
+
+	system("pause");
+	return 0;
+}
+
+floatRacunajOpseg(floatbroj)
+{
+	return 2 * broj*3.14;
+}
+floatRacunajPovrsinu(floatbroj)
+{
+	returnbroj * broj*3.14;
+} 
+
+_________________________________________________________________________
+
+98.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+typedefstructstruktura {
+	int brojnik;
+	int nazivnik;
+}razlomak;
+
+voidPrintMenu();
+floatZbroji(int, int, int, int);
+floatPodijeli(int, int, int, int);
+floatOduzmi(int, int, int, int);
+floatPomnozi(int, int, int, int);
+
+intmain()
+{
+	float rezultat;
+	char izbor, i = 1;
+	razlomak R;
+	razlomak K;
+	printf("Upisi brojnik:");
+	scanf("%d", &R.brojnik);
+
+	printf("Upisi nazivnik:");
+	scanf("%d", &R.nazivnik);
+
+	PrintMenu();
+	scanf("%c", &izbor);
+	//NAPOMENA: Nakon sta se upise broj izmedu 1-4(za operaciju) i unese drugi razlomak,obavezno pritisnit 5!
+	while (izbor != '5') {
+		switch (izbor)
+		{
+		case'1':printf("Unesi drugi razlomak:");
+			scanf("%d", &K.brojnik);
+			scanf("%d", &K.nazivnik);
+			rezultat = Zbroji(R.brojnik, R.nazivnik, K.brojnik, K.nazivnik);
+			break;
+		case'2':printf("Unesi drugi razlomak:");
+			scanf("%d", &K.brojnik);
+			scanf("%d", &K.nazivnik);
+			rezultat = Oduzmi(R.brojnik, R.nazivnik, K.brojnik, K.nazivnik);
+			break;
+		case'3':printf("Unesi drugi razlomak:");
+			scanf("%d", &K.brojnik);
+			scanf("%d", &K.nazivnik);
+			rezultat = Podijeli(R.brojnik, R.nazivnik, K.brojnik, K.nazivnik);
+			break;
+		case'4':printf("Unesi drugi razlomak:");
+			scanf("%d", &K.brojnik);
+			scanf("%d", &K.nazivnik);
+			rezultat = Pomnozi(R.brojnik, R.nazivnik, K.brojnik, K.nazivnik);
+			break;
+		default:
+			break;
+		}
+
+
+		scanf("%c", &izbor);
+	}
+
+	printf("Rezultat operacije = %f\n", rezultat);
+
+	system("pause");
+	return 0;
+}
+
+floatZbroji(intbr1, intnaz1, intbr2, intnaz2)
+{
+	printf("Uslo u zbroji\n");
+	int ukupNaz;
+	int ukupBrojnik;
+	int manji, i;
+	ukupNaz = naz2 * naz1;
+	br1 = br1 * (ukupNaz / naz1);
+	br2 = br2 * (ukupNaz / naz2);
+	ukupBrojnik = br1 + br2;
+
+	if (ukupBrojnik < ukupNaz)
+		manji = ukupBrojnik;
+	else manji = ukupNaz;
+
+	for (i = 1; i< manji; i++)
+	{
+		if (ukupBrojnik%i == 0 && ukupNaz%i == 0) {
+			ukupBrojnik /= i;
+			ukupNaz /= i;
+		}
+	}
+	printf("Broj: %d / %d \n", ukupBrojnik, ukupNaz);
+
+	return (float)ukupBrojnik / (float)ukupNaz;
+}
+
+floatOduzmi(intbr1, intnaz1, intbr2, intnaz2)
+{
+	int ukupNaz;
+	int ukupBrojnik;
+	int manji, i;
+
+	ukupNaz = naz2 * naz1;
+	br1 = br1 * (ukupNaz / naz1);
+	br2 = br2 * (ukupNaz / naz2);
+	ukupBrojnik = br1 - br2;
+
+	if (ukupBrojnik < ukupNaz)
+		manji = ukupBrojnik;
+	else manji = ukupNaz;
+
+	for (i = 1; i< manji; i++)
+	{
+		if (ukupBrojnik%i == 0 && ukupNaz%i == 0) {
+			ukupBrojnik /= i;
+			ukupNaz /= i;
+		}
+	}
+	printf("Broj: %d / %d \n", ukupBrojnik, ukupNaz);
+
+	return (float)ukupBrojnik / (float)ukupNaz;
+}
+floatPomnozi(intbr1, intnaz1, intbr2, intnaz2)
+{
+	int ukupNaz;
+	int ukupBrojnik;
+	int manji, i;
+
+	ukupNaz = naz2 * naz1;
+	ukupBrojnik = br1 * br2;
+
+	if (ukupBrojnik < ukupNaz)
+		manji = ukupBrojnik;
+	else manji = ukupNaz;
+
+	for (i = 1; i< manji; i++)
+	{
+		if (ukupBrojnik%i == 0 && ukupNaz%i == 0) {
+			ukupBrojnik /= i;
+			ukupNaz /= i;
+		}
+	}
+	printf("Broj: %d / %d \n", ukupBrojnik, ukupNaz);
+
+	return (float)ukupBrojnik / (float)ukupNaz;
+}
+floatPodijeli(intbr1, intnaz1, intbr2, intnaz2)
+{
+	int ukupNaz;
+	int ukupBrojnik;
+	int manji, i;
+
+	ukupBrojnik = br1 * naz2;
+	ukupNaz = br2 * naz1;
+
+	if (ukupBrojnik < ukupNaz)
+		manji = ukupBrojnik;
+	else manji = ukupNaz;
+
+	for (i = 1; i< manji; i++)
+	{
+		if (ukupBrojnik%i == 0 && ukupNaz%i == 0) {
+			ukupBrojnik /= i;
+			ukupNaz /= i;
+		}
+	}
+	printf("Broj: %d / %d \n", ukupBrojnik, ukupNaz);
+
+	return (float)ukupBrojnik / (float)ukupNaz;
+}
+voidPrintMenu()
+{
+	printf("Unesite svoj odabir:\n");
+	printf("1 - Zbroji razlomke\n");
+	printf("2 - Oduzmi razlomke\n");
+	printf("3 - Podijeli razlomke\n");
+	printf("4 - Pomnozi razlomke\n");
+	printf("5 - Izlaz iz petlje\n");
+}
+ 
+__________________________________________________________
+
+99.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+#definebrojStolova 5
+
+typedefstructstruktura {
+	int duljina;
+	int sirina;
+	int visina;
+	float povrsina;
+}stol;
+
+voidPronadiNajvecuPovrsinu(stol, stol*);
+voidVratiNajvecuPovrsinu(stol, stol*);
+void UpisiStol(stol*);
+voidVratiStolove(stol, stol*, int*);
+intmain()
+{
+	stol S[brojStolova];
+	int i, max = 0;
+	stol *pokazivac;
+	int *brojac = 0;
+	pokazivac = S;
+
+	for (i = 0; i <brojStolova; i++)
+	{
+		UpisiStol(S + i);
+	}
+
+	for (i = 0; i<brojStolova; i++)
+		PronadiNajvecuPovrsinu(S[i], pokazivac);
+
+	for (i = 0; i<brojStolova; i++)
+		VratiStolove(S[i], pokazivac, brojac);
+
+	printf("Maks povrsina iznosi : %f\n", pokazivac->povrsina);
+	system("pause");
+	return 0;
+}
+voidPronadiNajvecuPovrsinu(stolS, stol *pokazivac)
+{
+	if (S.povrsina>pokazivac->povrsina)
+	{
+		pokazivac->povrsina = S.povrsina;
+	}
+}
+voidUpisiStol(stol *S)
+{
+	printf("Za stol unesi duljinu:");
+	scanf("%d", &S->duljina);
+	printf("Unesi sirinu:");
+	scanf("%d", &S->sirina);
+	printf("Unesi visinu:");
+	scanf("%d", &S->visina);
+
+	S->povrsina = (float)S->duljina * (float)S->sirina;
+}
+
+voidVratiStolove(stolS, stol *pokazivac, int *counter)
+{
+	if (pokazivac->povrsina == S.povrsina) {
+		printf("\nStol sa dimenzijama %d %d %d ima najvecu povrsinu %f\n", S.duljina, S.sirina, S.visina, S.povrsina);
+		*counter++;
+	}
+}
+
+_______________________________________________________________
+ 
+101.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+void Racunaj(char[], char);
+
+intmain()
+{
+	charimeDatoteke[20];
+	char znak;
+
+	printf("Unesite ime datoteke:");
+
+	scanf("%[^\n]s", imeDatoteke);
+
+	printf("Unesite znak:");
+	scanf(" %c", &znak);
+
+	Racunaj(imeDatoteke, znak);
+
+	system("pause");
+	return 0;
+}
+
+voidRacunaj(charimeFajla[20], charzn)
+{
+	char znak;
+	int brojac = 0;
+	FILE *fp;
+	fp = fopen(imeFajla, "r");
+	if (fp == NULL)
+	{
+		printf("Ne moze otvorit fajl sa %s imenom.\n", imeFajla);
+		//exit(1);
+	}
+	else
+	{
+		while(!feof(fp))
+		{
+			fscanf(fp, "%c", &znak);
+			if (znak == zn)
+			{
+				brojac++;
+			}
+		}
+		fclose(fp);
+	}
+	printf("Znak %c se ponavlja %d. puta.\n", zn, brojac);
+}
+
+__________________________________________________________
+ 
+102.#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#defineBUFFER_SIZE 1000
+
+
+voidremoveAll(char * str, constchar * toRemove);
+intBrisi(char* path, char* toRemove);
+
+
+intmain()
+{
+
+	charpath[100];
+
+	chartoRemove[100];
+
+	printf("Enter path of source file: ");
+	scanf("%s", path);
+
+	printf("Enter word to remove: ");
+	scanf("%s", toRemove);
+
+
+	Brisi(path, toRemove);
+
+	system("pause");
+	return 0;
+}
+
+
+intBrisi(char* path, char* toRemove)
+{
+	FILE * fPtr;
+	FILE * fTemp;
+	charbuffer[1000];
+
+	fPtr = fopen(path, "r");
+	fTemp = fopen("delete.tmp", "w");
+
+	if (fPtr == NULL || fTemp == NULL)
+	{
+		printf("\nUnable to open file.\n");
+		printf("Please check whether file exists and you have read/write privilege.\n");
+		return 1;
+		exit(EXIT_SUCCESS);
+	}
+
+	while ((fgets(buffer, BUFFER_SIZE, fPtr)) != NULL)
+	{
+		removeAll(buffer, toRemove);
+
+		fputs(buffer, fTemp);
+	}
+
+	fclose(fPtr);
+	fclose(fTemp);
+
+	remove(path);
+
+	rename("delete.tmp", path);
+
+
+	printf("\nAll occurrence of '%s' removed successfully.", toRemove);
+
+	return 0;
+}
+
+voidremoveAll(char * str, constchar * toRemove)
+{
+	int i, j, stringLen, toRemoveLen;
+	int found;
+
+	stringLen = strlen(str);     
+	toRemoveLen = strlen(toRemove);
+
+
+	for (i = 0; i <= stringLen - toRemoveLen; i++)
+	{
+		
+		found = 1;
+		for (j = 0; j < toRemoveLen; j++)
+		{
+			if (str[i + j] != toRemove[j])
+			{
+				found = 0;
+				break;
+			}
+		}
+		if (str[i + j] != ' '&&str[i + j] != '\t'&&str[i + j] != '\n'&&str[i + j] != '\0')
+		{
+			found = 0;
+		}
+
+		if (found == 1)
+		{
+			for (j = i; j <= stringLen - toRemoveLen; j++)
+			{
+				str[j] = str[j + toRemoveLen];
+			}
+
+			stringLen = stringLen - toRemoveLen;
+
+			i--;
+		}
+	}
+}
+
+_____________________________________________________________
+ 
+
+103.
+#define_CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+
+voidmain()
+{
+	charrijec[80];
+	//NAPOMENA : Napravi datoteku "prva.txt"
+
+	int x = citaj("prva.txt");
+	printf("%d \n", x);
+
+}
+
+intcitaj(char *ime_datoteke)
+{
+	FILE *fp = fopen(ime_datoteke, "r");
+	chartemp[70];
+	int i = 0;
+
+	if (fp == NULL)
+		return 1;
+	else
+	{
+		while (feof(fp) == 0)
+		{
+			fscanf(fp, "%s", temp);
+			if (temp[0] == '#' || temp[0] == ' ')
+				i++;
+		}
+	}
+	fclose(fp);
+
+
+	return i;
+}
+
+_________________________________________________________
+ 
+106.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+typedefstruct_osoba {
+	charime[20];
+	int mb;
+	int ects;
+}OSOBA;
+
+int citanje(char[], OSOBA*);
+
+
+int main(void)
+{
+	charimeDat[20];
+	OSOBA *pNizOsoba = NULL;
+
+	printf("Unesite ime datoteke s podacima o osobama : ");
+	scanf(" %s", imeDat);
+
+	int x = citanje(imeDat, pNizOsoba);
+	printf("%d ", x);
+
+	system("pause");
+	return 0;
+}
+
+intcitanje(charimeDat[], OSOBA *pNiz)
+{
+	FILE *fp = fopen(imeDat, "r");
+	int i = 0;
+	int sum = 0;
+
+	if (fp == NULL)
+	{
+		printf("Otvaranje datoteke nije uspjelo.\n");
+
+	}
+	else
+	{
+		while (feof(fp) == 0)
+		{
+			pNiz = (OSOBA*)realloc(pNiz, (i + 1) * sizeof(OSOBA));
+			fscanf(fp, "%s %d %d", pNiz[i].ime, &pNiz[i].mb, &pNiz[i].ects);
+			sum = sum + pNiz[i].ects;
+			i++;
+		}
+		i--;
+
+		fclose(fp);
+	}
+	return sum;
+
+}
+
+_________________________________________________________________
+
+107.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+structnode;
+typedefstructnode * pozicija;
+
+structnode
+{
+	char znak;
+	pozicija next;
+};
+
+pozicijakreiraj()
+{
+	pozicija q = (pozicija)malloc(sizeof(structnode));
+	return q;
+}
+
+voidispisi(pozicijap)
+{
+
+	while (p != NULL)
+	{
+		printf("%c ", p->znak);
+		p = p->next;
+	}
+}
+
+void dodaj_na_pocetak(pozicijap, charx)
+{
+	pozicija q = kreiraj();
+
+	q->znak = x;
+	q->next = p->next;
+	p->next = q;
+	p = q;
+}
+
+voidizDatoteke(pozicijap)
+{
+	FILE *fp;
+	chardatoteka[70];
+	printf("Unesi ime datoteke: ");
+	scanf("%s", datoteka);
+
+	fp = fopen(datoteka, "r");
+	if (fp == NULL)
+		printf("Greska prilikom otvaranja\n");
+	else
+	{
+		while (feof(fp) == 0)
+		{
+			pozicija temp = kreiraj();
+			fscanf(fp, "%c", &temp->znak);
+			if (temp->znak >= 97 && temp->znak <= 122) {
+				temp->next = p->next;
+				p->next = temp;
+				p = temp;
+			}
+			elsecontinue;
+
+		}
+		fclose(fp);
+	}
+
+}
+
+void dodaj_u_datoteku(pozicijap)
+{
+	FILE *datoteka;
+	charimeDat[10];
+
+	printf("Unesite ime datoteke: ");
+	scanf(" %s", imeDat);
+	datoteka = fopen(imeDat, "w");
+
+	if (datoteka == NULL)
+		printf("Greska prilikom otvaranja\n");
+	else
+	{
+		while (p != NULL)
+		{
+			fprintf(datoteka, "%c", p->znak);
+			p = p->next;
+		}
+		printf("Podaci su upisani.\n");
+		fclose(datoteka);
+	}
+
+}
+
+voidmain()
+{
+	structnode head;
+	head.next = NULL;
+
+	izDatoteke(&head);
+	ispisi(head.next);
+	dodaj_u_datoteku(head.next);
+
+	system("pause");
+}
+
+___________________________________________________
+ 
+108.
+#define_CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+structnode;
+typedefstructnode * pozicija;
+
+structnode
+{
+	char znak;
+	pozicija next;
+};
+
+pozicijakreiraj()
+{
+	pozicija q = (pozicija)malloc(sizeof(structnode));
+	return q;
+}
+
+voidispisi(pozicijap)
+{
+
+	while (p != NULL)
+	{
+		printf("%c ", p->znak);
+		p = p->next;
+	}
+}
+
+
+
+intizDatoteke(pozicijap)
+{
+	FILE *fp;
+	int suma = 0;
+	chardatoteka[70];
+	printf("Unesi ime datoteke: ");
+	scanf("%s", datoteka);
+
+
+	fp = fopen(datoteka, "r");
+	if (fp == NULL)
+		printf("Greska prilikom otvaranja\n");
+	else
+	{
+		while (feof(fp) == 0)
+		{
+			pozicija temp = kreiraj();
+			fscanf(fp, "%c", &temp->znak);
+			if (temp->znak >= 48 && temp->znak <= 57) {
+				int x = temp->znak - '0';
+				suma = suma + x;
+			}
+			elsecontinue;
+
+		}
+		fclose(fp);
+	}
+	return suma;
+}
+
+
+
+voidmain()
+{
+	structnode head;
+	head.next = NULL;
+
+	int x = izDatoteke(&head);
+	printf("Zbroj je %d ", x);
+
+	system("pause");
+}
+
+_____________________________________________________
+ 
+111.
+#define_CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void citanje(char*);
+intprovjera(int*, int);
+
+int main(void)
+{
+	charimeDat[20];
+
+	printf("Unesite ime datoteke s podacima o osobama : ");
+	scanf(" %s", imeDat);
+
+	citanje(imeDat);
+
+	system("pause");
+	return 0;
+}
+voidcitanje(char *imeDat)
+{
+	FILE *fp = fopen(imeDat, "r");
+	int temp;
+	intniz[70];
+	int i = 0;
+
+	if (fp == NULL)
+	{
+		printf("Otvaranje datoteke nije uspjelo.\n");
+	}
+	else
+	{
+		while (feof(fp) == 0)
+		{
+			fscanf(fp, "%d", &temp);
+			if (provjera(niz, temp) == 1)
+			{
+				niz[i] = temp;
+				i++;
+			}
+		}
+		i--;
+		for (int j = 0; j < i; j++)
+		{
+			printf("%d ", niz[j]);
+		}
+	}
+	printf("\n %d clanova", i);
+	fclose(fp);
+}
+
+intprovjera(int *niz, intbr)
+{
+	for (int i = 0; i <sizeof(niz); i++)
+		if (br == niz[i])
+			return 0;
+	return 1;
+}
+
+________________________________________________________
+ 
+113.
+#define_CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+void Citaj(char*);
+
+intmain()
+{
+	charimeDatoteke[20];
+	//NAPRAVI DATOTEKU "my_file.txt" !!
+	printf("Upisi ime datoteke:");
+	scanf("%[^\n]s", imeDatoteke);
+
+	system("pause");
+	return 0;
+}
+
+voidCitaj(char *imeDatoteke){
+FILE *fp;
+	charrijec[20];
+	int broj, i;
+	fp = fopen("my_file.txt", "r");
+	if (fp == NULL)
+	{
+		printf("Greska!Nemoguce otvaranje fajla!\n");
+		//exit(1);
+	}
+	else
+	{
+		while(!feof(fp))
+		{
+			fscanf(fp, "%s %d ", rijec, &broj);
+			for (i = 0; i<broj; i++)
+			{
+				printf("%s\t", rijec);
+			}
+			printf("\n");
+		}
+		fclose(fp);
+	}	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
