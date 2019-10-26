@@ -1,0 +1,322 @@
+/* (tekst otprilike)
+Napraviti program koji iz datoteke cita tekst i sprema u listu samo prvo slovo svake rijeci, a za svako slovo
+kreira binarno stablo svih rijeci koje pocinju tim slovom.
+Uz slovo u listi treba pisati koliko je razlicitih rijeci s tim slovom, a uz rijeci u stablu treba pisati 
+koliko je istih rijeci u datoteci s tim slovom.*/
+//
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+#define MEMORY_CANT_BE_ALLOCATED -1
+#define EMPTY_LIST -2
+#define CANT_OPEN_FILE -3
+
+struct _list;
+typedef struct _list* PosList;
+
+struct _tree;
+typedef struct _tree* PosTree;
+
+typedef struct _list
+{
+	char letter;
+	int letter_counter;
+	PosTree tree;
+
+	PosList next;
+} list;
+
+typedef struct _tree
+{
+	char* word;
+	int word_counter;
+
+	PosTree left;
+	PosTree right;
+}tree;
+
+PosList CreateNodeList();
+PosTree CreateNodeTree();
+int ReadFromFile(char*, PosList);
+int CreateList(char, PosList);
+PosList FindPlaceInList(char, PosList);
+int InsertList (char, PosList);
+int PrintList(PosList);
+void PrintTree(PosTree);
+PosList FindInList(char, PosList);
+PosTree InsertTree(char*, PosTree);
+PosTree FindInTree(char*, PosTree );
+
+int main()
+{
+	PosList head=NULL;
+	char file_name[100];
+
+	head=CreateNodeList();
+
+	if(head==NULL)
+	{
+		return MEMORY_CANT_BE_ALLOCATED;
+	}
+
+	head->next=NULL;
+
+	printf("**--Please enter the file name which you want to read--**\n");
+	scanf(" %s", file_name);
+
+	system("cls");
+
+	ReadFromFile(file_name, head);
+	
+	printf("\t ----**** YOUR LIST **** ---- \t\n\n");
+	PrintList(head->next);
+
+	 printf("\n\n");
+
+	return 0;
+}
+
+PosList CreateNodeList()
+{
+	PosList p;
+
+	p=(PosList) malloc(sizeof(list));
+
+	if(p==NULL)
+	{
+		printf("Memory can't be allocated\n");
+	}
+
+	return p;
+}
+
+PosTree CreateNodeTree()
+{
+	PosTree p;
+
+	p=(PosTree) malloc(sizeof(tree));
+
+	if(p==NULL)
+	{
+		printf("Memory can't be allocated\n");
+	}
+
+	return p;
+}
+
+ int ReadFromFile(char* file_name, PosList head)
+ {
+	 FILE* file=NULL;
+	 PosList ResultListFind=NULL;
+	 PosTree ResultTreeFind=NULL;
+	 char word[1024]={0};
+	 char letter=0;
+	 int word_size=0, i=0;
+
+	 file=fopen(file_name, "r");
+	
+	 if(file==NULL)
+	 {
+		 printf("\n\n \t\t Error! \n\n\t Your file can't be opened! \n\n\n\n");
+		 return CANT_OPEN_FILE;
+	 }
+
+	 printf("In your file is written:\n\n");
+
+	 while(!feof(file))
+	 {
+		 memset(word, 0, 1024);
+
+		 if( fscanf(file, " %s", word) != 1)
+			 break;
+
+		 printf("%s\t", word);
+
+		 word_size=strlen(word);
+
+		  for(i=0;i<word_size;i++)
+		 {
+			 if(word[i]==',' || word[i]=='.')
+			 {
+				 word[i]=0;
+			 }
+		 }
+
+		letter=toupper(word[0]);
+
+		ResultListFind=FindInList(letter, head->next);
+
+		if(ResultListFind==NULL)
+		{	
+			 CreateList(letter,head);
+
+			 ResultListFind=FindInList(letter, head->next);
+
+			 ResultListFind->tree=InsertTree(word, ResultListFind->tree);
+			
+		 }
+
+		
+		else 
+		{
+			ResultListFind->letter_counter++;
+			ResultTreeFind=FindInTree(word,ResultListFind->tree);
+
+			 if(ResultTreeFind==NULL)
+			 {
+				 ResultListFind->tree = InsertTree(word, ResultListFind->tree);
+			 }
+
+			 else
+				 {
+					 ResultTreeFind->word_counter++;
+					 ResultListFind->letter_counter--;
+				 }
+		}
+
+	 }
+
+	 printf("\n\n");
+
+	 fclose(file);
+
+	 return 0;
+ }
+
+ int CreateList (char letter, PosList head)
+ {
+	 PosList q;
+
+	 q=FindPlaceInList (letter, head);
+	 InsertList(letter, q);
+
+	 return 0;
+ }
+
+ PosList FindPlaceInList(char letter, PosList p)
+ {
+	 while(p->next!=NULL && letter > p->next->letter)
+	 {
+		 p=p->next;
+	 }
+
+	 return p;
+ }
+
+ int InsertList(char letter, PosList p)
+ {
+	 PosList q=NULL;
+
+	 q=CreateNodeList();
+
+	 if(q==NULL)
+	 {
+		 return MEMORY_CANT_BE_ALLOCATED;
+	 }
+
+	 q->letter=letter;
+	 q->letter_counter=1;
+	 q->tree=NULL;
+
+	 q->next=p->next;
+	 p->next=q;
+
+	 return 0;
+ }
+
+ int PrintList(PosList p)
+ {
+	 if(p==NULL)
+	 {
+		 printf("Empty list\n");
+		 return EMPTY_LIST;
+	 }
+
+	 while(p!=NULL)
+	 {
+		 printf("_______________________________________\n");
+		 printf(" LETTER: %c \t LETTER COUNTER: %d \n" , p->letter, p->letter_counter);
+		 printf("\n --WORDS WITH THAT LETTER:--  \n\n");
+		 printf(" WORD \t\t WORD COUNTER \n\n");
+		 PrintTree(p->tree);
+		 p=p->next;
+	 }
+
+	 return 0;
+ }
+
+ void PrintTree(PosTree p)
+ {
+	 if(p!=NULL)
+	 {
+		 PrintTree(p->left);
+		 printf(" %s \t\t  %d \n" , p->word, p->word_counter);
+		 PrintTree(p->right);
+	 }
+ }
+
+ PosList FindInList (char letter, PosList p)
+ {
+	 while(p!=NULL && letter != p->letter)
+	 {
+		 p=p->next;
+	 }
+
+	 return p;
+ }
+
+PosTree InsertTree(char* word, PosTree p)
+{
+	int word_size=0;
+	word_size=strlen(word);
+	word_size++;
+
+	if(p==NULL)
+	{
+		p=CreateNodeTree();
+		p->word=(char*) malloc(word_size*sizeof(char));
+		strcpy(p->word, word);
+		p->word_counter=1;
+
+		p->left=NULL;
+		p->right=NULL;
+	}
+
+	else if( _stricmp(word, p->word) <0 )
+	{
+		p->left=InsertTree(word, p->left);
+	}
+
+	else if( _stricmp(word, p->word) <0 )
+	{
+		p->right=InsertTree(word, p->right);
+	}
+
+	return p;
+}
+
+PosTree FindInTree(char* word, PosTree p)
+{
+	if(p==NULL)
+	{
+		return NULL;
+	}
+
+	else if( _stricmp(word, p->word) <0 )
+	{
+		p=FindInTree(word, p->left);
+	}
+
+	else if( _stricmp(word, p->word) <0 )
+	{
+		p=FindInTree(word, p->right);
+	}
+
+	return p;
+}

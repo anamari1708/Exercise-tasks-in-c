@@ -1,0 +1,313 @@
+/*
+Napisati program koji iz datoteke èita dio teksta, rijeè po rijeè i unosi u binarno stablo pretraživanja
+(maksimalna duljina rijeèi 1024 znaka). Ispisati binarno stablo na „inorder“ naèin.
+
+Iz binarnog stabla kreirati dvije datoteke, u prvoj se nalaze sve rijeèi koje poèinju samoglasnikom, a u
+drugoj sve rijeèi koje poèinju suglasnikom. Rijeèi zapisane u datotekama moraju biti sortirane po abecedi. 
+*/
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+struct _stablo;
+typedef struct _stablo* pos;
+
+struct _list;
+typedef struct _list* pos2;
+
+typedef struct _stablo 
+{
+	char* rijec;
+
+	pos left;
+	pos right;
+
+}stablo;
+
+typedef struct _list
+{
+	char* rijec;
+
+	pos2 next;
+
+}list;
+
+pos CreateNode();
+pos ReadFromFile(char*, pos);
+pos InsertTree(char*, pos);
+void PrintTree(pos);
+void TreeToList(pos, pos2, pos2);
+pos2 CreateNode2();
+int InsertList(char*, pos2);
+int PrintList(pos2);
+int CreateList(char*, pos2);
+pos2 FindPlace(char*, pos2);
+int ListToFile(char*, char*, pos2, pos2);
+
+int main()
+{
+	pos p=NULL;
+	pos2 p1=NULL;
+	pos2 p2=NULL;
+	char f[100]={0};
+	char f1[100]={0};
+	char f2[100]={0};
+
+
+	p1=CreateNode2();
+
+	if(p1==NULL)
+	{
+		return -1;
+	}
+
+	p1->next=NULL;
+
+	p2=CreateNode2();
+
+	if(p2==NULL)
+	{
+		return -1;
+	}
+
+	p2->next=NULL;
+
+	printf("Unesite ime datoteke iz koje zelite citati\n");
+	scanf(" %s", f);
+
+	system("cls");
+
+	p=ReadFromFile(f, p);
+
+	printf("\n\n");
+
+	printf("\n---*** STABLO ***--- \n\n");
+	PrintTree(p);
+
+	TreeToList(p,p1,p2);
+
+	printf("\n---*** PRVA LISTA ***--- \n\n");
+	PrintList(p1->next);
+
+	printf("\n\n");
+
+	printf("\n---*** DRUGA LISTA ***--- \n\n");
+	PrintList(p2->next);
+
+	printf("\n\n\n");
+
+	printf("Unesite ime prve datoteke u koju zelite ispisati clanove\n");
+	scanf(" %s", f1);
+
+	printf("Unesite ime druge datoteke u koju zelite ispisati clanove\n");
+	scanf(" %s", f2);
+
+	ListToFile(f1,f2,p1->next,p2->next);
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc (sizeof(stablo));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+pos2 CreateNode2()
+{
+	pos2 q=NULL;
+
+	q=(pos2) malloc (sizeof(list));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+pos ReadFromFile(char* f, pos p)
+{
+	FILE* b=NULL;
+	char rijec[1024]={0};
+
+	b=fopen(f, "r");
+
+	printf("\nU vasoj datoteci pise:\n\n");
+	while(!feof(b))
+	{
+		if( fscanf(b, " %s", rijec)!= 1 )
+			break;
+
+		printf("%s ", rijec);
+
+		p=InsertTree(rijec, p);
+	}
+
+	fclose(b);
+
+	return p;
+}
+
+pos InsertTree(char* rijec, pos p)
+{
+	int n=0;
+	n=strlen(rijec);
+	n++;
+
+	if(p==NULL)
+	{
+		p=CreateNode();
+
+		p->rijec=(char*) malloc(n*sizeof(char));
+		strcpy(p->rijec, rijec);
+		
+		p->left=NULL;
+		p->right=NULL;
+	}
+
+	else if ( strcmp( rijec, p->rijec) < 0 )
+	{
+		p->left=InsertTree(rijec, p->left);
+	}
+
+	else if ( strcmp( rijec, p->rijec) > 0 )
+	{
+		p->right=InsertTree(rijec, p->right);
+	}
+
+	return p;
+}
+
+void PrintTree(pos p)
+{
+	if(p!=NULL)
+	{
+		PrintTree(p->left);
+		printf("%s\n", p->rijec);
+		PrintTree(p->right);
+	}
+}
+
+int InsertList(char* rijec, pos2 p)
+{
+	pos2 q=NULL;
+	int n=0;
+
+	n=strlen(rijec);
+	n++;
+
+	q=CreateNode2();
+
+	if(q==NULL)
+		return -1;
+
+	q->rijec=(char*) malloc(n*sizeof(char));
+	strcpy(q->rijec, rijec);
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int PrintList(pos2 p)
+{
+	if(p==NULL)
+	{
+		printf("Prazna lista\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+
+		printf(" %s\t", p->rijec);
+		p=p->next;
+	}
+
+	return 0;
+}
+
+void TreeToList (pos p, pos2 p1, pos2 p2)
+{
+	if(p!=NULL)
+	{
+
+		TreeToList(p->left,p1,p2);
+
+		if(toupper(p->rijec[0])=='A' || toupper(p->rijec[0])=='E' || toupper(p->rijec[0])=='I' || toupper(p->rijec[0])=='O' || toupper(p->rijec[0])=='U') 
+		{
+			CreateList(p->rijec, p1);
+		}
+
+		else
+		{
+			CreateList(p->rijec, p2);
+		}
+
+		TreeToList(p->right,p1,p2);
+	}
+}
+
+int CreateList (char* rijec, pos2 p)
+{
+	pos2 q=NULL;
+
+	q=FindPlace(rijec, p);
+	InsertList(rijec, q);
+
+	return 0;
+}
+
+pos2 FindPlace(char* rijec, pos2 p)
+{
+	while(p->next!=NULL && strcmp(rijec, p->next->rijec) >= 0)
+	{
+		p=p->next;
+	}
+
+	return p;
+}
+
+int ListToFile(char* f1, char* f2, pos2 p1, pos2 p2)
+{
+	FILE* b1=NULL;
+	FILE* b2=NULL;
+
+	b1=fopen(f1, "w");
+	b2=fopen(f2, "w");
+
+	while(p1!=NULL)
+	{
+		fprintf(b1, "%s\t", p1->rijec);
+		p1=p1->next;
+	}
+
+	while(p2!=NULL)
+	{
+		fprintf(b2, "%s\t", p2->rijec);
+		p2=p2->next;
+	}
+
+	fclose(b1);
+	fclose(b2);
+
+	return 0;
+}
+

@@ -1,0 +1,287 @@
+/*
+Napisati program koji èita znak po znak iz datoteke i iz toga napraviti stablo proraèuna
+sa brojaèem ponavljanja znaka te iz tako dobivenog stabla ispisati znakove sortirano po ASCII tablici 
+sa pripadajuæim brojem ponavljanja.
+b) ispisati po dva kriterija; prvi je broj ponavljanja, a drugi je ascii vrijednost */
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+struct _stablo;
+typedef struct _stablo* pos;
+
+struct _lista;
+typedef struct _lista* pos2;
+
+typedef struct _stablo
+{
+	char slovo;
+	int brojac;
+
+	pos left;
+	pos right;
+
+}stablo;
+
+typedef struct _lista
+{
+	char slovo;
+	int brojac;
+
+	pos2 next;
+}lista;
+
+pos CreateNode();
+pos2 CreateNode2();
+pos CitajIzDatoteke(char*, pos);
+pos InsertTree(char, pos);
+pos FindTree(char, pos);
+void PrintTree(pos);
+void TreeToList(pos, pos2);
+int InsertNewList(char, int, pos2);
+int InsertList(char, int, pos2);
+pos2 FindPlace(char, int, pos2);
+int PrintList(pos2);
+
+int main()
+{
+	char f[100]={0};
+	pos s=NULL;
+	pos2 p=NULL;
+
+	p=CreateNode2();
+
+	if(p==NULL)
+		return -1;
+
+	p->next=NULL;
+
+	printf("Unesite ime datoteke iz koje zelite citati \n");
+	scanf(" %s" , f);
+
+	system("cls");
+
+	s=CitajIzDatoteke(f, s);
+
+	printf("\n\n");
+
+	printf("\n ---*** STABLO ***--- \n");
+	PrintTree(s);
+	
+	TreeToList(s,p);
+
+	printf("\n\n");
+
+	printf("\n ---*** LISTA  ***---\n");
+	PrintList(p->next);
+
+	printf("\n\n");
+
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(stablo));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija \n");
+		return NULL;
+	}
+
+	return q;
+}
+
+pos2 CreateNode2()
+{
+	pos2 q=NULL;
+
+	q=(pos2) malloc(sizeof(lista));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija \n");
+		return NULL;
+	}
+
+	return q;
+}
+
+pos CitajIzDatoteke(char* f, pos p)
+{
+	FILE* b=NULL;
+	pos q=NULL;
+	char slovo=0;
+
+	b=fopen(f, "r");
+
+	if(b==NULL)
+	{
+		printf("Greska u otvaranju datoteke\n");
+		return NULL;
+	}
+
+	while(!feof(b))
+	{
+		if( fscanf(b, " %c", &slovo) != 1)
+			break;
+
+		printf(" %c ", slovo);
+
+		q=FindTree(slovo, p);
+
+		if(q!=NULL)
+			q->brojac++;
+
+		p=InsertTree(slovo, p);
+	}
+	
+	fclose(b);
+
+	return p; 
+}
+
+pos InsertTree(char slovo, pos p)
+{
+	if(p==NULL)
+	{
+		p=CreateNode();
+		p->slovo=slovo;
+		p->brojac=1;
+
+		p->left=NULL;
+		p->right=NULL;
+	}
+
+	else if( slovo < p->slovo)
+	{
+		p->left=InsertTree(slovo, p->left);
+	}
+
+	else if( slovo > p->slovo)
+	{
+		p->right=InsertTree(slovo, p->right);
+	}
+
+	return p;
+}
+
+pos FindTree(char slovo, pos p)
+{
+	if(p==NULL)
+	{
+		return NULL;
+	}
+
+	else if( slovo < p->slovo)
+	{
+		p=FindTree(slovo, p->left);
+	}
+
+	else if( slovo > p->slovo)
+	{
+		p=FindTree(slovo, p->right);
+	}
+
+	return p;
+}
+
+void PrintTree(pos p)
+{
+	if(p!=NULL)
+	{
+		PrintTree(p->left);
+		printf("%c\t", p->slovo);
+		printf("%d ", p->brojac);
+		printf("\n");
+		PrintTree(p->right);
+	}
+}
+
+void TreeToList(pos s, pos2 p)
+{
+	if(s!=NULL)
+	{
+		InsertNewList(s->slovo, s->brojac, p);
+		TreeToList(s->left, p);
+		TreeToList(s->right, p);
+
+	}
+}
+
+int InsertNewList(char slovo, int brojac, pos2 p)
+{
+	pos2 q=NULL;
+
+	q=FindPlace(slovo, brojac, p);
+	InsertList(slovo, brojac, q);	
+
+	return 0;
+}
+
+int InsertList(char slovo, int brojac, pos2 p)
+{
+	pos2 q=NULL;
+	
+	q=CreateNode2();
+
+	if(q==NULL)
+		return -1;
+
+	q->slovo=slovo;
+	q->brojac=brojac;
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+pos2 FindPlace(char slovo, int brojac, pos2 p)
+{
+	pos2 q=NULL;
+	int a=1;
+
+	while(p->next!=NULL && brojac <= p->next->brojac && a!=0)
+	{
+		q=p;
+		p=p->next;
+
+		if(brojac == p->brojac)
+		{
+			if(slovo < p->slovo)
+			{
+				p=q;
+				a=0;
+			}
+		}		
+	}
+	return p;
+}
+
+int PrintList(pos2 p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf("%c\t", p->slovo);
+		printf("%d\t", p->brojac);
+		printf("\n");
+		p=p->next;
+	}
+
+	return 0;
+}

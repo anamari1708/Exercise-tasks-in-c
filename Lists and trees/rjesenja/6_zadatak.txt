@@ -1,0 +1,374 @@
+/*
+Napisati program koji za tri razlièita predmeta èita ime i prezime studenta te njegovu ocjenu. 
+Podaci o svakome predmetu se nalaze u odvojenoj datoteci i iz svake datoteke je potrebno kreirati
+vezanu listu i ispisati je.
+
+a) Nakon toga potrebno je kreirati novu listu koja sadrži imena studenata koji su položili sva tri predmeta.
+b) Nadopuniti zadatak pod a) tako da se ispise nova vezana lista koja osim što sadrži imena studenata sadrži i njihovu prosijeènu ocjenu iz ta tri predmeta.
+
+*/
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+struct _list;
+typedef struct _list* pos;
+
+struct _list2;
+typedef struct _list2* pos2;
+
+typedef struct _list
+{
+	char* ime;
+	char* prezime;
+	int ocjena;
+
+	pos next;
+}list;
+
+
+typedef struct _list2
+{
+	char* ime;
+	float prosijek;
+
+	pos2 next;
+}list2;
+
+pos CreateNode();
+pos2 CreateNode2();
+int CitajIzDatoteke(char*, char*, char*, pos, pos, pos);
+int InsertList(char*, char*, int, pos);
+int PrintList(pos);
+pos Find(char*, char*, pos);
+int CreateNewList(pos, pos, pos, pos2);
+int InsertNewList(char*,float, pos2);
+int PrintNewList(pos2);
+
+int main()
+{
+	pos p1=NULL;
+	pos p2=NULL;
+	pos p3=NULL;
+	pos2 p=NULL;
+	char f1[100]={0};
+	char f2[100]={0};
+	char f3[100]={0};
+
+	p1=CreateNode();
+
+	if(p1==NULL)
+	{
+		return -1;
+	}
+
+	p1->next=NULL;
+
+	p2=CreateNode();
+
+	if(p2==NULL)
+	{
+		return -1;
+	}
+
+	p2->next=NULL;
+
+	p3=CreateNode();
+
+	if(p3==NULL)
+	{
+		return -1;
+	}
+
+	p3->next=NULL;
+
+	p=CreateNode2();
+
+	if(p==NULL)
+	{
+		return -1;
+	}
+
+	p->next=NULL;
+
+	printf("Unesite ime prve datoteke iz koje zelite citati\n");
+	scanf(" %s", f1);
+
+	printf("Unesite ime druge datoteke iz koje zelite citati\n");
+	scanf(" %s", f2);
+
+	printf("Unesite ime trece datoteke iz koje zelite citati\n");
+	scanf(" %s", f3);
+
+	CitajIzDatoteke(f1, f2, f3, p1, p2, p3);
+
+	printf("\n \n");
+
+	printf("Lista 1 (OOP) glasi:\n");
+	PrintList(p1->next);
+
+	printf("\n \n");
+
+	printf("Lista 2 (DSS) glasi:\n");
+	PrintList(p2->next);
+
+	printf("\n \n");
+
+	printf("Lista 3 (STRUKTURE) glasi:\n");
+	PrintList(p3->next);
+
+	printf("\n");
+
+	CreateNewList(p1,p2,p3,p);
+
+	printf("\n\n Lista 4 (STUDENTI KOJI SU SVE PROSLI) glasi:\n");
+	PrintNewList(p->next);
+
+	printf("\n \n");
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(list));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+pos2 CreateNode2()
+{
+	pos2 q=NULL;
+
+	q=(pos2) malloc(sizeof(list2));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+int CitajIzDatoteke(char* f1, char* f2, char* f3, pos p1, pos p2, pos p3)
+{
+	FILE* b1=NULL;
+	FILE* b2=NULL;
+	FILE* b3=NULL;
+	char ime[100]={0};
+	char prezime[100]={0};
+	int ocjena=0;
+
+	b1=fopen(f1, "r");
+	b2=fopen(f2, "r");
+	b3=fopen(f3, "r");
+
+	if(b1==NULL || b2==NULL || b3==NULL)
+	{
+		printf("Neuspjesno otvorena datoteka\n");
+		return -1;
+	}
+
+	printf("\n\n OOP: \n");
+
+	while(!feof(b1) )
+	{
+		memset(ime, NULL, 100);
+		memset(prezime, NULL, 100);
+
+		if( fscanf(b1," %s %s %d ", ime, prezime, &ocjena) !=3)
+			break;
+	
+		printf("%s \t", ime);
+		printf(" %s \t", prezime);
+		printf(" %d \n", ocjena);
+
+		InsertList (ime, prezime, ocjena, p1);
+	}
+
+	printf("\n\n DSS: \n");
+
+		while(!feof(b2) )
+	{
+		memset(ime, NULL, 100);
+		memset(prezime, NULL, 100);
+
+		if( fscanf(b2," %s %s %d ", ime, prezime, &ocjena) !=3)
+			break;
+	
+		printf("%s \t", ime);
+		printf(" %s \t", prezime);
+		printf(" %d \n", ocjena);
+
+		InsertList (ime, prezime, ocjena, p2);
+	}
+
+		printf("\n\n STRUKURE: \n");
+
+		while(!feof(b3) )
+	{
+		memset(ime, NULL, 100);
+		memset(prezime, NULL, 100);
+
+		if( fscanf(b3," %s %s %d ", ime, prezime, &ocjena) !=3)
+			break;
+	
+		printf("%s \t", ime);
+		printf(" %s \t", prezime);
+		printf(" %d \n", ocjena);
+
+		InsertList (ime, prezime, ocjena, p3);
+	}
+
+	fclose(b1);
+	fclose(b2);
+	fclose(b3);
+
+	return 0;
+}
+
+int InsertList(char* ime, char* prezime, int ocjena, pos p)
+{
+	pos q=NULL;
+	int n1=0;
+	int n2=0;
+
+	n1=strlen(ime);
+	n1++;
+	n2=strlen(prezime);
+	n2++;
+
+	q=CreateNode();
+
+	if(q==NULL)
+		return 1;
+
+	q->ime=(char*) malloc(n1*sizeof(char));
+	q->prezime=(char*) malloc(n2*sizeof(char));
+
+	strcpy(q->ime, ime);
+	strcpy(q->prezime, prezime);
+	q->ocjena=ocjena;
+
+	q->next=p->next;
+	p->next=q;
+	
+	return 0;
+}
+
+int PrintList(pos p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf("%s \t", p->ime);
+		printf(" %s \t", p->prezime);
+		printf(" %d \n", p->ocjena);
+
+		p=p->next;
+
+	}
+
+	return 0;
+}
+
+int CreateNewList(pos p1, pos p2, pos p3, pos2 p)
+{
+	pos q1=NULL;
+	pos q2=NULL;
+	float prosijek=0.0;
+	int suma=0;
+
+	p1=p1->next;
+
+	while(p1!=NULL)
+	{
+		q1=Find(p1->ime, p1->prezime, p2->next);
+		q2=Find(p1->ime, p1->prezime, p3->next);
+
+		if(q1!=NULL && q2 !=NULL)
+		{
+			if( p1->ocjena>1 && q1->ocjena >1 && q2->ocjena>1)
+			{
+				suma=p1->ocjena+q1->ocjena+q2->ocjena;
+				prosijek=(float) suma/3;
+				InsertNewList(p1->ime, prosijek, p);
+			}
+		}
+
+		p1=p1->next;
+	}
+
+	return 0;
+}
+
+pos Find(char* ime, char* prezime, pos p)
+{
+	while(p!=NULL &&  ( strcmp (ime, p->ime)!=NULL || strcmp(prezime, p->prezime)!=NULL ) )
+	{
+		p=p->next;
+	}
+
+	return p;
+}
+int InsertNewList(char* ime, float prosijek, pos2 p)
+{
+	pos2 q=NULL;
+	int n=0;
+
+	n=strlen(ime);
+	n++;
+
+	q=CreateNode2();
+
+	if(q==NULL)
+		return -1;
+
+	q->ime=(char*) malloc(n*sizeof(char));
+
+	strcpy(q->ime, ime);
+	q->prosijek=prosijek;
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int PrintNewList (pos2 p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf(" %s\t", p->ime);
+		printf(" %.3f\t", p->prosijek);
+		printf("\n");
+		p=p->next;
+	}
+
+	return 0;
+}
+
+

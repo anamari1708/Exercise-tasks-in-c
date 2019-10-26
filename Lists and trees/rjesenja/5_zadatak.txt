@@ -1,0 +1,317 @@
+/* Napisati program koji èita iz datoteka podatke o studentima i ispitima, te kreira dvije vezane liste
+struct _Student{char *sifra_studenta; char *ime; char *prezime; char *sifra_ispita;struct _Student
+*Next;};
+struct _Ispit {char *sifra_ispita; char *naziv; struct _Ispit *Next;};
+Potrebno je ispisati koliko je studenata položilo svaki pojedini ispit (po nazivu ispita), te nabrojati koji su
+to studenti. */
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+struct _list;
+typedef struct _list* pos;
+
+struct _list2;
+typedef struct _list2* pos2;
+
+typedef struct _list
+{
+	char* ime;
+	char* prezime;
+	char* sifra_studenta;
+	char* sifra_ispita;
+	
+	pos next;
+}list;
+
+typedef struct _list2
+{
+	char* naziv_ispita;
+	char* sifra_ispita;
+
+	pos2 next;
+}list2;
+
+pos CreateNode();
+pos2 CreateNode2();
+int InsertList1(char*, char*, char*, char*, pos);
+int InsertList2(char*, char*, pos2);
+int PrintList1(pos);
+int PrintList2(pos2);
+int ReadFromFile(char*, char*, pos, pos2);
+int ProlazakKrozObeListe(pos, pos2);
+
+int main()
+{
+	pos p1=NULL;
+	pos2 p2=NULL;
+	char f1[100]={0};
+	char f2[100]={0};
+	
+	p1=CreateNode();
+
+	if(p1==NULL)
+	{
+		return -1;
+	}
+
+	p1->next=NULL;
+
+	p2=CreateNode2();
+
+	if(p2==NULL)
+	{
+		return 1;
+	}
+
+	p2->next=NULL;
+
+	printf("Unesite ime prve datoteke iz koje zelite citati\n");
+	scanf(" %s", f1);
+
+	printf("Unesite ime druge datoteke iz koje zelite citati\n");
+	scanf(" %s", f2);
+
+	ReadFromFile(f1, f2, p1, p2);
+
+	printf("\n\n");
+
+	printf("Lista 1 glasi \n");
+	PrintList1(p1->next);
+
+	printf("\n\n");
+
+	printf("Lista 2 glasi \n");
+	PrintList2(p2->next);
+
+	ProlazakKrozObeListe (p1, p2);
+
+	printf("\n\n");
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(list));;
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+pos2 CreateNode2()
+{
+	pos2 q=NULL;
+
+	q=(pos2) malloc(sizeof(list2));;
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+int InsertList1 (char* ime, char* prezime, char* sifra_studenta, char* sifra_ispita, pos p)
+{
+	pos q=NULL;
+	int n1=0, n2=0, n3=0, n4=0;
+	q=CreateNode();
+
+	n1=strlen(ime);
+	n2=strlen(prezime);
+	n3=strlen(sifra_studenta);
+	n4=strlen(sifra_ispita);
+	n1++;
+	n2++;
+	n3++;
+	n4++;
+
+	if(q==NULL)
+		return -1;
+
+	q->ime=(char*) malloc(n1*sizeof(char));
+	q->prezime=(char*) malloc(n2*sizeof(char));
+	q->sifra_studenta=(char*) malloc(n3*sizeof(char));
+	q->sifra_ispita=(char*) malloc(n4*sizeof(char));
+
+	strcpy(q->ime, ime);
+	strcpy(q->prezime, prezime);
+	strcpy(q->sifra_studenta, sifra_studenta);
+	strcpy(q->sifra_ispita, sifra_ispita);
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int InsertList2 (char* naziv_ispita, char* sifra_ispita, pos2 p)
+{
+	pos2 q=NULL;
+	int n1=0, n2=0;
+	q=CreateNode2();
+
+	n1=strlen(naziv_ispita);
+	n2=strlen(sifra_ispita);
+	n1++;
+	n2++;
+
+	if(q==NULL)
+		return -1;
+
+	q->naziv_ispita=(char*) malloc(n1*sizeof(char));
+	q->sifra_ispita=(char*) malloc(n2*sizeof(char));
+
+	strcpy(q->naziv_ispita, naziv_ispita);
+	strcpy(q->sifra_ispita, sifra_ispita);
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int ReadFromFile(char* f1, char* f2, pos p1, pos2 p2)
+{
+	FILE* b1=NULL;
+	FILE* b2=NULL;
+	char ime[100]={0};
+	char prezime[100]={0};
+	char sifra_studenta[100]={0};
+	char sifra_ispita[100]={0};
+	char naziv_ispita[100]={0};	
+
+	b1=fopen(f1, "r");
+	b2=fopen(f2, "r");
+
+	if(b1==NULL || b2==NULL)
+	{
+		printf("Greska u otvaranju jedne od datoteka (ili obe) \n");
+		return -1;
+	}
+
+	while(!feof(b1))
+	{
+		memset(ime, 0, 100);
+		memset(prezime, 0, 100);
+		memset(sifra_studenta, 0, 100);
+		memset(sifra_ispita, 0, 100);
+
+		if( fscanf(b1, "%s %s %s %s", ime, prezime, sifra_studenta, sifra_ispita)!= 4 )
+			break;
+
+		printf("%s %s %s %s\n", ime, prezime, sifra_studenta, sifra_ispita);
+
+		InsertList1(ime, prezime, sifra_studenta, sifra_ispita, p1);
+	}
+
+	
+	while(!feof(b2))
+	{
+		memset(naziv_ispita, 0, 100);
+		memset(sifra_ispita, 0, 100);
+		if( fscanf(b2, "%s %s", naziv_ispita, sifra_ispita)!= 2 )
+			break;
+
+		printf("%s %s\n", naziv_ispita, sifra_ispita);
+
+		InsertList2(naziv_ispita, sifra_ispita, p2);
+	}
+
+	fclose(b1);
+	fclose(b2);
+
+	return 0;
+}
+
+int PrintList1(pos p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf("%s %s %s %s\n", p->ime, p->prezime, p->sifra_studenta, p->sifra_ispita);
+		p=p->next;
+	}
+
+	return 0;
+}
+
+int PrintList2(pos2 p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf("%s %s \n", p->naziv_ispita, p->sifra_ispita);
+		p=p->next;
+	}
+
+	return 0;
+}
+
+int ProlazakKrozObeListe(pos p1, pos2 p2)
+{
+	pos poc=NULL;
+	int brojac=0;
+	char ime[20][128] = {0};
+        char prezime[20][128] = {0};
+	int n=0, i=0;
+	
+	p2=p2->next;
+	p1=p1->next;
+
+	poc=p1;
+
+	while(p2!=NULL)
+	{
+		while(p1!=NULL)
+		{
+			if(strcmp(p2->sifra_ispita, p1->sifra_ispita) == 0)
+			{
+				strcpy(ime[n], p1->ime);
+				strcpy(prezime[n], p1->prezime);
+				n++;
+			}
+
+			p1=p1->next;
+		}
+
+		printf("\n\nIspit %s prosao/proslo je %d student/studenata,a to su:\n",p2->naziv_ispita, n);
+
+		for(i=0;i<n;i++)
+		{
+				printf("%s\t%s\n", ime[i], prezime[i]);
+		}
+
+		n=0;
+		p2=p2->next;
+		p1=poc;
+
+	}
+
+	return 0;
+}
+

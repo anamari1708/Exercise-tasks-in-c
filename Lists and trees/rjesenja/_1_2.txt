@@ -1,0 +1,270 @@
+/* Napisati program koji iz datoteke èita rijeèi, te ih sprema u vezanu listu
+(struct _node {char rijec[20]; int brojac; struct _Node *Next;};),
+ s tim ukoliko se ista rijeè ponavlja tada se ona ne zapisuje u vezanu listu, nego se brojaè uveèava.
+
+
+a.	Ispisati tako kreiranu listu, s tim da je redoslijed rijeèi obrnut od
+redoslijeda kojim se pojavljuju u datoteci.
+b.	Iz tako kreirane liste kreirati novu listu, na naèin, da su elementi u novoj
+listi sortirani prvo po broju ponavljanja ,a zatim po abecednom redu. */
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<conio.h>
+#include<time.h>
+
+struct _list;
+typedef struct _list* pos;
+
+typedef struct _list
+{
+	char* rijec;
+	int brojac;
+
+	pos next;
+
+}list;
+
+pos CreateNode();
+int InsertList(char*, pos);
+int InsertList2(char*, int, pos);
+int CitajIzDatoteke(char*, pos);
+pos Find(char*, pos);
+int PrintList(pos);
+int ListToList(pos, pos);
+pos FindPlace(pos p, int, char* );
+int CreateList(pos, pos);
+
+int main()
+{
+	char f[100]={0};
+	pos p=NULL;
+	pos p2=NULL;
+
+	p=CreateNode();
+	p2=CreateNode();
+
+	if(p==NULL)
+		return -1;
+
+	if(p2==NULL)
+		return 1;
+
+	p->next=NULL;
+	p2->next=NULL;
+
+	printf("Unesite ime datoteke iz koje zelite citati\n");
+	scanf(" %s", f);
+
+	system("cls");
+
+	CitajIzDatoteke(f,p);
+
+	printf("\n\n ---*** LISTA 1 ***---  \n\n");
+
+	PrintList(p->next);
+
+	printf("\n\n");
+
+	ListToList(p,p2);
+
+	printf("\n\n ---*** LISTA 2 ***--- \n\n");
+
+	PrintList(p2->next);
+
+	printf("\n\n");
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(list));
+
+	if(q==NULL)
+	{
+		printf("Nije dobro alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+int InsertList( char* rijec, pos p)
+{
+	pos q=NULL;
+	int n=0;
+
+	n=strlen(rijec);
+	n++;
+	q=CreateNode();
+
+	if(q==NULL)
+		return -1;
+
+	q->rijec=(char*) malloc(n*sizeof(char));
+	strcpy(q->rijec, rijec);
+	q->brojac=1;
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int InsertList2(char* rijec, int brojac, pos p)
+{
+	pos q=NULL;
+	int n=0;
+
+	n=strlen(rijec);
+	n++;
+	q=CreateNode();
+
+	if(q==NULL)
+		return -1;
+
+	q->rijec=(char*) malloc(n*sizeof(char));
+	strcpy(q->rijec, rijec);
+	q->brojac=brojac;
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int CitajIzDatoteke(char* f, pos p)
+{
+	FILE* b=NULL;
+	char rijec[20];
+	pos q=NULL;
+
+	b=fopen(f, "r");
+
+	if(b==NULL)
+	{
+		printf("Neuspjesno otvorena datoteka\n");
+		return -1;
+	}
+
+	printf("U vasoj datoteci je zapisano: \n\n");
+
+	while(!feof(b))
+	{
+		memset(rijec,0,20);
+
+		if( fscanf(b, " %s", rijec) != 1)
+			break;
+
+		printf("%s\t", rijec);
+		
+		q=NULL;
+
+		q=Find(rijec, p->next);
+
+		if(q==NULL)
+		{
+			InsertList(rijec, p);
+		}
+
+		else
+		{
+			q->brojac++;
+		}
+	}
+
+	printf("\n");
+
+	fclose(b);
+
+	return 0;
+}
+
+pos Find(char* rijec, pos p)
+{
+	 while(p!=NULL && strcmp(p->rijec, rijec) != 0)
+		 p=p->next;
+
+	 return p;
+}
+
+int PrintList(pos p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+	printf("RIJEC\t\tBROJAC\n");
+
+	while(p!=NULL)
+	{
+		printf("%s\t\t", p->rijec);
+		printf("%d", p->brojac);
+		printf("\n");
+		p=p->next;
+	}
+
+	return 0;
+}
+
+int ListToList(pos p, pos p2)
+{
+	pos q=NULL;
+	pos poc=p2;
+	
+	p=p->next;
+
+	while(p!=NULL)
+	{
+		CreateList(p,p2);
+		
+		p=p->next;
+
+	}
+
+
+	return 0;
+}
+
+pos FindPlace(pos p2, int brojac, char* rijec)
+{
+	pos q=NULL;
+	int check=1;
+
+	while(p2->next!=NULL &&  brojac <= p2->next->brojac && check!=0) //nece pristupat head elementu jer je vec p->next!=NULL neispunjeno
+	{
+		q=p2;
+		p2=p2->next;
+
+		if(p2->brojac==brojac)
+		{
+			if(strcmp(rijec, p2->rijec) < 0)
+				{
+					p2=q;
+					check=0;
+				}
+		}
+	
+		
+	}
+
+	return p2;
+}
+
+int CreateList(pos p, pos p2)
+{
+	pos q=NULL;
+
+	q=FindPlace(p2,p->brojac, p->rijec);
+
+	InsertList2(p->rijec,p->brojac, q);
+
+	return 0;
+}

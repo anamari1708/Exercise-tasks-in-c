@@ -1,0 +1,308 @@
+/*Napisati program koji generira 20 sluèajnih brojeva iz opsega 100 – 150 i njih spremiti u vezanu listu i
+svakom od njih dodijeliti redni broj od 0-19.
+
+a) Nakon toga treba generirati pet sluèajnih brojeva iz opsega 0-19 (voditi raèuna da se ne pojavi
+isti broj više puta) i elemente gornje liste s tim rednim brojem postaviti na poèetak liste. Ispisati
+te brojeve te novu listu s rednim brojevima.
+Npr. za listu:
+Redni broj: 0    1   2   3  4   5   6   7  8
+Element	   125 134 145 121 103 111 106 149 ….
+Ako se izgeneriraju redni brojevi 4, 2, 6, 0, 5 prvo se na poèetak dodaje element s rednim brojem
+4, pa s rednim brojem 2, pa s 6… Nova lista na kraju izgleda:
+Redni broj: 5   0   6   2   4   1   3   7  8
+Element    111 125 106 145 103 134 121 149 ….
+
+b) Izmijeniti gornji zadatak tako da iz postojeæe liste nova formira na naèin da se elementi iz
+postojeæe liste prebace po redoslijedu generiranja rednih brojeva, tj. za gornji primjer nova bi
+lista izgledala: 
+Redni broj: 4   2   6   0   5   1   3   7  8
+		Element     103 145 106 125 111 134 121 149 ….
+Ispisati te brojeve te novu listu s rednim brojevima. */
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+#include<time.h>
+
+struct _list;
+typedef struct _list* pos;
+
+typedef struct _list
+{
+	int el;
+	int redni_br;
+
+	pos next;
+}list;
+
+pos CreateNode();
+int CreateList( pos);
+int InsertList(int, int, pos);
+int PrintList(pos);
+void Generate(int* );
+int CreateNewList1(int*, pos);
+int InsertListEnd(int, int, pos);
+pos FindLast(pos);
+pos Find(int,pos);
+int Delete(int, pos);
+pos FindPrev(int, pos);
+int CreateNewList2(int*, pos);
+
+int main()
+{
+	pos p=NULL;
+	int a[5]={0};
+
+	p=CreateNode();
+
+	if(p==NULL)
+	{
+		return -1;
+	}
+
+	p->next=NULL;
+
+	CreateList(p);
+
+
+	printf("\n----** Vasa lista glasi: **----\n\n");
+	PrintList(p->next);
+	
+	printf("\n\n");
+
+	Generate(a);
+
+	CreateNewList1(a, p);
+
+	printf("\n\n");
+
+	printf("\n----** Vasa prepravljena lista glasi: **----\n\n");
+	PrintList(p->next);
+
+	CreateNewList2(a, p);
+	
+	printf("\n----** Vasa druga prepravljena lista glasi: **----\n\n");
+	PrintList(p->next);
+
+	printf("\n\n");
+	
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(list));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+int CreateList(pos p)
+{
+	int el=0;
+	int br=0;
+	srand((unsigned)time(NULL));
+
+	while(br<20)
+	{
+		el=rand()%(150-100)+100;
+		InsertListEnd(el, br, p);
+		br++;
+	}
+
+	return 0;
+}
+
+int InsertList(int el, int redni_br, pos p)
+{
+	pos q=NULL;
+
+	q=CreateNode();
+
+	if(q==NULL)
+		return -1;
+
+	q->el=el;
+	q->redni_br=redni_br;
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+int PrintList(pos p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf(" \t %d \t %d  \n", p->el, p->redni_br);
+		p=p->next;
+	}
+
+
+	return 0;
+}
+
+void Generate(int* a)
+{
+int provjera=0;
+int i=0,j=0;
+srand((unsigned)time(NULL));
+
+for(i=0;i<5;i++)
+	a[i]=rand()%20;
+
+while(provjera==0)
+{
+	provjera=1; //pretpostavimo da nema istih
+
+	for(i=0;i<4;i++)
+	{
+		for(j=i+1;j<5;j++)
+		{
+			if(a[i]==a[j])
+			{
+				provjera=0;  //ako ima makar jedna ista 
+			}
+		}
+	}
+
+	if(provjera==0) //ako ima istih ponovno generiraj sve brojeve
+	{
+		for(i=0;i<5;i++)
+		{
+			a[i]=rand()%20;
+		}
+	}
+}
+
+printf("----** 5 izgeneriranih brojeva **----\n");
+
+for(i=0;i<5;i++)
+	printf("\n%d",a[i]);
+
+}
+
+int CreateNewList1(int* a, pos p)
+{
+	pos q=NULL;
+	int redni_br=0, el=0;
+	int i=0;
+
+	for(i=0;i<5;i++)
+	{
+		q=Find(a[i], p->next);
+		redni_br=q->redni_br;
+		el=q->el;
+		Delete(a[i], p);
+		InsertList(el,redni_br, p);		
+
+	}
+
+	return 0;
+}
+
+int InsertListEnd(int el, int redni_br, pos p)
+{
+	p=FindLast(p);
+
+	InsertList(el, redni_br, p);
+
+	return 0;
+}
+
+pos FindLast(pos p)
+{
+	while(p->next!=NULL)
+	{
+		p=p->next;
+	}
+
+	return p;
+}
+
+pos Find( int redni_br, pos p)
+{
+	while(p!=NULL && redni_br!=p->redni_br)
+		p=p->next;
+
+	return p;
+}
+
+int Delete( int redni_br, pos p)
+{
+	pos prev=NULL; 
+	pos curr=NULL;	
+
+	prev=FindPrev(redni_br, p);
+
+	if(prev==NULL)
+		return -1;
+
+	curr=prev->next;
+	prev->next=prev->next->next;
+
+	free(curr);
+
+	return 0;
+}
+
+pos FindPrev (int redni_br, pos p)
+{
+	pos prev=NULL;
+	pos curr=NULL;
+
+	prev=p;
+	curr=p->next;
+
+	while(curr!=NULL && redni_br!=curr->redni_br)
+	{
+		prev=curr;
+		curr=prev->next;
+	}
+
+	if(curr==NULL)
+	{
+		return NULL;
+	}
+
+	return prev;
+}
+
+int CreateNewList2(int* a, pos p)
+{
+	pos q=NULL;
+	int redni_br=0, el=0;
+	int i=0;
+	int element[5]={0};
+
+	for(i=0;i<5;i++)
+	{
+		q=Find(a[i], p->next);
+		element[i]=q->el;
+		Delete(a[i], p);
+	}
+
+	for(i=4;i>=0;i--)
+	{
+		InsertList(element[i], a[i], p);
+	}
+
+	return 0;
+}

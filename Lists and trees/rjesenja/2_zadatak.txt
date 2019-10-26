@@ -1,0 +1,240 @@
+/*
+Napisati program koji iz datoteke èita dio teksta, rijeè po rijeè
+i unosi ih u red s prioritetom (maksimalna duljina rijeèi 1024 znaka,
+prioritet=1 => rijeè poèinje samoglasnikom, prioritet=2 => rijeè poèinje
+suglasnikom;). Rijeèi u redu moraju biti sortirane po prioritetu.
+
+Iz tako kreiranog reda kreirati dvije datoteke, u prvoj æe se nalaziti rijeèi
+sa prioritetom=1, a u drugoj rijeèi s prioritetom=2; s tim da su te rijeèi
+u datoteci zapisane sortirane po abecedi.
+*/
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+struct _list;
+typedef struct _list* pos;
+typedef struct _list
+{
+	char* rijec;
+	int pri;
+
+	pos next;
+}list;
+
+pos CreateNode();
+int ReadFromFile(char*, pos);
+int InsertList(char*, int, pos);
+int CreateList(char*, int, pos);
+pos FindPlace(char*, int, pos);
+int PrintList(pos);
+int IspisiUDatoteku(char*, char*, pos);
+
+int main()
+{
+	pos p=NULL;
+	char f[100]={0};
+	char f1[100]={0};
+	char f2[100]={0};
+
+	p=CreateNode();
+
+	if(p==NULL)
+	{
+		return -1;
+	}
+
+	p->next=NULL;
+
+	printf("Unesite ime datoteke iz koje zelite citati\n");
+	scanf(" %s", f);
+	
+	system("cls");
+
+	ReadFromFile(f, p);
+
+	printf("\n\nVasa lista glasi\n");
+	PrintList(p->next);
+
+	printf("\nUnesite ime prve datoteke u koju zelite pisati\n");
+	scanf(" %s", f1);
+
+	printf("Unesite ime druge datoteke u koju zelite pisati\n");
+	scanf(" %s", f2);
+
+	IspisiUDatoteku(f1,f2,p);
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(list));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+int ReadFromFile(char* f, pos p)
+{
+	FILE* b=NULL;
+	char rijec[1024];
+
+	b=fopen(f, "r");
+
+	if(b==NULL)
+	{
+		printf("Neuspjesno otvorena datoteka\n");
+		return -1;
+	}
+
+	printf("U vasoj datoteci je zapisano:\n");
+
+	while(!feof(b))
+	{
+		if( fscanf(b, " %s", rijec) != 1)
+			break;
+		
+		printf("%s ", rijec);
+
+		if(toupper(rijec[0])=='A' || toupper(rijec[0])=='E' || toupper(rijec[0])=='I' || (rijec[0])=='O' || toupper(rijec[0])=='U' )
+		{
+			CreateList(rijec, 1, p);
+		}
+
+		else
+		{
+			CreateList(rijec, 2, p);
+		}
+	}
+
+	fclose(b);
+
+	return 0;
+	
+}
+
+int CreateList(char* rijec, int pri, pos p)
+{
+	pos q=NULL;
+
+	q=FindPlace(rijec, pri, p);
+	InsertList(rijec, pri, q);
+
+	return 0;
+}
+
+pos FindPlace(char* rijec, int pri, pos p)
+{
+	pos q=NULL;
+	int check=1;
+
+	while(p->next!=NULL && pri >= p->next->pri && check!=0)
+	{
+		q=p;
+		p=p->next;
+		
+	    if( pri == p->pri )
+		{
+			if( strcmp (rijec, p->rijec) < 0)
+			{
+				p=q;
+				check=0;
+			}
+		}
+	}
+
+	return p;
+}
+
+int InsertList(char* rijec, int pri, pos p)
+{
+	pos q=NULL;
+	int n;
+
+	n=strlen(rijec);
+	n++;
+
+	q=CreateNode();
+
+	if(q==NULL)
+		return -1;
+
+	q->rijec=(char*) malloc(n*sizeof(char));
+	strcpy(q->rijec, rijec);
+	q->pri=pri;
+
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+
+int PrintList(pos p)
+{
+	if(p==NULL)
+	{
+		printf("Prazna lista.\n");
+		return -1;
+	}
+
+	while(p!=NULL)
+	{
+		printf(" %s\t", p->rijec);
+		printf(" %d\t", p->pri);
+		printf("\n");
+		p=p->next;
+	}
+
+	return 0;
+}
+
+int IspisiUDatoteku (char* f1, char* f2, pos p)
+{
+	FILE* b1=NULL;
+	FILE* b2=NULL;
+
+	b1=fopen(f1, "w");
+	b2=fopen(f2, "w");
+
+	if(b1==NULL || b2==NULL)
+	{
+		printf("Neuspjesno otvorena jedna od datoteka.\n");
+		return -1;
+	}
+
+	p=p->next;
+
+	while(p!=NULL)
+	{
+		if(p->pri==1)
+		{
+			fprintf(b1, " %s \t ", p->rijec);	
+		}
+
+		else
+		{
+			fprintf(b2, " %s\t", p->rijec);
+		}
+
+		p=p->next;
+	}
+
+	fclose(b1);
+	fclose(b2);
+
+	return 0;
+}

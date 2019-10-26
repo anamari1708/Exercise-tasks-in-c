@@ -1,0 +1,271 @@
+/*
+Napisati program koji èita iz datoteke dio teksta, te kreira binarno stablo pretraživanja.
+Binarno stablo se kreira na naèin da se u njega upisuju sve razlièite rijeèi iz teksta
+koji je  zapisan u datoteci s pripadajuæim duljinama unesene rijeèi.
+
+struct _Cvor
+{
+	char *rijec;
+	int length;
+
+	struct _Cvor* Left;
+	struct _Cvor* Right;
+
+	};
+
+Potrebno je izraèunati prosjeènu duljinu svake rijeèi zapisane u binarnom stablu.
+
+Napisati program koji iz tako kreiranog binarnog stabla u vezanu listu puni samo one
+rijeèi koje su dulje od prosjeène duljine svih rijeèi, te ispisati tu vezanu listu.
+
+*/
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct _tree;
+typedef struct _tree* PosTree;
+
+struct _list;
+typedef struct _list* PosList;
+
+typedef struct _tree
+{
+	char* rijec;
+	int duljina;
+
+	PosTree left;
+	PosTree right;
+
+}tree;
+
+typedef struct _list
+{
+	char *ime;
+
+	PosList next;
+
+}list;
+
+PosTree Insert(char*, int, PosTree);
+PosTree CreateNodeTree();
+PosTree ReadFromFile(PosTree, char*, float*);
+int WordSize (char* );
+void PrintTree(PosTree);
+void TreeToList(PosTree, PosList, float);
+PosList CreateNodeList();
+int InsertList(char*,int, PosList);
+int PrintList(PosList);
+
+int main ()
+{
+	PosTree s=NULL;
+	char f[100]={0};
+	float prosijek=0;
+	PosList p2=NULL;
+
+	p2=CreateNodeList();
+
+	p2->next=NULL;
+
+	printf("Unesite ime datoteke iz koje zelite citati rijeci\n");
+	scanf(" %s", f);
+
+	system("cls");
+
+	s=ReadFromFile(s, f, &prosijek);
+
+	printf("---*** VASE STABLO ***--- \n\n");
+	PrintTree(s);
+
+	printf("\n");
+
+	printf("Prosijecna duljina rijeci je %.2f\n\n", prosijek);
+
+	TreeToList(s, p2, prosijek);
+
+	printf("\n---*** Rijeci dulje od prosijeka su: ***---\t\n\n");
+
+    PrintList(p2->next);
+
+	printf("\n\n");
+
+	return 0;
+
+}
+
+PosTree CreateNodeTree()
+{
+	PosTree q=NULL;
+
+	q=(PosTree) malloc(sizeof(tree));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija!\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+PosList CreateNodeList()
+{
+	PosList q=NULL;
+
+	q=(PosList) malloc(sizeof(list));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija!\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+PosTree Insert(char* _rijec, int _duljina, PosTree p)
+{
+	if(p==NULL)
+	{
+		p=CreateNodeTree();
+		p->left=NULL;
+		p->right=NULL;
+
+		p->rijec=(char*)malloc(sizeof(_duljina)+1);
+		strcpy(p->rijec, _rijec);
+		p->duljina=_duljina;
+	}
+
+
+	else if( strcmp(_rijec, p->rijec) < 0 )
+	{
+		p->left=Insert(_rijec, _duljina, p->left);
+	}
+
+	else if( strcmp(_rijec, p->rijec) > 0 )
+	{
+		p->right=Insert(_rijec, _duljina, p->right);
+	}
+
+	return p;
+}
+
+
+PosTree ReadFromFile(PosTree p, char* f, float* prosijek)
+{
+	FILE* b;
+	int _duljina=0;
+	char buffer[1000]={0};
+	int niz_duljina[100]={0};
+	int k=0, br_rijeci=0, i=0, suma=0;
+
+	b=fopen(f, "r");
+
+	if(b==NULL)
+	{
+		printf("Greska u otvaranju datoteke\n");
+		return NULL;
+	}
+
+	while(!feof(b))
+	{
+		memset(buffer, 0, 1000);
+
+		if( fscanf(b, " %s", buffer) != 1 )
+			break;
+
+		_duljina=WordSize(buffer);
+		// _duljina=strlen(buffer);
+
+		p=Insert(buffer, _duljina, p);
+
+		niz_duljina[k]=_duljina;
+		k++;
+	}
+
+	br_rijeci=k;
+
+	for(i=0;i<k;i++)
+		suma=suma+niz_duljina[i];
+
+	*prosijek=(float)suma/br_rijeci;
+
+	fclose(b);
+
+	return p;
+}
+
+int WordSize (char* rijec)
+{
+	int i=0;
+
+	while(rijec[i]!='\0')
+	{
+		i++;
+	}
+
+	return i;
+}
+
+
+void PrintTree(PosTree p)
+{
+	if(p!=NULL)
+	{
+		printf(" %s  ", p->rijec);
+		printf(" %d  \n", p->duljina);
+		PrintTree(p->left);
+		PrintTree(p->right);
+	}
+}
+
+
+int InsertList(char* _ime, int duljina, PosList p)
+{
+	PosList q=NULL;
+
+	q=CreateNodeList();
+
+	if(q==NULL)
+		return -1;
+
+	q->ime=(char*) malloc ( sizeof(duljina)+1 );
+	strcpy(q->ime, _ime);
+
+	q->next=p->next;
+	p->next=q;
+
+	return 0;
+}
+
+void TreeToList(PosTree s, PosList p, float prosijek)
+{
+	if (s!=NULL)
+	{
+		if( s->duljina  >  prosijek )
+			InsertList(s->rijec,s->duljina, p);
+
+		TreeToList(s->left, p, prosijek);
+		TreeToList(s->right, p, prosijek);
+	}
+}
+
+int PrintList(PosList p)
+{
+	if(p==NULL)
+	{
+		printf("Lista je prazna\n");
+		return -1;
+	}
+	
+	while(p!=NULL)
+	{
+		printf(" %s \t", p->ime);
+		p=p->next;
+	}
+
+	return 0;
+}

@@ -1,0 +1,158 @@
+1.zadatak
+
+Napisati program koji èita iz datoteke dio teksta, te kreira binarno stablo pretraživanja. Binarno stablo se
+kreira na naèin da se u njega upisuju sve razlièite rijeèi iz teksta koji je zapisan u datoteci s pripadajuæim
+duljinama unesene rijeèi.
+struct _Cvor{char *rijec; int length; struct _Cvor *Left; struct _Cvor *Right;};
+Potrebno je izraèunati prosjeènu duljinu svake rijeèi zapisane u binarnom stablu.
+Napisati program koji iz tako kreiranog binarnog stabla u vezanu listu puni samo one rijeèi koje su dulje
+od prosjeène duljine svih rijeèi, te ispisati tu vezanu listu.
+__________________________________________
+
+2.zadatak
+
+Napisati program koji iz datoteke èita dio teksta, rijeè po rijeè i unosi ih u red s prioritetom (maksimalna
+duljina rijeèi 1024 znaka, prioritet=1 => rijeè poèinje samoglasnikom, prioritet=2 => rijeè poèinje
+suglasnikom;). Rijeèi u redu moraju biti sortirane po prioritetu.
+Iz tako kreiranog reda kreirati dvije datoteke, u prvoj æe se nalaziti rijeèi sa prioritetom=1, a u drugoj rijeèi
+s prioritetom=2; s tim da su te rijeèi u datoteci zapisane sortirane po abecedi.
+__________________________________________
+
+3.zadatak
+
+Napisati program koji iz datoteke èita dio teksta, rijeè po rijeè i unosi u binarno stablo pretraživanja
+(maksimalna duljina rijeèi 1024 znaka). Ispisati binarno stablo na „inorder“ naèin.
+Iz binarnog stabla kreirati dvije datoteke, u prvoj se nalaze sve rijeèi koje poèinju samoglasnikom, a u
+drugoj sve rijeèi koje poèinju suglasnikom. Rijeèi zapisane u datotekama moraju biti sortirane po abecedi.
+__________________________________________
+
+4.zadatak
+
+Napisati program koji iz datoteke èita podatke o broju bodova koje je jedan student dobio na ispitu
+(struct _student{char ime[128];char prezime[128];int broj_bodova; float relativni_broj_bodova;struct
+_student *left; ;struct _student right;}) i sprema ih u binarno stablo pretraživanja. (Napomena : 0 <
+broj_bodova <= 100). Ispisati binarno stablo na „inorder“ naèin.
+U tako kreiranom binarnom stablu potrebno je za svakog od studenata izraèunati i relativan broj bodova
+po formuli: relativan_broj_bodova=( broj_bodova / MAX(broj_bodova) ). Ispisati binarno stablo na
+„preorder“ naèin. 
+__________________________________________
+
+5.zadatak
+
+Napisati program koji èita iz datoteka podatke o studentima i ispitima, te kreira dvije vezane liste
+struct _Student{char *sifra_studenta; char *ime; char *prezime; char *sifra_ispita;struct _Student
+*Next;};
+struct _Ispit {char *sifra_ispita; char *naziv; struct _Ispit *Next;};
+Potrebno je ispisati koliko je studenata položilo svaki pojedini ispit (po nazivu ispita), te nabrojati koji su
+to studenti.
+__________________________________________
+
+6.zadatak
+
+Napisati program koji za tri razlièita predmeta èita ime i prezime studenta te njegovu ocjenu. Podaci o
+svakom predmetu se nalaze u odvojenoj datoteci i iz svake datoteke je potrebno kreirati vezanu listu i
+ispisati je.
+a) Nakon toga potrebno je kreirati novu listu koja sadrži imena studenata koji su položili sva tri
+predmeta.
+b) Nadopuniti zadatak pod a) tako da se ispiše nova vezana lista koja osim što sadrži imena
+studenata, sadrži i njihovu prosjeènu ocjenu iz ta tri predmeta.
+__________________________________________
+
+7.zadatak
+
+Napisati program koji generira 20 sluèajnih brojeva iz opsega 100 – 150 i njih spremiti u vezanu listu i
+svakom od njih dodijeliti redni broj od 0-19.
+
+a) Nakon toga treba generirati pet sluèajnih brojeva iz opsega 0-19 (voditi raèuna da se ne pojavi
+isti broj više puta) i elemente gornje liste s tim rednim brojem postaviti na poèetak liste. Ispisati
+te brojeve te novu listu s rednim brojevima.
+Npr. za listu:
+Redni broj: 0    1   2   3  4   5   6   7  8
+Element	   125 134 145 121 103 111 106 149 ….
+Ako se izgeneriraju redni brojevi 4, 2, 6, 0, 5 prvo se na poèetak dodaje element s rednim brojem
+4, pa s rednim brojem 2, pa s 6… Nova lista na kraju izgleda:
+Redni broj: 5   0   6   2   4   1   3   7  8
+Element    111 125 106 145 103 134 121 149 ….
+
+b) Izmijeniti gornji zadatak tako da iz postojeæe liste nova formira na naèin da se elementi iz
+postojeæe liste prebace po redoslijedu generiranja rednih brojeva, tj. za gornji primjer nova bi
+lista izgledala: 
+Redni broj: 4   2   6   0   5   1   3   7  8
+Element 		    103 145 106 125 111 134 121 149 ….
+Ispisati te brojeve te novu listu s rednim brojevima. 
+__________________________________________
+
+8.zadatak
+
+Napisati program koji generira sluèajne brojeve u opsegu od 50-80. Ukoliko je generirani broj paran
+sprema se u vezanu listu parnih brojeva i to u padajuæem redoslijedu (od najveæeg prema najmanjem).
+Ukoliko je broj neparan sprema se u vezanu listu neparnih brojeva, takoðer u padajuæem redoslijedu. Niti
+jedna vezana lista ne smije sadržavati dva ista elementa. Unos traje sve dok obje liste ne sadrže 10
+elemenata. Treba ispisivati koji se broj generira i na kraju ispisati obje liste. 
+
+
+___________________________________________________________________
+
+1_1
+
+1. Napisati program koji èita znak po znak iz datoteke i iz toga napraviti stablo proraèuna
+sa brojaèem ponavljanja znaka te iz tako dobivenog stabla ispisati znakove sortirano po ASCII tablici 
+sa pripadajuæim brojem ponavljanja.
+b) ispisati po dva kriterija; prvi je broj ponavljanja, a drugi je ascii vrijednost */
+
+__________________________________________
+
+1_2
+
+/* 2.	Napisati program koji iz datoteke èita rijeèi, te ih sprema u vezanu listu
+(struct _node {char rijec[20]; int brojac; struct _Node *Next;};),
+ s tim ukoliko se ista rijeè ponavlja tada se ona ne zapisuje u vezanu listu, nego se brojaè uveèava.
+
+a.	Ispisati tako kreiranu listu, s tim da je redoslijed rijeèi obrnut od
+redoslijeda kojim se pojavljuju u datoteci.
+b.	Iz tako kreirane liste kreirati novu listu, na naèin, da su elementi u novoj
+listi sortirani prvo po broju ponavljanja ,a zatim po abecednom redu. */
+
+__________________________________________
+
+2_1
+
+/* 
+                                   
+-----------------------------------------------------------------------------------------------------------
+Napisati program koji iz teksta èita rijeè po rijeè i radi rijeènik svih rijeèi koje se nalaze u tekstu.
+Rijeènik se izraðuje na naèin da se u vezanu listu zapisuje samo prvo slovo rijeèi;
+zatim se ta rijeè sprema u binarno stablo na koje pokazuje pokazivaè koji se nalazi u èvoru vezane liste.
+Slova u vezanoj listi moraju biti sortirana. Ne smije se koristiti funkcija za sortiranje.
+Ispisati sve razlièite rijeèi abecednim redoslijedom.
+
+a) Ukoliko se u stablo zapisuje nova rijeè poveæaje se brojaè u èvoru vezane liste.
+b) Ukoliko se rijeè ponavlja, potrebno je samo poveæati brojaè. 
+c) Ispisati sve razlièite rijeèi abecednim redoslijedom s brojem ponavljnja.
+d) Ispisati koliko ima rijeèi koje zapoèinju s poèetnim slovom koje se nalazi u listi.
+ 
+ Napomena:
+ typedef struct _listNode
+ {
+	char firstLetter;
+	int wordsCounter;
+	struct _treeNode *myRoot;
+	struct _listNode *Next;
+ }_LISTNODE;
+ 
+ typedef struct _treeNode
+ {
+	char[50] word;
+	int wordCounter;
+	struct _treeNode *Left;
+	struct _treeNode *Right;
+ }_TREENODE;
+
+...Ukratko:
+Napraviti program koji iz datoteke cita tekst i sprema u listu samo prvo slovo svake rijeci, a za svako slovo
+kreira binarno stablo svih rijeci koje pocinju tim slovom.
+Uz slovo u listi treba pisati koliko je razlicitih rijeci s tim slovom, a uz rijeci u stablu treba pisati 
+koliko je istih rijeci u datoteci s tim slovom. */
+
+__________________________________________
+

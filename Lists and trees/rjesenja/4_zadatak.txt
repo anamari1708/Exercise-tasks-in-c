@@ -1,0 +1,193 @@
+/*Napisati program koji iz datoteke èita podatke o broju bodova koje je jedan student dobio na ispitu
+(struct _student{char ime[128];char prezime[128];int broj_bodova; float relativni_broj_bodova; struct
+_student *left; ;struct _student right;}) i sprema ih u binarno stablo pretraživanja. (Napomena : 0 <
+broj_bodova <= 100). Ispisati binarno stablo na „inorder“ naèin.
+
+U tako kreiranom binarnom stablu potrebno je za svakog od studenata izraèunati i relativan broj bodova
+po formuli: relativan_broj_bodova=( broj_bodova / MAX(broj_bodova) ). Ispisati binarno stablo na
+„preorder“ naèin. */
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+struct _stablo;
+typedef struct _stablo* pos;
+
+typedef struct _stablo
+{
+	char* ime;
+	char* prezime;
+	int br_bodova;
+	float relativni_br_bodova;
+	
+	pos left;
+	pos right;
+}stablo;
+
+pos CreateNode();
+pos InsertTree(char*, char*, int, pos);
+pos ReadFromFile(char*, pos, int* );
+void PrintTreeInOrder(pos);
+void UmetniRelBodove(pos, int);
+void PrintTreePreOrder(pos);
+
+int main()
+{
+	pos p=NULL;
+	char f[100]={0};
+	int max_bodovi=0;
+
+	printf("Unesite ime datoteke iz koje zelite citati\n");
+	scanf(" %s", f);
+
+	system("cls");
+
+	p=ReadFromFile(f, p, &max_bodovi);
+
+	printf("________________________________________________________________________________");
+
+	printf("Vaste stablo glasi: \n\n");
+	PrintTreeInOrder(p);
+
+	printf("\n\n");
+
+	printf("________________________________________________________________________________");
+
+	UmetniRelBodove(p, max_bodovi);
+
+	printf("Vaste stablo sa relativnim postotkom (brojem bodova) glasi: \n\n");
+	PrintTreePreOrder(p);
+
+	printf("\n\n");
+
+	return 0;
+}
+
+pos CreateNode()
+{
+	pos q=NULL;
+
+	q=(pos) malloc(sizeof(stablo));
+
+	if(q==NULL)
+	{
+		printf("Neuspjesno alocirana memorija\n");
+		return NULL;
+	}
+
+	return q;
+}
+
+
+pos InsertTree (char* ime, char* prezime, int br_bodova, pos p)
+{ 
+	int n1=0, n2=0;
+
+	if(p==NULL)
+	{
+		p=CreateNode();
+
+		n1=strlen(ime);
+		n2=strlen(prezime);
+		n1++;
+		n2++;
+
+		p->ime=(char*) malloc(n1*sizeof(char));
+		p->prezime=(char*) malloc(n2*sizeof(char));
+
+		strcpy(p->ime, ime);
+		strcpy(p->prezime, prezime);
+		p->br_bodova=br_bodova;
+		p->relativni_br_bodova=0.0;
+
+		p->left=NULL;
+		p->right=NULL;
+	}
+
+	else if( strcmp(prezime, p->prezime) < 0 || strcmp(ime, p->ime) < 0 )
+	{
+		p->left=InsertTree(ime, prezime, br_bodova, p->left);
+	}
+
+	else if( strcmp(prezime, p->prezime) > 0 || strcmp(ime, p->ime) > 0 )
+	{
+		p->right=InsertTree(ime, prezime, br_bodova, p->right);
+	}
+
+	return p;
+
+}
+
+pos ReadFromFile(char* f, pos p, int* max_bodovi)
+{
+	FILE* b=NULL;
+	char ime[100]={0};
+	char prezime[100]={0};
+	int bodovi=0;
+
+	b=fopen(f, "r");
+
+	if(b==NULL)
+	{
+		printf("Greska u otvaranju datoteke \n");
+		return NULL;
+	}
+
+	while(!feof(b))
+	{
+	
+		memset(ime, 0, 100);
+		memset(prezime, 0, 100);
+
+		if( fscanf(b, " %s %s %d ", ime, prezime, &bodovi)!= 3 )
+			break;
+
+		if(bodovi > *max_bodovi)
+			*max_bodovi=bodovi;
+
+		printf("%s %s %d \n", ime, prezime, bodovi);
+
+		p=InsertTree(ime, prezime, bodovi, p);
+	}
+
+	fclose(b);
+
+	return p;
+}
+
+void PrintTreeInOrder(pos p)
+{
+	if(p!=NULL)
+	{
+		PrintTreeInOrder(p->left);
+		printf("%s \t\t %s \t\t %d \t \n", p->ime, p->prezime, p->br_bodova);
+		PrintTreeInOrder(p->right);
+	}
+}
+
+void UmetniRelBodove(pos p, int max_bodovi)
+{
+	if(p!=NULL)
+	{
+		UmetniRelBodove(p->left, max_bodovi);
+		p->relativni_br_bodova= (float) p->br_bodova/max_bodovi;
+		p->relativni_br_bodova=p->relativni_br_bodova*100;
+		UmetniRelBodove(p->right, max_bodovi);
+	}
+}
+
+
+void PrintTreePreOrder(pos p)
+{
+	if(p!=NULL)
+	{
+		printf("%s \t\t %s \t\t %d \t %.2f \n", p->ime, p->prezime, p->br_bodova, p->relativni_br_bodova);
+		PrintTreePreOrder(p->left);	
+		PrintTreePreOrder(p->right);
+	}
+}
+
